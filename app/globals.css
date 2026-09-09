@@ -1,0 +1,49 @@
+@import "tailwindcss";
+
+@theme {
+  --color-void: #050505;
+  --color-rim: #FFFFFF;
+  --color-gold: #D4AF37;
+  --color-chrome: #C0C0C0;
+  --glow: rgba(212, 175, 55, 0.4);
+}
+
+:root {
+  --font-playfair: 'Playfair Display SC', Georgia, serif;
+  --font-merriweather: 'Merriweather', Georgia, serif;
+  --font-georgia-italic: Georgia, serif;
+  --font-machine-meta: 'Times New Roman', Times, serif;
+}
+
+body {
+  background-color: var(--color-void);
+  color: var(--color-rim);
+  font-family: var(--font-merriweather);
+  line-height: 1.65;
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-playfair);
+  letter-spacing: -0.01em;
+}
+
+.machine-meta-block {
+  font-family: var(--font-machine-meta);
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+.footer-disclaimer {
+  font-family: var(--font-georgia-italic);
+  font-style: italic;
+}
