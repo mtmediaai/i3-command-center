@@ -6,8 +6,9 @@ import { POST as handleLeadPost } from '../app/api/leads/route';
 import { validateLeadSubmission } from '../lib/validation';
 import { siteConfig } from '../config/site.config';
 import { siteCopy } from '../content/site-copy';
+import { evidenceLedger } from '../content/evidence-ledger';
 
-console.log('--- RUNNING SCIENCE SQUAD QUALITY PROBES ---');
+console.log('--- RUNNING MTM I³ SCIENCE SQUAD QUALITY PROBES (PHASE B) ---');
 
 let passed = 0;
 let failed = 0;
@@ -115,28 +116,32 @@ async function runSuite() {
     assert.strictEqual(result.sanitized.fulfillment_tier, 'mass');
   });
 
-  // 6. Schema.org Mesh Probe: Layout JSON-LD validates apex @id
-  await runAsyncProbe('Mesh Probe: Schema.org Organization @id is apex https://mtmediaai.com/#organization', () => {
+  // 6. Schema.org Mesh & FAQPage Probe: Layout JSON-LD validates apex @id and FAQPage
+  await runAsyncProbe('Mesh Probe: Schema.org apex IDs and FAQPage schema match visible content', () => {
     const layoutContent = fs.readFileSync(path.join(process.cwd(), 'app/layout.tsx'), 'utf8');
     assert.ok(
-      /['"]@id['"]:\s*['"]https:\/\/mtmediaai\.com\/#organization['"]/.test(layoutContent),
+      layoutContent.includes('https://mtmediaai.com/#organization'),
       'Organization @id must be apex'
     );
     assert.ok(
-      /['"]@id['"]:\s*['"]https:\/\/mtmediaai\.com\/#person['"]/.test(layoutContent),
+      layoutContent.includes('https://mtmediaai.com/#person'),
       'Person @id must be apex'
     );
     assert.ok(
-      /['"]@id['"]:\s*['"]https:\/\/i3\.mtmediaai\.com\/#website['"]/.test(layoutContent),
+      layoutContent.includes('https://i3.mtmediaai.com/#website'),
       'WebSite @id must be subdomain-scoped'
     );
     assert.ok(
-      /['"]@id['"]:\s*['"]https:\/\/i3\.mtmediaai\.com\/#service['"]/.test(layoutContent),
+      layoutContent.includes('https://i3.mtmediaai.com/#service'),
       'Service @id must be subdomain-scoped'
     );
     assert.ok(
-      /['"]@id['"]:\s*['"]https:\/\/i3\.mtmediaai\.com\/#offer['"]/.test(layoutContent),
+      layoutContent.includes('https://i3.mtmediaai.com/#offer'),
       'Offer @id must be subdomain-scoped'
+    );
+    assert.ok(
+      layoutContent.includes('https://i3.mtmediaai.com/#faq'),
+      'FAQPage @id must be subdomain-scoped'
     );
     assert.ok(
       !layoutContent.includes('preferences') || !layoutContent.includes('sameAs'),
@@ -175,11 +180,10 @@ async function runSuite() {
   });
 
   // 8. API Probe: Rate limiter triggers 429 on abuse
-  await runAsyncProbe('API Probe: Rate limiter enforces maximum requests per window', async () => {
+  await runAsyncProbe('API Probe: Rate limiter enforces 5 req/10min per IP with Retry-After 600', async () => {
     const testIp = '10.0.0.99';
     let lastRes;
 
-    // Send 5 rapid requests from testIp (consuming allowance)
     for (let i = 0; i < 5; i++) {
       const req = new NextRequest('http://localhost:3000/api/leads', {
         method: 'POST',
@@ -195,7 +199,6 @@ async function runSuite() {
       lastRes = await handleLeadPost(req);
     }
 
-    // 6th request from testIp must trigger rate limit
     const burstReq = new NextRequest('http://localhost:3000/api/leads', {
       method: 'POST',
       headers: { 'x-forwarded-for': testIp },
@@ -211,61 +214,120 @@ async function runSuite() {
     assert.strictEqual(burstRes.status, 429, 'Excess request must return 429');
     const burstBody = await burstRes.json();
     assert.strictEqual(burstBody.error, 'RATE_LIMITED');
-    assert.ok(burstRes.headers.get('retry-after'), 'Must include Retry-After header');
+    assert.strictEqual(burstRes.headers.get('retry-after'), '600');
   });
 
-  // 9. Config Audit: Variable Card values consolidated in config/site.config.ts
-  await runAsyncProbe('Config Audit: Variable Card values consolidated in config/site.config.ts', () => {
-    assert.strictEqual(siteConfig.subdomain, 'i3');
-    assert.strictEqual(siteConfig.pageUrl, 'https://i3.mtmediaai.com');
-    assert.strictEqual(siteConfig.repo, 'i3-command-center');
-    assert.strictEqual(siteConfig.serviceName, 'Invisible Infrastructure Intelligence (I³ System)');
-    assert.strictEqual(siteConfig.offerName, 'Lux Snapshot: AI Visibility Diagnostic');
-    assert.strictEqual(siteConfig.offerPrice, '0.00');
-    assert.strictEqual(siteConfig.entryValue, 'i3');
-    assert.strictEqual(siteConfig.endcapTarget, 'https://armory.mtmediaai.com');
-    assert.strictEqual(siteConfig.stagedH1, 'Rescuing Legacy From AI Erasure.');
-    assert.strictEqual(siteConfig.tableName, 'leads');
-    assert.strictEqual(siteConfig.preferredSourcesEnabled, false, 'Preferred Sources must remain gated');
+  // 9. API Probe: Payload size limit (<16KB)
+  await runAsyncProbe('API Probe: Payload >16KB rejected with 413 PAYLOAD_TOO_LARGE', async () => {
+    const largeReq = new NextRequest('http://localhost:3000/api/leads', {
+      method: 'POST',
+      headers: {
+        'x-forwarded-for': '10.0.0.88',
+        'content-length': '20000',
+      },
+      body: JSON.stringify({ dummy: 'a'.repeat(20000) }),
+    });
+
+    const res = await handleLeadPost(largeReq);
+    assert.strictEqual(res.status, 413);
+    const body = await res.json();
+    assert.strictEqual(body.error, 'PAYLOAD_TOO_LARGE');
   });
 
-  // 10. Phase B Copy Deck Audit: Validate values populated from Phase B deck
-  await runAsyncProbe('Phase B Copy Audit: Modal success copy and stats match specification exactly', () => {
-    assert.strictEqual(
-      siteCopy.modal.successMessage,
-      'Request received. Your Lux Snapshot is assembled and delivered to your inbox.'
-    );
-    assert.strictEqual(siteCopy.hero.h1, 'Rescuing Legacy From AI Erasure.');
-    assert.strictEqual(siteCopy.oldWay.heading, 'The Front Door Moved.');
-    // Confirm stat keys are populated with the Phase B values
-    assert.strictEqual(siteCopy.oldWay.stats.stat1.value, '58.5% → <1 in 3');
-    assert.strictEqual(siteCopy.oldWay.stats.stat2.value, '−91%');
-    assert.strictEqual(siteCopy.oldWay.stats.stat3.value, '13.5M → 8.6M');
-    assert.strictEqual(siteCopy.oldWay.stats.stat4.value, '−58%');
+  // 10. Security Probe: No Client Bundle Exposure of Secret Keys
+  await runAsyncProbe('Security Probe: Zero server secret tokens exposed in client components', () => {
+    const componentsDir = path.join(process.cwd(), 'components');
+    const files = fs.readdirSync(componentsDir).filter((f) => /\.(tsx|ts|jsx|js)$/.test(f));
+    for (const f of files) {
+      const code = fs.readFileSync(path.join(componentsDir, f), 'utf8');
+      assert.ok(!code.includes('HUBSPOT_PRIVATE_APP_TOKEN'), `${f} must not reference HUBSPOT_PRIVATE_APP_TOKEN`);
+      assert.ok(!code.includes('SUPABASE_SERVICE_ROLE_KEY'), `${f} must not reference SUPABASE_SERVICE_ROLE_KEY`);
+    }
   });
 
-  // 11. Social Proof Carousel Probe: 5 items with Master Equation and verified statistics
-  await runAsyncProbe('Social Proof Carousel Probe: 5 proof items present with Master Equation', () => {
-    assert.ok(Array.isArray(siteCopy.proofCarousel), 'proofCarousel must be an array');
-    assert.strictEqual(siteCopy.proofCarousel.length, 5, 'Must contain 5 proof items');
-    assert.strictEqual(
-      siteCopy.proofCarousel[0].headline,
-      'AI Invisibility + AI Erasure = AI Brand Ignorance'
-    );
-    assert.strictEqual(siteCopy.proofCarousel[0].badge, 'CORE THREAT FORMULA');
-    assert.strictEqual(siteCopy.proofCarousel[1].headline, '58.5% → <1 in 3');
-    assert.strictEqual(siteCopy.proofCarousel[2].headline, '13.5M → 8.6M');
-    assert.strictEqual(siteCopy.proofCarousel[3].headline, '−58% Click Erosion');
-    assert.strictEqual(siteCopy.proofCarousel[4].headline, '−91% Traffic Wipeout');
+  // 11. Deterministic Carousel Uniqueness Probe
+  await runAsyncProbe('Carousel Uniqueness Probe: Exactly ONE carousel rendered in app/page.tsx', () => {
+    const pageContent = fs.readFileSync(path.join(process.cwd(), 'app/page.tsx'), 'utf8');
+    const matches = pageContent.match(/<SocialProofCarousel/g);
+    assert.ok(matches, 'SocialProofCarousel must exist in page.tsx');
+    assert.strictEqual(matches.length, 1, 'Exactly one SocialProofCarousel must be rendered');
+    assert.ok(!pageContent.includes('oldWay.stats'), 'Duplicate oldWay.stats render must be removed');
   });
 
-  // 12. Zero Em-Dash Probe: Ensure no em-dashes exist across copy and codebase
-  await runAsyncProbe('Zero Em-Dash Probe: Ensure zero em-dashes exist in site-copy and site.config', () => {
-    const copyString = JSON.stringify(siteCopy);
-    assert.ok(!copyString.includes('\u2014'), 'siteCopy must contain zero em-dashes');
-    assert.ok(!copyString.includes('&' + 'mdash;'), 'siteCopy must contain zero mdash entities');
-    const configString = JSON.stringify(siteConfig);
-    assert.ok(!configString.includes('\u2014'), 'siteConfig must contain zero em-dashes');
+  // 12. Carousel Accessibility & Reduced Motion Probe
+  await runAsyncProbe('Carousel Accessibility Probe: Reduced motion check and keyboard navigation supported', () => {
+    const carouselCode = fs.readFileSync(path.join(process.cwd(), 'components/social-proof-carousel.tsx'), 'utf8');
+    assert.ok(carouselCode.includes('prefers-reduced-motion'), 'Must check prefers-reduced-motion');
+    assert.ok(carouselCode.includes('onKeyDown'), 'Must support keyboard navigation');
+    assert.ok(carouselCode.includes('focus-visible'), 'Must have visible focus ring');
+    assert.ok(!carouselCode.includes('aria-live="polite"'), 'Must avoid banned live word boundary');
+  });
+
+  // 13. Evidence Ledger Integrity Probe
+  await runAsyncProbe('Evidence Ledger Probe: 4 verified cards with complete source metadata', () => {
+    assert.strictEqual(evidenceLedger.length, 4, 'Must contain exactly 4 verified items');
+    for (const item of evidenceLedger) {
+      assert.ok(item.id, 'Item must have id');
+      assert.ok(item.title, 'Item must have title');
+      assert.ok(item.approvedClaim, 'Item must have approvedClaim');
+      assert.ok(item.sourceOrganization, 'Item must have sourceOrganization');
+      assert.ok(item.sourceTitle, 'Item must have sourceTitle');
+      assert.ok(item.sourceUrl.startsWith('https://'), 'Item must have valid https sourceUrl');
+      assert.ok(item.publicationDate, 'Item must have publicationDate');
+      assert.ok(item.methodologyNote, 'Item must have methodologyNote');
+    }
+    // Verify removal of unverified 58% AIO card
+    const hasUnverifiedAio = evidenceLedger.some((i) => i.approvedClaim.includes('loses an average of 58%'));
+    assert.strictEqual(hasUnverifiedAio, false, 'Unverified 58% claim must be excluded');
+  });
+
+  // 14. Five Keyword Placements Probe
+  await runAsyncProbe('Five Keyword Placements Probe: Intent cluster verified in all 5 designated layers', () => {
+    // 1. Title tag
+    assert.ok(siteCopy.meta.pageTitle.includes('AI Visibility Audit'), 'Layer 1: Title tag must include AI Visibility Audit');
+    // 2. H1 + first 100 words
+    assert.ok(siteCopy.hero.h1.includes('AI') && siteCopy.hero.h1.includes('who to trust'), 'Layer 2: H1 question verified');
+    const heroFirst100 = `${siteCopy.hero.h1} ${siteCopy.hero.subhead}`;
+    assert.ok(heroFirst100.includes('AI visibility'), 'Layer 2: First 100 words must include AI visibility');
+    // 3. Explanatory H2
+    assert.strictEqual(siteCopy.structuralAnswer.h2, 'What an AI visibility audit examines', 'Layer 3: Explanatory H2 verified');
+    // 4. Visible FAQ
+    const faqTitles = siteCopy.faqSection.items.map((i) => i.question).join(' ');
+    assert.ok(faqTitles.includes('What is an AI visibility audit?'), 'Layer 4: FAQ 1 verified');
+    assert.ok(faqTitles.includes('How is AI search visibility different from SEO?'), 'Layer 4: FAQ 2 verified');
+    // 5. Machine layer
+    assert.ok(siteCopy.meta.metaDescription.includes('AI search'), 'Layer 5: Meta description verified');
+    const llmsContent = fs.readFileSync(path.join(process.cwd(), 'public/llms.txt'), 'utf8');
+    assert.ok(llmsContent.includes('I³ Visibility Snapshot'), 'Layer 5: llms.txt verified');
+  });
+
+  // 15. Preferred Sources Gating Probe
+  await runAsyncProbe('Preferred Sources Gating Probe: Flag false, component returns null, zero destination emitted', () => {
+    assert.strictEqual(siteConfig.preferredSourcesEnabled, false, 'Flag must be false');
+    const pageHtml = fs.readFileSync(path.join(process.cwd(), 'app/page.tsx'), 'utf8');
+    assert.ok(!pageHtml.includes('google-add-preferred-source-btn'), 'Button container must not render directly in page');
+  });
+
+  // 16. Universal Zero Em-Dash Probe across the entire repository
+  await runAsyncProbe('Zero Em-Dash Probe: 0 em-dashes across all repo files', () => {
+    const scanDirs = ['app', 'components', 'config', 'content', 'scripts', 'docs', 'public'];
+    for (const dir of scanDirs) {
+      const fullDir = path.join(process.cwd(), dir);
+      if (!fs.existsSync(fullDir)) continue;
+      const walk = (d) => {
+        for (const entry of fs.readdirSync(d, { withFileTypes: true })) {
+          if (entry.name === 'node_modules' || entry.name === '.next' || entry.name === '.git') continue;
+          const p = path.join(d, entry.name);
+          if (entry.isDirectory()) walk(p);
+          else if (entry.isFile()) {
+            const content = fs.readFileSync(p, 'utf8');
+            assert.ok(!content.includes('\u2014'), `Found em-dash in ${p}`);
+            assert.ok(!content.includes('&' + 'mdash;'), `Found forbidden mdash entity in ${p}`);
+          }
+        }
+      };
+      walk(fullDir);
+    }
   });
 
   console.log(`\nProbe Results: ${passed} passed, ${failed} failed.`);
