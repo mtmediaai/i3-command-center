@@ -161,7 +161,7 @@ export const siteCopy: SiteCopy = {
     eyebrow: 'I³ Command Center · MT Media AI',
     h1: 'Is AI Erasing Your Business When High-Net-Worth Buyers Ask Who To Trust?',
     subhead:
-      "MT Media AI's I³ System, Invisible Infrastructure Intelligence, translates your real-world prestige and referral trust into machine-readable data across ChatGPT, Gemini, and Perplexity. You receive a practical AI visibility diagnosis before deciding what to repair.",
+      "MT Media AI's I³ System, Invisible Infrastructure Intelligence, translates your real-world prestige and referral trust into machine-readable data across Google AI Overviews, Google AI Mode, ChatGPT, Gemini, and Perplexity. You receive a practical AI visibility diagnosis before deciding what to repair.",
     aeoBlock: {
       title: 'What is the I³ AI Visibility Diagnosis?',
       body:
@@ -191,7 +191,7 @@ export const siteCopy: SiteCopy = {
       {
         question: 'What do I receive in the snapshot?',
         answer:
-          'A practical AI visibility snapshot detailing prioritized evidence gaps, an AI Brand Ignorance diagnosis, and recommended next steps. It is a diagnostic audit, not a guarantee of rankings, citations, or revenue.',
+          'You receive an interactive knowledge hub: the Inspiration Ignition Hub (a private Gemini Notebook / NotebookLM environment) containing a timestamped snapshot of your AI visibility according to Perplexity AI, prioritized evidence gaps, and an AI Brand Ignorance diagnosis. In accordance with our Anti-Static Deliverables Doctrine, we deliver living, queryable intelligence rather than static PDFs that get discarded. It is yours to keep, query, and explore without cost.',
       },
       {
         question: 'What happens after I submit?',
@@ -246,10 +246,10 @@ export const siteCopy: SiteCopy = {
   deliverables: {
     h2: 'Your I³ Visibility Snapshot Includes',
     bullets: [
-      'A commercial category-question map',
-      'An entity mesh and structured evidence review',
-      'An AI Brand Ignorance and representation-risk analysis',
-      'A prioritized next-step remediation roadmap',
+      'An interactive Inspiration Ignition Hub (Gemini Notebook / NotebookLM shared workspace)',
+      'A timestamped AI visibility benchmark based on Perplexity AI retrieval data',
+      'An AI Brand Ignorance and representation-risk gap diagnosis across public citation sources',
+      'A prioritized remediation roadmap for machine legibility (Anti-Static Deliverables Doctrine)',
     ],
   },
   limitations: {
@@ -281,9 +281,9 @@ export const siteCopy: SiteCopy = {
       },
       {
         question:
-          "Why isn't my referral business showing up in ChatGPT, Gemini, or Perplexity?",
+          "Why isn't my referral business showing up in Google AI Overviews, Google AI Mode, ChatGPT, Gemini, or Perplexity?",
         answer:
-          'Language models cannot read offline reputation or private handshakes. If your business lacks structured entity proof, canonical citations, and verifiable web evidence, generative engines omit your business when buyers ask for recommendations.',
+          'Language models and search generative systems cannot read offline reputation or private handshakes. If your business lacks structured entity proof, canonical citations, and verifiable web evidence, generative systems omit your business when buyers ask for recommendations.',
       },
       {
         question:
@@ -300,7 +300,7 @@ export const siteCopy: SiteCopy = {
       {
         question: 'What happens after I request an I³ Visibility Snapshot?',
         answer:
-          'Your request enters the MTM intake queue. A team member reviews your public business footprint and prepares your visibility diagnosis within 24 to 48 hours.',
+          'Your request enters the MTM intake queue. An operations lead reviews your public footprint and configures your interactive Inspiration Ignition Hub (Gemini Notebook / NotebookLM) with your timestamped Perplexity AI diagnosis within 24 to 48 hours.',
       },
     ],
   },

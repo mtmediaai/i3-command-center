@@ -2,9 +2,19 @@
 
 @theme {
   --color-void: #050505;
+  --color-obsidian: #050505;
+  --color-onyx: #0A0A0A;
   --color-rim: #FFFFFF;
   --color-gold: #D4AF37;
+  --color-gold-matte: #B6862C;
+  --color-gold-fidelity: #C5A059;
   --color-chrome: #C0C0C0;
+  --color-chrome-white: #F5F5F5;
+  --color-hi-chrome: #E1E1E1;
+  --color-platinum: #E5E4E2;
+  --color-secondary-gray: #9DA3A9;
+  --color-tertiary-blue: #1E2A3A;
+  --color-lightning-blue: #00E5FF;
   --glow: rgba(212, 175, 55, 0.4);
 }
 
@@ -13,11 +23,12 @@
   --font-merriweather: 'Merriweather', Georgia, serif;
   --font-georgia-italic: Georgia, serif;
   --font-machine-meta: 'Times New Roman', Times, serif;
+  --font-ui: system-ui, -apple-system, sans-serif;
 }
 
 body {
-  background-color: var(--color-void);
-  color: var(--color-rim);
+  background-color: var(--color-obsidian);
+  color: var(--color-chrome-white);
   font-family: var(--font-merriweather);
   line-height: 1.65;
   margin: 0;
@@ -30,34 +41,116 @@ h1, h2, h3, h4, h5, h6 {
   letter-spacing: -0.01em;
 }
 
-/* The Lenz Effect: Atmospheric Depth & Lighting */
+/* L1-L4 Lighting Protocol & Lenz Effect: Atmospheric Depth */
 .lenz-ambient-glow {
   position: absolute;
-  top: -80px;
+  top: -100px;
   left: 50%;
   transform: translateX(-50%);
-  width: 700px;
-  height: 400px;
-  background: radial-gradient(circle, rgba(212, 175, 55, 0.08) 0%, rgba(5, 5, 5, 0) 70%);
+  width: 850px;
+  height: 480px;
+  background: radial-gradient(circle, rgba(212, 175, 55, 0.12) 0%, rgba(212, 175, 55, 0.02) 45%, rgba(5, 5, 5, 0) 70%);
   pointer-events: none;
   z-index: 0;
 }
 
 .lenz-cta-glow {
-  background: radial-gradient(circle at 50% 0%, rgba(212, 175, 55, 0.1) 0%, rgba(255, 255, 255, 0.02) 60%, transparent 100%);
+  background: radial-gradient(circle at 50% 0%, rgba(212, 175, 55, 0.15) 0%, rgba(255, 255, 255, 0.03) 60%, transparent 100%);
 }
 
+/* Sword-Blade Glow: High-Intensity White-Hot Outer Glow for Primary Titles */
+.sword-blade-glow {
+  text-shadow: 0 0 20px rgba(245, 245, 245, 0.9),
+               0 0 40px rgba(245, 245, 245, 0.6),
+               0 0 80px rgba(212, 175, 55, 0.35);
+}
+
+/* The Forge Section Header Protocol (Echo + Nina + Goldie + Roman) */
+.forge-echo-containment {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  border: 1px solid rgba(128, 128, 128, 0.4);
+  background: rgba(10, 10, 10, 0.7);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.forge-nina-glow {
+  color: #FFFFFF;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.9),
+               0 0 22px rgba(255, 255, 255, 0.6),
+               0 0 40px rgba(255, 255, 255, 0.35);
+}
+
+.forge-goldie-subtitle {
+  color: var(--color-gold);
+  font-family: var(--font-ui);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-size: 0.8125rem;
+  font-weight: 600;
+}
+
+/* Woke Up Protocol: High Gloss Onyx Foreground Surface & Clinical Rim */
+.glass-onyx {
+  background: rgba(10, 10, 10, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
+}
+
+.glass-onyx:hover {
+  border-color: rgba(212, 175, 55, 0.45);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.7), 0 0 25px rgba(212, 175, 55, 0.14);
+}
+
+/* Clinical Rim (10,000K HID cold surgical edge) */
+.clinical-rim {
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+
+/* Midas Practical Light Source Button */
+.midas-glow-button {
+  background: #D4AF37;
+  color: #050505;
+  box-shadow: 0 0 25px rgba(212, 175, 55, 0.35);
+  transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.midas-glow-button:hover {
+  background: #E5C158;
+  box-shadow: 0 0 35px rgba(212, 175, 55, 0.55);
+}
+
+/* L5 Data Pulse Kinetic Badge */
+.data-pulse-badge {
+  color: #00E5FF;
+  border: 1px solid rgba(0, 229, 255, 0.45);
+  background: rgba(0, 229, 255, 0.08);
+  box-shadow: 0 0 14px rgba(0, 229, 255, 0.25);
+}
+
+/* Legacy utility alias kept for backward compatibility */
 .glass-panel {
-  background: rgba(255, 255, 255, 0.025);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 8px;
+  background: rgba(10, 10, 10, 0.8);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 10px;
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .glass-panel:hover {
-  border-color: rgba(212, 175, 55, 0.35);
-  box-shadow: 0 0 20px rgba(212, 175, 55, 0.08);
+  border-color: rgba(212, 175, 55, 0.4);
+  box-shadow: 0 0 22px rgba(212, 175, 55, 0.12);
 }
 
 .machine-meta-block {
@@ -79,8 +172,9 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .attribution-seal-box {
-  border: 1px solid rgba(212, 175, 55, 0.25);
-  background: rgba(212, 175, 55, 0.02);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  background: rgba(212, 175, 55, 0.03);
   padding: 12px 16px;
-  border-radius: 6px;
+  border-radius: 8px;
+  box-shadow: inset 0 1px 0 rgba(212, 175, 55, 0.15);
 }

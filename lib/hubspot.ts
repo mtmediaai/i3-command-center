@@ -154,7 +154,7 @@ async function createFulfillmentTask(
   tier: 'mass' | 'first_round',
   businessName: string
 ): Promise<string | null> {
-  const taskSubject = `Assemble Lux Snapshot: ${businessName} (${tier})`;
+  const taskSubject = `Assemble Inspiration Ignition Hub: ${businessName} (${tier})`;
   const now = new Date();
   const dueDate = new Date(now.getTime() + 48 * 60 * 60 * 1000); // 48h SLA
 
@@ -171,7 +171,7 @@ async function createFulfillmentTask(
           hs_task_status: 'NOT_STARTED',
           hs_task_priority: tier === 'first_round' ? 'HIGH' : 'MEDIUM',
           hs_timestamp: dueDate.toISOString(),
-          hs_task_body: `Fulfillment queue task for ${businessName}. SLA: 24–48h. Ops to assemble shareable Gemini/NotebookLM notebook carrying Perplexity-derived AI Visibility Snapshot.`,
+          hs_task_body: `Fulfillment queue task for ${businessName}. SLA: 24 to 48 hours. Ops to assemble shareable Inspiration Ignition Hub (Gemini Notebook / NotebookLM) carrying timestamped Perplexity AI Visibility Snapshot under the MTM Anti-Static Deliverables Doctrine.`,
         },
         associations: [
           {
