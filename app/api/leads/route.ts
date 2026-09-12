@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { validateLeadSubmission } from '@/lib/validation';
 import { getSupabaseClient } from '@/lib/supabase';
 import { syncLeadToHubspot } from '@/lib/hubspot';
+import { triggerLeadFulfillment } from '@/lib/fulfillment';
 import { siteConfig } from '@/config/site.config';
 
 // In-Memory Rate Limiter (sliding window per IP)
@@ -164,7 +165,26 @@ export async function POST(request: NextRequest) {
       ).catch((err: unknown) => console.warn('[HubSpot ID Write-back Warning]:', err));
     }
 
-    return secureJsonResponse({ ok: true, crm: hubspotResult.status }, 200);
+    // 7. Automated Inspiration Ignition Hub Fulfillment (asynchronous dispatch)
+    if (dbData?.id) {
+      triggerLeadFulfillment(
+        dbData.id,
+        {
+          full_name: sanitized.full_name,
+          business_name: sanitized.business_name,
+          email: sanitized.email,
+          website: sanitized.website,
+          category: sanitized.category,
+          fulfillment_tier: sanitized.fulfillment_tier,
+          referred_by_surface: sanitized.referred_by_surface,
+          utm: sanitized.utm,
+          hubspot_id: hubspotResult.contactId,
+        },
+        hubspotResult
+      );
+    }
+
+    return secureJsonResponse({ ok: true, crm: hubspotResult.status, fulfillment: 'dispatched' }, 200);
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : String(err);
     console.error('[Lead Intake Unhandled Error]:', message);

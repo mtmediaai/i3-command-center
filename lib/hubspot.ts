@@ -199,3 +199,50 @@ async function createFulfillmentTask(
     return null;
   }
 }
+
+export async function updateLeadFulfillment(
+  contactId: string,
+  fulfillmentUrl: string,
+  taskId?: string
+): Promise<boolean> {
+  const token = process.env.HUBSPOT_PRIVATE_APP_TOKEN;
+  if (!token) return false;
+
+  const headers = {
+    Authorization: `Bearer ${token}`,
+    'Content-Type': 'application/json',
+  };
+
+  try {
+    // 1. Update Contact properties with fulfillment URL
+    await fetch(`https://api.hubapi.com/crm/v3/objects/contacts/${contactId}`, {
+      method: 'PATCH',
+      headers,
+      body: JSON.stringify({
+        properties: {
+          fulfillment_url: fulfillmentUrl,
+          hs_lead_status: 'IN_PROGRESS',
+        },
+      }),
+    });
+
+    // 2. If taskId is provided, mark task COMPLETED with deliverable link
+    if (taskId) {
+      await fetch(`https://api.hubapi.com/crm/v3/objects/tasks/${taskId}`, {
+        method: 'PATCH',
+        headers,
+        body: JSON.stringify({
+          properties: {
+            hs_task_status: 'COMPLETED',
+            hs_task_body: `Inspiration Ignition Hub delivered. Shareable workspace: ${fulfillmentUrl}`,
+          },
+        }),
+      });
+    }
+
+    return true;
+  } catch (err: unknown) {
+    console.warn('[HubSpot Fulfillment Update Warning]:', err);
+    return false;
+  }
+}
