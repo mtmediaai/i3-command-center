@@ -30,6 +30,36 @@ h1, h2, h3, h4, h5, h6 {
   letter-spacing: -0.01em;
 }
 
+/* The Lenz Effect — Atmospheric Depth & Lighting */
+.lenz-ambient-glow {
+  position: absolute;
+  top: -80px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 700px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(212, 175, 55, 0.08) 0%, rgba(5, 5, 5, 0) 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.lenz-cta-glow {
+  background: radial-gradient(circle at 50% 0%, rgba(212, 175, 55, 0.1) 0%, rgba(255, 255, 255, 0.02) 60%, transparent 100%);
+}
+
+.glass-panel {
+  background: rgba(255, 255, 255, 0.025);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.glass-panel:hover {
+  border-color: rgba(212, 175, 55, 0.35);
+  box-shadow: 0 0 20px rgba(212, 175, 55, 0.08);
+}
+
 .machine-meta-block {
   font-family: var(--font-machine-meta);
   position: absolute;
@@ -46,4 +76,11 @@ h1, h2, h3, h4, h5, h6 {
 .footer-disclaimer {
   font-family: var(--font-georgia-italic);
   font-style: italic;
+}
+
+.attribution-seal-box {
+  border: 1px solid rgba(212, 175, 55, 0.25);
+  background: rgba(212, 175, 55, 0.02);
+  padding: 12px 16px;
+  border-radius: 6px;
 }

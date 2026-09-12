@@ -6,17 +6,17 @@ import { ModalTrigger } from '@/components/modal-trigger';
 
 export default function HomePage() {
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen relative overflow-hidden bg-[var(--color-void)] text-[var(--color-rim)]">
       {/* Semantic Header */}
-      <header className="border-b border-white/10 bg-[var(--color-void)]/95 sticky top-0 z-40 backdrop-blur-xs">
+      <header className="border-b border-white/10 bg-[var(--color-void)]/95 sticky top-0 z-40 backdrop-blur-md">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <Monogram size={32} />
-            <span className="text-sm font-semibold tracking-wide text-[var(--color-rim)] uppercase">
+            <Monogram size={34} />
+            <span className="text-sm font-semibold tracking-wider text-[var(--color-rim)] uppercase">
               {siteCopy.header.brandName}
             </span>
           </div>
-          <nav aria-label="Primary Navigation" className="flex items-center gap-4 sm:gap-6 text-xs text-[var(--color-chrome)]">
+          <nav aria-label="Primary Navigation" className="flex items-center gap-5 sm:gap-7 text-xs text-[var(--color-chrome)]">
             <a
               href={siteCopy.header.nav.palace.url}
               className="hover:text-[var(--color-gold)] transition-colors"
@@ -41,26 +41,28 @@ export default function HomePage() {
         </div>
       </header>
 
-      <main className="flex-1 max-w-6xl mx-auto w-full px-4 sm:px-6 py-12 space-y-24">
+      <main className="flex-1 max-w-6xl mx-auto w-full px-4 sm:px-6 py-12 space-y-28 relative z-10">
         {/* Section 1: Hero */}
-        <section id="hero" className="space-y-6 pt-4 pb-8 border-b border-white/10">
-          <div className="inline-block text-xs font-semibold tracking-widest uppercase text-[var(--color-gold)]">
+        <section id="hero" className="space-y-6 pt-6 pb-12 border-b border-white/10 relative">
+          <div className="lenz-ambient-glow" aria-hidden="true" />
+          
+          <div className="inline-block text-xs font-bold tracking-widest uppercase text-[var(--color-gold)]">
             {siteCopy.hero.eyebrow}
           </div>
-          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-[var(--color-rim)] tracking-tight leading-tight">
+          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-[var(--color-rim)] tracking-tight leading-tight max-w-4xl font-serif">
             {siteCopy.hero.h1}
           </h1>
           <p className="text-base sm:text-lg text-[var(--color-chrome)] max-w-3xl leading-relaxed">
             {siteCopy.hero.subhead}
           </p>
 
-          <div className="flex flex-wrap items-center gap-4 pt-2">
+          <div className="flex flex-wrap items-center gap-4 pt-3">
             <ModalTrigger label={siteCopy.hero.primaryCta} />
             <a
               href={siteCopy.hero.ghostCta.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="px-6 py-3 rounded border border-white/20 text-xs font-medium text-[var(--color-rim)] hover:border-[var(--color-gold)] hover:text-[var(--color-gold)] transition-colors"
+              className="px-6 py-3 rounded border border-white/20 text-xs font-semibold text-[var(--color-rim)] hover:border-[var(--color-gold)] hover:text-[var(--color-gold)] transition-colors"
             >
               {siteCopy.hero.ghostCta.label}
             </a>
@@ -73,35 +75,37 @@ export default function HomePage() {
         </section>
 
         {/* Section 2: Old Way */}
-        <section id="old-way" className="space-y-8 border-b border-white/10 pb-16">
-          <div className="space-y-2">
-            <div className="text-xs font-semibold tracking-widest uppercase text-[var(--color-gold)]">
+        <section id="old-way" className="space-y-10 border-b border-white/10 pb-20">
+          <div className="space-y-3">
+            <div className="text-xs font-bold tracking-widest uppercase text-[var(--color-gold)]">
               {siteCopy.oldWay.eyebrow}
             </div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-[var(--color-rim)]">
+            <h2 className="text-2xl sm:text-4xl font-bold text-[var(--color-rim)] font-serif">
               {siteCopy.oldWay.heading}
             </h2>
-            <p className="text-sm sm:text-base text-[var(--color-chrome)] max-w-3xl">
+            <p className="text-sm sm:text-base text-[var(--color-chrome)] max-w-3xl leading-relaxed">
               {siteCopy.oldWay.description}
             </p>
           </div>
 
-          {/* Staged empty stat-key slots (Phase B fills from Appendix C) */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          {/* Phase B Stat Pack */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
             {Object.entries(siteCopy.oldWay.stats).map(([statKey, stat]) => (
               <div
                 key={statKey}
-                className="p-5 rounded border border-white/10 bg-white/[0.02] min-h-[110px] flex flex-col justify-between"
+                className="glass-panel p-6 min-h-[160px] flex flex-col justify-between"
               >
-                <div className="text-2xl font-bold text-[var(--color-gold)]">
-                  {stat.value || '—'}
+                <div>
+                  <div className="text-2xl sm:text-3xl font-extrabold text-[var(--color-gold)] tracking-tight font-serif">
+                    {stat.value || '—'}
+                  </div>
+                  <p className="text-xs text-[var(--color-rim)]/90 mt-3 leading-relaxed">
+                    {stat.label}
+                  </p>
                 </div>
-                <div className="text-xs text-[var(--color-chrome)] mt-2">
-                  {stat.label || 'Pending Phase B Verification'}
-                </div>
-                {(stat.source || stat.date) && (
-                  <div className="text-[10px] text-white/40 mt-1">
-                    {stat.source} {stat.date}
+                {stat.source && (
+                  <div className="text-[10px] text-white/40 mt-4 pt-2 border-t border-white/5 font-mono">
+                    {stat.source}
                   </div>
                 )}
               </div>
@@ -110,15 +114,15 @@ export default function HomePage() {
         </section>
 
         {/* Section 3: New Way */}
-        <section id="new-way" className="space-y-8 border-b border-white/10 pb-16">
-          <div className="space-y-2">
-            <div className="text-xs font-semibold tracking-widest uppercase text-[var(--color-gold)]">
+        <section id="new-way" className="space-y-10 border-b border-white/10 pb-20">
+          <div className="space-y-3">
+            <div className="text-xs font-bold tracking-widest uppercase text-[var(--color-gold)]">
               {siteCopy.newWay.eyebrow}
             </div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-[var(--color-rim)]">
+            <h2 className="text-2xl sm:text-4xl font-bold text-[var(--color-rim)] font-serif">
               {siteCopy.newWay.heading}
             </h2>
-            <p className="text-sm sm:text-base text-[var(--color-chrome)] max-w-3xl">
+            <p className="text-sm sm:text-base text-[var(--color-chrome)] max-w-3xl leading-relaxed">
               {siteCopy.newWay.description}
             </p>
           </div>
@@ -127,12 +131,12 @@ export default function HomePage() {
             {siteCopy.newWay.pillars.map((pillar, idx) => (
               <div
                 key={idx}
-                className="p-6 rounded border border-white/10 bg-white/[0.02] space-y-3"
+                className="glass-panel p-7 space-y-4"
               >
-                <div className="text-xs font-bold text-[var(--color-gold)] uppercase tracking-wider">
+                <div className="text-xs font-mono font-bold text-[var(--color-gold)] tracking-wider">
                   0{idx + 1}
                 </div>
-                <h3 className="text-lg font-bold text-[var(--color-rim)]">
+                <h3 className="text-lg font-bold text-[var(--color-rim)] font-serif">
                   {pillar.title}
                 </h3>
                 <p className="text-xs leading-relaxed text-[var(--color-chrome)]">
@@ -144,15 +148,15 @@ export default function HomePage() {
         </section>
 
         {/* Section 4: Evidence */}
-        <section id="evidence" className="space-y-8 border-b border-white/10 pb-16">
-          <div className="space-y-2">
-            <div className="text-xs font-semibold tracking-widest uppercase text-[var(--color-gold)]">
+        <section id="evidence" className="space-y-10 border-b border-white/10 pb-20">
+          <div className="space-y-3">
+            <div className="text-xs font-bold tracking-widest uppercase text-[var(--color-gold)]">
               {siteCopy.evidence.eyebrow}
             </div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-[var(--color-rim)]">
+            <h2 className="text-2xl sm:text-4xl font-bold text-[var(--color-rim)] font-serif">
               {siteCopy.evidence.heading}
             </h2>
-            <p className="text-sm sm:text-base text-[var(--color-chrome)] max-w-3xl">
+            <p className="text-sm sm:text-base text-[var(--color-chrome)] max-w-3xl leading-relaxed">
               {siteCopy.evidence.description}
             </p>
           </div>
@@ -161,10 +165,10 @@ export default function HomePage() {
             {siteCopy.evidence.figures.map((fig) => (
               <figure
                 key={fig.id}
-                className="p-6 rounded border border-white/10 bg-white/[0.02] space-y-4"
+                className="glass-panel p-6 space-y-4"
               >
-                <div className="h-44 rounded border border-dashed border-white/20 bg-black/40 flex items-center justify-center p-4 text-center">
-                  <span className="text-xs text-[var(--color-chrome)] font-mono">
+                <div className="h-44 rounded border border-dashed border-white/20 bg-black/60 flex items-center justify-center p-6 text-center">
+                  <span className="text-xs text-[var(--color-chrome)] font-mono leading-relaxed">
                     {fig.description}
                   </span>
                 </div>
@@ -177,22 +181,22 @@ export default function HomePage() {
         </section>
 
         {/* Section 5: Endcap Cross-Merchandising */}
-        <section id="endcap" className="p-8 rounded border border-white/15 bg-white/[0.03] space-y-4">
-          <div className="text-xs font-semibold tracking-widest uppercase text-[var(--color-gold)]">
+        <section id="endcap" className="glass-panel p-8 sm:p-10 space-y-5 border-l-4 border-l-[var(--color-gold)]">
+          <div className="text-xs font-bold tracking-widest uppercase text-[var(--color-gold)]">
             {siteCopy.endcap.eyebrow}
           </div>
-          <h2 className="text-xl sm:text-2xl font-bold text-[var(--color-rim)]">
+          <h2 className="text-xl sm:text-3xl font-bold text-[var(--color-rim)] font-serif">
             {siteCopy.endcap.title}
           </h2>
-          <p className="text-sm text-[var(--color-chrome)] max-w-2xl">
+          <p className="text-sm text-[var(--color-chrome)] max-w-2xl leading-relaxed">
             {siteCopy.endcap.description}
           </p>
-          <div>
+          <div className="pt-2">
             <a
               href={siteCopy.endcap.ctaUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded border border-white/30 text-xs font-semibold text-white hover:border-[var(--color-gold)] hover:text-[var(--color-gold)] transition-colors"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded border border-white/30 text-xs font-semibold text-white hover:border-[var(--color-gold)] hover:text-[var(--color-gold)] transition-colors"
             >
               <span>{siteCopy.endcap.ctaLabel}</span>
               <span>→</span>
@@ -201,14 +205,14 @@ export default function HomePage() {
         </section>
 
         {/* Section 6: CTA */}
-        <section id="cta" className="p-8 sm:p-12 rounded border border-[var(--color-gold)]/40 bg-gradient-to-b from-white/[0.03] to-transparent space-y-6 text-center">
-          <div className="text-xs font-semibold tracking-widest uppercase text-[var(--color-gold)]">
+        <section id="cta" className="p-10 sm:p-16 rounded-xl border border-[var(--color-gold)]/40 lenz-cta-glow space-y-7 text-center shadow-[0_0_40px_rgba(212,175,55,0.08)]">
+          <div className="text-xs font-bold tracking-widest uppercase text-[var(--color-gold)]">
             {siteCopy.cta.eyebrow}
           </div>
-          <h2 className="text-2xl sm:text-4xl font-bold text-[var(--color-rim)] max-w-xl mx-auto">
+          <h2 className="text-2xl sm:text-4xl font-bold text-[var(--color-rim)] max-w-2xl mx-auto font-serif">
             {siteCopy.cta.heading}
           </h2>
-          <p className="text-sm sm:text-base text-[var(--color-chrome)] max-w-xl mx-auto">
+          <p className="text-sm sm:text-base text-[var(--color-chrome)] max-w-xl mx-auto leading-relaxed">
             {siteCopy.cta.description}
           </p>
           <div className="pt-2">
@@ -223,30 +227,39 @@ export default function HomePage() {
         </section>
       </main>
 
-      {/* Semantic Footer */}
-      <footer className="border-t border-white/10 bg-[var(--color-void)] py-12 mt-16 text-xs text-[var(--color-chrome)]">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 space-y-6">
-          <div className="footer-disclaimer space-y-2 border-b border-white/10 pb-6">
+      {/* Semantic Footer with Recursive Attribution Seal */}
+      <footer className="border-t border-white/10 bg-[var(--color-void)] py-14 mt-20 text-xs text-[var(--color-chrome)]">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 space-y-8">
+          <div className="footer-disclaimer space-y-2 border-b border-white/10 pb-6 text-white/70">
             <p>{siteCopy.footer.disclaimer}</p>
             <p>{siteCopy.footer.aiDisclosure}</p>
           </div>
 
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div className="attribution-seal-box space-y-2 text-center sm:text-left">
+            <div className="font-semibold text-[var(--color-gold)] text-xs tracking-wide">
+              {siteCopy.footer.attributionSeal}
+            </div>
+            <div className="text-[11px] text-[var(--color-chrome)] font-mono">
+              Authored by Kareem Daniel, Founder of MT Media AI | Enhanced by Circuit, MT Media AI | Published by MT Media AI · Modern Touch Media
+            </div>
+          </div>
+
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pt-2">
             <div className="space-y-1">
               <div className="font-semibold text-[var(--color-rim)]">
-                {siteCopy.footer.attributionSeal}
+                {siteCopy.footer.location}
               </div>
-              <div>{siteCopy.footer.location}</div>
+              <div className="text-[11px] text-white/50">{siteCopy.footer.entityHandle}</div>
             </div>
 
-            <div className="flex flex-wrap items-center gap-4 sm:gap-6">
+            <div className="flex flex-wrap items-center gap-5 sm:gap-7">
               <a
                 href={siteCopy.footer.links.github.url}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hover:text-[var(--color-gold)] transition-colors"
               >
-                {siteCopy.footer.links.github.label} ({siteCopy.footer.entityHandle})
+                {siteCopy.footer.links.github.label}
               </a>
               <a
                 href={siteCopy.footer.links.linkedin.url}

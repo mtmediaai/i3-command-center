@@ -144,8 +144,8 @@ async function runSuite() {
     );
   });
 
-  // 7. API Probe: No envs -> typed 503 { error: "INTAKE_OFFLINE" }
-  await runAsyncProbe('API Probe: No envs returns typed 503 { error: "INTAKE_OFFLINE" }', async () => {
+  // 7. API Probe: No envs -> typed 503 with CVE-2026-72587 Cache-Control headers
+  await runAsyncProbe('API Probe: No envs returns typed 503 { error: "INTAKE_OFFLINE" } with no-store headers', async () => {
     const originalUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
     const originalKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
     delete process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -153,6 +153,7 @@ async function runSuite() {
 
     const req = new NextRequest('http://localhost:3000/api/leads', {
       method: 'POST',
+      headers: { 'x-forwarded-for': '192.168.1.50' },
       body: JSON.stringify({
         full_name: 'Test Advisor',
         business_name: 'Test Firm',
@@ -164,6 +165,8 @@ async function runSuite() {
 
     const res = await handleLeadPost(req);
     assert.strictEqual(res.status, 503);
+    const cacheControl = res.headers.get('cache-control') || '';
+    assert.ok(cacheControl.includes('no-store'), 'Must include no-store for CVE mitigation');
     const body = await res.json();
     assert.strictEqual(body.error, 'INTAKE_OFFLINE');
 
@@ -171,7 +174,47 @@ async function runSuite() {
     if (originalKey) process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY = originalKey;
   });
 
-  // 8. Config & Staged Copy Audit: Audit hardcoded strings
+  // 8. API Probe: Rate limiter triggers 429 on abuse
+  await runAsyncProbe('API Probe: Rate limiter enforces maximum requests per window', async () => {
+    const testIp = '10.0.0.99';
+    let lastRes;
+
+    // Send 5 rapid requests from testIp (consuming allowance)
+    for (let i = 0; i < 5; i++) {
+      const req = new NextRequest('http://localhost:3000/api/leads', {
+        method: 'POST',
+        headers: { 'x-forwarded-for': testIp },
+        body: JSON.stringify({
+          full_name: 'Test User',
+          business_name: 'Test Co',
+          email: 'test@co.com',
+          consent: true,
+          rendered_at: Date.now() - 5000,
+        }),
+      });
+      lastRes = await handleLeadPost(req);
+    }
+
+    // 6th request from testIp must trigger rate limit
+    const burstReq = new NextRequest('http://localhost:3000/api/leads', {
+      method: 'POST',
+      headers: { 'x-forwarded-for': testIp },
+      body: JSON.stringify({
+        full_name: 'Test User',
+        business_name: 'Test Co',
+        email: 'test@co.com',
+        consent: true,
+        rendered_at: Date.now() - 5000,
+      }),
+    });
+    const burstRes = await handleLeadPost(burstReq);
+    assert.strictEqual(burstRes.status, 429, 'Excess request must return 429');
+    const burstBody = await burstRes.json();
+    assert.strictEqual(burstBody.error, 'RATE_LIMITED');
+    assert.ok(burstRes.headers.get('retry-after'), 'Must include Retry-After header');
+  });
+
+  // 9. Config Audit: Variable Card values consolidated in config/site.config.ts
   await runAsyncProbe('Config Audit: Variable Card values consolidated in config/site.config.ts', () => {
     assert.strictEqual(siteConfig.subdomain, 'i3');
     assert.strictEqual(siteConfig.pageUrl, 'https://i3.mtmediaai.com');
@@ -185,17 +228,19 @@ async function runSuite() {
     assert.strictEqual(siteConfig.tableName, 'leads');
   });
 
-  await runAsyncProbe('Staged Copy Audit: Modal success copy matches specification exactly', () => {
+  // 10. Phase B Copy Deck Audit: Validate values populated from Phase B deck
+  await runAsyncProbe('Phase B Copy Audit: Modal success copy and stats match specification exactly', () => {
     assert.strictEqual(
       siteCopy.modal.successMessage,
       'Request received. Your Lux Snapshot is assembled and delivered to your inbox.'
     );
     assert.strictEqual(siteCopy.hero.h1, 'Rescuing Legacy From AI Erasure.');
-    // Confirm stat keys are present and empty
-    assert.strictEqual(siteCopy.oldWay.stats.stat1.value, '');
-    assert.strictEqual(siteCopy.oldWay.stats.stat2.value, '');
-    assert.strictEqual(siteCopy.oldWay.stats.stat3.value, '');
-    assert.strictEqual(siteCopy.oldWay.stats.stat4.value, '');
+    assert.strictEqual(siteCopy.oldWay.heading, 'The Front Door Moved.');
+    // Confirm stat keys are populated with the Phase B values
+    assert.strictEqual(siteCopy.oldWay.stats.stat1.value, '58.5% → <1 in 3');
+    assert.strictEqual(siteCopy.oldWay.stats.stat2.value, '−91%');
+    assert.strictEqual(siteCopy.oldWay.stats.stat3.value, '13.5M → 8.6M');
+    assert.strictEqual(siteCopy.oldWay.stats.stat4.value, '−58%');
   });
 
   console.log(`\nProbe Results: ${passed} passed, ${failed} failed.`);
