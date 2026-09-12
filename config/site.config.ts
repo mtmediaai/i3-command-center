@@ -38,11 +38,11 @@ export const siteConfig: SiteConfig = {
   subdomain: 'i3',
   pageUrl: 'https://i3.mtmediaai.com',
   repo: 'i3-command-center',
-  pageTitle: 'I³ Command Center',
+  pageTitle: 'AI Visibility Audit: See How AI Search Describes Your Business | I³',
   owner: 'Reign Ω (sales door) · Moolah oversight',
   serviceName: 'Invisible Infrastructure Intelligence (I³ System)',
   serviceType: 'AI Visibility & Generative Engine Optimization',
-  offerName: 'Lux Snapshot: AI Visibility Diagnostic',
+  offerName: 'I³ Visibility Snapshot: AI Visibility Diagnostic',
   offerPrice: '0.00',
   entryValue: 'i3',
   utmDefaults: {
@@ -52,7 +52,8 @@ export const siteConfig: SiteConfig = {
   },
   categories: CATEGORIES,
   endcapTarget: 'https://armory.mtmediaai.com',
-  stagedH1: 'Rescuing Legacy From AI Erasure.',
+  stagedH1:
+    'Is AI describing your business correctly when buyers ask who to trust?',
   publishDate: '2026-09-09',
   fulfillmentSLA: '24–48h',
   tableName: 'leads',

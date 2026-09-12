@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Script from 'next/script';
 import { Playfair_Display_SC, Merriweather } from 'next/font/google';
 import './globals.css';
+import { siteCopy } from '@/content/site-copy';
 
 const playfair = Playfair_Display_SC({
   weight: ['900'],
@@ -19,18 +20,23 @@ const merriweather = Merriweather({
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://i3.mtmediaai.com'),
-  title: 'I³ Command Center | Rescuing Legacy From AI Erasure',
-  description: 'Invisible Infrastructure Intelligence (I³ System): AI Visibility & Generative Engine Optimization by MT Media AI.',
+  title: siteCopy.meta.pageTitle,
+  description: siteCopy.meta.metaDescription,
   alternates: {
     canonical: 'https://i3.mtmediaai.com',
   },
   openGraph: {
-    title: 'I³ Command Center | Rescuing Legacy From AI Erasure',
-    description: 'Invisible Infrastructure Intelligence (I³ System): AI Visibility & Generative Engine Optimization by MT Media AI.',
+    title: siteCopy.meta.pageTitle,
+    description: siteCopy.meta.metaDescription,
     url: 'https://i3.mtmediaai.com',
     siteName: 'I³ Command Center | MT Media AI',
     locale: 'en_US',
     type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: siteCopy.meta.pageTitle,
+    description: siteCopy.meta.metaDescription,
   },
 };
 
@@ -57,7 +63,8 @@ const jsonLdGraph = {
       about: {
         '@id': 'https://i3.mtmediaai.com/#service',
       },
-      name: 'I³ Command Center: Rescuing Legacy From AI Erasure',
+      name: siteCopy.meta.pageTitle,
+      description: siteCopy.meta.metaDescription,
       datePublished: '2026-09-09',
       inLanguage: 'en-US',
     },
@@ -88,10 +95,25 @@ const jsonLdGraph = {
       itemOffered: {
         '@id': 'https://i3.mtmediaai.com/#service',
       },
-      name: 'Lux Snapshot: AI Visibility Diagnostic',
+      name: 'I³ Visibility Snapshot: AI Visibility Diagnostic',
       price: '0.00',
       priceCurrency: 'USD',
       availability: 'https://schema.org/InStock',
+    },
+    {
+      '@type': 'FAQPage',
+      '@id': 'https://i3.mtmediaai.com/#faq',
+      isPartOf: {
+        '@id': 'https://i3.mtmediaai.com/#webpage',
+      },
+      mainEntity: siteCopy.faqSection.items.map((item) => ({
+        '@type': 'Question',
+        name: item.question,
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: item.answer,
+        },
+      })),
     },
   ],
 };
