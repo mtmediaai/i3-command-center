@@ -8,7 +8,7 @@ import { siteConfig } from '../config/site.config';
 import { siteCopy } from '../content/site-copy';
 import { evidenceLedger } from '../content/evidence-ledger';
 
-console.log('--- RUNNING MTM I³ SCIENCE SQUAD QUALITY PROBES (PHASE B) ---');
+console.log('--- RUNNING MTM I³ SCIENCE SQUAD QUALITY PROBES (PHASE B v2) ---');
 
 let passed = 0;
 let failed = 0;
@@ -117,7 +117,7 @@ async function runSuite() {
   });
 
   // 6. Schema.org Mesh & FAQPage Probe: Layout JSON-LD validates apex @id and FAQPage
-  await runAsyncProbe('Mesh Probe: Schema.org apex IDs and FAQPage schema match visible content', () => {
+  await runAsyncProbe('Mesh Probe: Schema.org apex IDs, DefinedTerm, and FAQPage schema match visible content', () => {
     const layoutContent = fs.readFileSync(path.join(process.cwd(), 'app/layout.tsx'), 'utf8');
     assert.ok(
       layoutContent.includes('https://mtmediaai.com/#organization'),
@@ -138,6 +138,10 @@ async function runSuite() {
     assert.ok(
       layoutContent.includes('https://i3.mtmediaai.com/#offer'),
       'Offer @id must be subdomain-scoped'
+    );
+    assert.ok(
+      layoutContent.includes('https://i3.mtmediaai.com/#term-ai-brand-ignorance'),
+      'DefinedTerm AI Brand Ignorance must exist'
     );
     assert.ok(
       layoutContent.includes('https://i3.mtmediaai.com/#faq'),
@@ -276,25 +280,52 @@ async function runSuite() {
       assert.ok(item.publicationDate, 'Item must have publicationDate');
       assert.ok(item.methodologyNote, 'Item must have methodologyNote');
     }
-    // Verify removal of unverified 58% AIO card
     const hasUnverifiedAio = evidenceLedger.some((i) => i.approvedClaim.includes('loses an average of 58%'));
     assert.strictEqual(hasUnverifiedAio, false, 'Unverified 58% claim must be excluded');
   });
 
-  // 14. Five Keyword Placements Probe
-  await runAsyncProbe('Five Keyword Placements Probe: Intent cluster verified in all 5 designated layers', () => {
+  // 14. Five Keyword Placements & Full-Name Introduction Probe
+  await runAsyncProbe('Five Keyword Placements Probe: Intent cluster & full name verified in all 5 designated layers', () => {
     // 1. Title tag
+    assert.ok(
+      siteCopy.meta.pageTitle.includes('Invisible Infrastructure Intelligence (I³ System)'),
+      'Layer 1: Title tag must include full system name'
+    );
     assert.ok(siteCopy.meta.pageTitle.includes('AI Visibility Audit'), 'Layer 1: Title tag must include AI Visibility Audit');
+
     // 2. H1 + first 100 words
-    assert.ok(siteCopy.hero.h1.includes('AI') && siteCopy.hero.h1.includes('who to trust'), 'Layer 2: H1 question verified');
-    const heroFirst100 = `${siteCopy.hero.h1} ${siteCopy.hero.subhead}`;
-    assert.ok(heroFirst100.includes('AI visibility'), 'Layer 2: First 100 words must include AI visibility');
+    assert.strictEqual(
+      siteCopy.hero.h1,
+      'Is AI Erasing Your Business When High-Net-Worth Buyers Ask Who To Trust?',
+      'Layer 2: Pain-mirror H1 verified'
+    );
+    assert.ok(
+      siteCopy.hero.subhead.includes('Invisible Infrastructure Intelligence'),
+      'Layer 2: Hero subhead must introduce the full system name upfront'
+    );
+
+    // 2b. AEO Answer Block (40-60 words)
+    assert.ok(siteCopy.hero.aeoBlock, 'AEO Answer block must exist');
+    const wordCount = siteCopy.hero.aeoBlock.body.split(/\s+/).filter(Boolean).length;
+    assert.ok(
+      wordCount >= 40 && wordCount <= 60,
+      `AEO block body must be 40-60 words (actual: ${wordCount})`
+    );
+
     // 3. Explanatory H2
-    assert.strictEqual(siteCopy.structuralAnswer.h2, 'What an AI visibility audit examines', 'Layer 3: Explanatory H2 verified');
+    assert.strictEqual(
+      siteCopy.structuralAnswer.h2,
+      'What an AI Visibility Audit Examines When Machines Describe Your Business',
+      'Layer 3: Explanatory H2 verified'
+    );
+
     // 4. Visible FAQ
+    assert.strictEqual(siteCopy.faqSection.items.length, 6, 'Layer 4: 6 visible FAQs verified');
     const faqTitles = siteCopy.faqSection.items.map((i) => i.question).join(' ');
-    assert.ok(faqTitles.includes('What is an AI visibility audit?'), 'Layer 4: FAQ 1 verified');
-    assert.ok(faqTitles.includes('How is AI search visibility different from SEO?'), 'Layer 4: FAQ 2 verified');
+    assert.ok(faqTitles.includes('What is an AI visibility audit?'), 'FAQ 1 verified');
+    assert.ok(faqTitles.includes('Why isn\'t my referral business showing up in ChatGPT, Gemini, or Perplexity?'), 'FAQ 3 verified');
+    assert.ok(faqTitles.includes('What is AI Brand Ignorance and how does the I³ System resolve it?'), 'FAQ 4 verified');
+
     // 5. Machine layer
     assert.ok(siteCopy.meta.metaDescription.includes('AI search'), 'Layer 5: Meta description verified');
     const llmsContent = fs.readFileSync(path.join(process.cwd(), 'public/llms.txt'), 'utf8');

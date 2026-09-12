@@ -86,8 +86,14 @@ const jsonLdGraph = {
       provider: {
         '@id': 'https://mtmediaai.com/#organization',
       },
-      areaServed: 'United States',
-      serviceType: 'AI Visibility & Generative Engine Optimization',
+      areaServed: ['The Woodlands', 'Houston Metro', 'United States'],
+      serviceType: [
+        'AI Visibility Audit',
+        'Generative Engine Optimization',
+        'AI Search Visibility',
+        'Local Business AI Erasure Remediation',
+      ],
+      description: siteCopy.hero.aeoBlock.body,
     },
     {
       '@type': 'Offer',
@@ -99,6 +105,22 @@ const jsonLdGraph = {
       price: '0.00',
       priceCurrency: 'USD',
       availability: 'https://schema.org/InStock',
+    },
+    {
+      '@type': 'DefinedTerm',
+      '@id': 'https://i3.mtmediaai.com/#term-ai-brand-ignorance',
+      name: 'AI Brand Ignorance',
+      description:
+        'The condition where AI Invisibility and AI Erasure combine, leaving conversational engines and answer models unaware of an established commercial practice.',
+      inDefinedTermSet: 'https://i3.mtmediaai.com/#service',
+    },
+    {
+      '@type': 'DefinedTerm',
+      '@id': 'https://i3.mtmediaai.com/#term-invisible-elite',
+      name: 'The Invisible Elite',
+      description:
+        'Established high-net-worth service providers and private estate advisors whose prestige and referral authority remain unreadable to generative AI search engines.',
+      inDefinedTermSet: 'https://i3.mtmediaai.com/#service',
     },
     {
       '@type': 'FAQPage',
