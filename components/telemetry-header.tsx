@@ -56,8 +56,8 @@ export function TelemetryHeader() {
   const formattedProgress = String(Math.round(scrollProgress)).padStart(3, '0');
 
   return (
-    <header className="border-b border-white/10 bg-[var(--color-obsidian)]/95 sticky top-0 z-50 backdrop-blur-md clinical-rim">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between gap-4">
+    <header className="bg-black/50 sticky top-0 z-50 backdrop-blur-lg">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3.5 flex items-center justify-between gap-4">
         {/* Left: Brand Monogram & Entity Badge */}
         <div className="flex items-center gap-3">
           <Monogram size={32} />
@@ -73,7 +73,7 @@ export function TelemetryHeader() {
         </div>
 
         {/* Center: Dynamic Chapter & Telemetry Readout */}
-        <div className="hidden md:flex items-center gap-3 px-4 py-1.5 rounded-full border border-white/10 bg-white/[0.02]">
+        <div className="hidden md:flex items-center gap-3 px-4 py-1.5 rounded-full bg-white/[0.04] backdrop-blur-md">
           <span className="text-[10px] font-mono font-bold text-[var(--color-gold)]">
             CH {activeChapter.code} / 07
           </span>

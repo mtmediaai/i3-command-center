@@ -100,58 +100,58 @@ export function HoustonSpatialMesh() {
   const [selectedLandmark, setSelectedLandmark] = useState<LandmarkNode>(HOUSTON_LANDMARKS[0]);
 
   return (
-    <div className="space-y-6">
-      {/* HUD Header Bar */}
-      <div className="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-white/10 text-xs font-mono">
+    <div className="space-y-8">
+      {/* Floating HUD Telemetry Bar */}
+      <div className="flex flex-wrap items-center justify-between gap-4 text-xs font-mono">
         <div className="flex items-center gap-2">
           <span className="w-2 h-2 rounded-full bg-[var(--color-gold)] animate-pulse" aria-hidden="true" />
           <span className="text-[var(--color-gold)] font-bold tracking-widest uppercase">
             GEV SPATIAL TRAJECTORY : HOUSTON METRO GRID
           </span>
         </div>
-        <div className="text-white/50 tracking-wider">
+        <div className="text-white/40 tracking-wider">
           COORDINATES: {selectedLandmark.coordinates} : ELEV: {selectedLandmark.elevation}
         </div>
       </div>
 
-      {/* Main Interactive Chamber */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
-        {/* Left: Interactive Houston Landmark Selector */}
-        <div className="lg:col-span-5 space-y-2.5 flex flex-col justify-between">
-          <div className="space-y-2.5">
-            <span className="text-[11px] font-mono tracking-widest uppercase text-white/50 block mb-1">
-              SELECT GEOGRAPHIC ENTITY NODE
-            </span>
+      {/* Main Zero-Gravity Layout */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        {/* Left: Floating Geographic Selector */}
+        <div className="lg:col-span-5 space-y-2">
+          <span className="text-[10px] font-mono tracking-widest uppercase text-white/40 block mb-3">
+            SELECT GEOGRAPHIC ENTITY NODE
+          </span>
+          <div className="space-y-2">
             {HOUSTON_LANDMARKS.map((item) => {
               const isSelected = selectedLandmark.id === item.id;
               return (
                 <button
                   key={item.id}
                   onClick={() => setSelectedLandmark(item)}
-                  className={`w-full text-left p-3.5 rounded-lg border transition-all flex items-center justify-between gap-3 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--color-gold)] ${
+                  className={`w-full text-left p-4 rounded-xl transition-all flex items-center justify-between gap-3 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--color-gold)] ${
                     isSelected
-                      ? 'bg-white/[0.08] border-[var(--color-gold)] text-white shadow-lg'
-                      : 'bg-white/[0.02] border-white/10 text-white/70 hover:bg-white/[0.04] hover:border-white/20'
+                      ? 'bg-white/[0.06] text-white shadow-2xl'
+                      : 'bg-transparent text-white/50 hover:bg-white/[0.02] hover:text-white/80'
                   }`}
                 >
                   <div className="flex items-center gap-3">
-                    <span className="text-[11px] font-mono text-[var(--color-gold)] font-bold">
+                    <span className="text-xs font-mono text-[var(--color-gold)] font-bold">
                       {item.code}
                     </span>
                     <div>
-                      <div className="text-xs sm:text-sm font-serif font-bold text-white leading-snug">
+                      <div className="text-sm font-serif font-bold text-white leading-snug">
                         {item.name}
                       </div>
-                      <div className="text-[10px] font-mono text-white/50 uppercase">
+                      <div className="text-[10px] font-mono text-white/40 uppercase">
                         {item.district}
                       </div>
                     </div>
                   </div>
                   <div className="text-right">
-                    <span className="text-[10px] font-mono text-[var(--color-lightning-blue)] font-bold block">
+                    <span className="text-[11px] font-mono text-[var(--color-lightning-blue)] font-bold block">
                       {item.corroborationScore}
                     </span>
-                    <span className="text-[9px] font-mono text-white/40">
+                    <span className="text-[9px] font-mono text-white/30">
                       ZIP {item.zipCode}
                     </span>
                   </div>
@@ -160,7 +160,7 @@ export function HoustonSpatialMesh() {
             })}
           </div>
 
-          <div className="p-3.5 rounded-lg border border-white/10 bg-white/[0.02] text-[11px] font-mono text-white/60 flex items-center justify-between">
+          <div className="pt-4 flex items-center justify-between text-[11px] font-mono text-white/40">
             <span className="flex items-center gap-1.5">
               <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-gold)]" />
               SUN & 3 KINGS SCARCITY PROTOCOL
@@ -169,24 +169,24 @@ export function HoustonSpatialMesh() {
           </div>
         </div>
 
-        {/* Right: Telemetry Diagnostic Card with Visual Radar HUD */}
-        <div className="lg:col-span-7 glass-onyx p-6 sm:p-8 rounded-xl border border-white/15 clinical-rim flex flex-col justify-between space-y-6 relative overflow-hidden">
-          {/* Spatial Radar SVG Map */}
-          <div className="w-full h-44 sm:h-48 rounded-lg border border-white/10 bg-black/70 overflow-hidden relative">
+        {/* Right: Floating Radar & Telemetry Display */}
+        <div className="lg:col-span-7 space-y-6">
+          {/* Spatial Radar SVG Viewport */}
+          <div className="w-full h-56 rounded-2xl bg-black/40 overflow-hidden relative backdrop-blur-md">
             <svg viewBox="0 0 400 200" className="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
               {/* Concentric Radar Rings */}
               <circle cx="200" cy="115" r="30" stroke="rgba(255,255,255,0.06)" strokeWidth="1" />
               <circle cx="200" cy="115" r="60" stroke="rgba(255,255,255,0.06)" strokeWidth="1" />
               <circle cx="200" cy="115" r="90" stroke="rgba(255,255,255,0.04)" strokeWidth="1" />
               {/* Crosshair grid lines */}
-              <line x1="200" y1="10" x2="200" y2="190" stroke="rgba(255,255,255,0.08)" strokeWidth="1" strokeDasharray="3 3" />
-              <line x1="10" y1="115" x2="390" y2="115" stroke="rgba(255,255,255,0.08)" strokeWidth="1" strokeDasharray="3 3" />
+              <line x1="200" y1="10" x2="200" y2="190" stroke="rgba(255,255,255,0.06)" strokeWidth="1" strokeDasharray="3 3" />
+              <line x1="10" y1="115" x2="390" y2="115" stroke="rgba(255,255,255,0.06)" strokeWidth="1" strokeDasharray="3 3" />
               
               {/* Trajectory Mesh lines connecting Houston Nodes */}
-              <line x1="200" y1="45" x2="180" y2="110" stroke="rgba(212,175,55,0.2)" strokeWidth="1" />
-              <line x1="180" y1="110" x2="140" y2="125" stroke="rgba(212,175,55,0.2)" strokeWidth="1" />
-              <line x1="180" y1="110" x2="220" y2="115" stroke="rgba(212,175,55,0.2)" strokeWidth="1" />
-              <line x1="220" y1="115" x2="200" y2="165" stroke="rgba(212,175,55,0.2)" strokeWidth="1" />
+              <line x1="200" y1="45" x2="180" y2="110" stroke="rgba(212,175,55,0.25)" strokeWidth="1" />
+              <line x1="180" y1="110" x2="140" y2="125" stroke="rgba(212,175,55,0.25)" strokeWidth="1" />
+              <line x1="180" y1="110" x2="220" y2="115" stroke="rgba(212,175,55,0.25)" strokeWidth="1" />
+              <line x1="220" y1="115" x2="200" y2="165" stroke="rgba(212,175,55,0.25)" strokeWidth="1" />
 
               {/* Houston Nodes */}
               {HOUSTON_LANDMARKS.map((item) => {
@@ -197,7 +197,7 @@ export function HoustonSpatialMesh() {
                       cx={item.radarPos.cx}
                       cy={item.radarPos.cy}
                       r={isTarget ? 7 : 4}
-                      fill={isTarget ? '#D4AF37' : 'rgba(255,255,255,0.4)'}
+                      fill={isTarget ? '#D4AF37' : 'rgba(255,255,255,0.3)'}
                       className={isTarget ? 'animate-pulse' : ''}
                     />
                     {isTarget && (
@@ -224,61 +224,52 @@ export function HoustonSpatialMesh() {
                 );
               })}
             </svg>
-            <div className="absolute top-2 left-3 text-[9px] font-mono text-[var(--color-gold)] font-bold">
+            <div className="absolute top-3 left-4 text-[9px] font-mono text-[var(--color-gold)] font-bold tracking-wider">
               RADAR // ACTIVE TARGET: {selectedLandmark.code}
             </div>
-            <div className="absolute bottom-2 right-3 text-[9px] font-mono text-white/40">
+            <div className="absolute bottom-3 right-4 text-[9px] font-mono text-white/40">
               {selectedLandmark.scarcityStatus}
             </div>
           </div>
 
-          <div className="space-y-4 relative z-10">
+          {/* Floating Diagnostic Text */}
+          <div className="space-y-4">
             <div className="flex flex-wrap items-center justify-between gap-2">
-              <div className="forge-echo-containment">
-                <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-gold)]" aria-hidden="true" />
-                <span className="text-[10px] font-mono font-bold tracking-widest uppercase text-[var(--color-gold)]">
-                  {selectedLandmark.role}
-                </span>
-              </div>
+              <span className="floating-pill text-[var(--color-gold)] font-bold">
+                {selectedLandmark.role}
+              </span>
               <span className="text-[10px] font-mono text-[var(--color-lightning-blue)] font-bold">
                 CORROBORATION INDEX: {selectedLandmark.corroborationScore}
               </span>
             </div>
 
-            <h3 className="text-xl sm:text-2xl font-bold font-serif text-[var(--color-rim)] sword-blade-glow">
+            <h3 className="text-2xl font-bold font-serif text-[var(--color-rim)]">
               {selectedLandmark.name}
             </h3>
 
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 p-3.5 rounded-lg border border-white/10 bg-black/40 text-[11px] font-mono">
+            <div className="grid grid-cols-3 gap-3 text-[11px] font-mono text-white/70">
               <div>
-                <span className="text-white/40 block text-[9px] uppercase">COORDINATES</span>
+                <span className="text-white/30 block text-[9px] uppercase">COORDINATES</span>
                 <span className="text-white font-bold">{selectedLandmark.coordinates}</span>
               </div>
               <div>
-                <span className="text-white/40 block text-[9px] uppercase">POSTAL NODE</span>
+                <span className="text-white/30 block text-[9px] uppercase">POSTAL NODE</span>
                 <span className="text-[var(--color-gold)] font-bold">TX {selectedLandmark.zipCode}</span>
               </div>
-              <div className="col-span-2 sm:col-span-1">
-                <span className="text-white/40 block text-[9px] uppercase">ALTITUDE</span>
+              <div>
+                <span className="text-white/30 block text-[9px] uppercase">ALTITUDE</span>
                 <span className="text-white font-bold">{selectedLandmark.elevation}</span>
               </div>
             </div>
 
-            <div className="space-y-2 pt-1">
+            <div className="space-y-1.5 pt-2">
               <span className="text-[10px] font-mono font-bold tracking-wider text-[var(--color-gold)] uppercase block">
                 MACHINE LEGIBILITY ANALYSIS:
               </span>
-              <p className="text-xs sm:text-sm text-[var(--color-chrome)] leading-relaxed font-serif">
+              <p className="text-sm text-white/70 leading-relaxed font-serif">
                 {selectedLandmark.aiDiagnostic}
               </p>
             </div>
-          </div>
-
-          <div className="pt-4 border-t border-white/10 flex flex-wrap items-center justify-between text-[11px] font-mono text-white/50 gap-2 relative z-10">
-            <span>GROUNDING: LOCAL KNOWLEDGE GRAPH</span>
-            <span className="text-[var(--color-gold)] font-bold">
-              I³ SYSTEM // GEOGRAPHIC CORROBORATION
-            </span>
           </div>
         </div>
       </div>

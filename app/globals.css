@@ -281,3 +281,80 @@ h1, h2, h3, h4, h5, h6 {
     transition: none !important;
   }
 }
+
+/* ── ZERO-GRAVITY CONTAINERLESS FLOW & HID HEADERS (ARCHITECTURE SPEC) ── */
+.hid-sword-blade {
+  font-family: var(--font-playfair);
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: #F5F5F5;
+  text-shadow: 
+    0 0 10px rgba(255, 255, 255, 0.8),
+    0 0 22px rgba(255, 255, 255, 0.4),
+    0 0 40px rgba(255, 255, 255, 0.25);
+  -webkit-text-stroke: 0.5px rgba(229, 228, 226, 0.25);
+}
+
+.hid-subtitle-shield {
+  font-family: var(--font-ui);
+  color: var(--color-gold);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.zero-gravity-plate {
+  background: rgba(10, 10, 10, 0.55);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-radius: 1.25rem;
+  box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.85), 0 0 35px rgba(212, 175, 55, 0.04);
+}
+
+.floating-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 1rem;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  font-family: monospace;
+  font-size: 0.6875rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.floating-circle-token {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  background: radial-gradient(circle at center, rgba(255, 255, 255, 0.05) 0%, rgba(10, 10, 10, 0.85) 100%);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 1rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+}
+
+.landmark-photo-plate {
+  position: relative;
+  overflow: hidden;
+  border-radius: 1.25rem;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.9), 0 0 45px rgba(212, 175, 55, 0.06);
+}
+
+.landmark-photo-plate img {
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.landmark-photo-plate:hover img {
+  transform: scale(1.03);
+}

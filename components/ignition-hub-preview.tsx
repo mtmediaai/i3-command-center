@@ -85,9 +85,9 @@ export function IgnitionHubPreview() {
   const [activePromptIndex, setActivePromptIndex] = useState<number>(0);
 
   return (
-    <div className="space-y-6">
-      {/* Header bar */}
-      <div className="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-white/10 text-xs font-mono">
+    <div className="space-y-8">
+      {/* Floating Header bar */}
+      <div className="flex flex-wrap items-center justify-between gap-3 text-xs font-mono">
         <div className="flex items-center gap-2">
           <span className="w-2 h-2 rounded-full bg-[#00E5FF] animate-pulse" aria-hidden="true" />
           <span className="text-[var(--color-rim)] font-bold tracking-widest uppercase">
@@ -99,8 +99,8 @@ export function IgnitionHubPreview() {
         </div>
       </div>
 
-      {/* Tabs */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+      {/* Floating Selector Tabs */}
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
         {TABS.map((tab) => {
           const isActive = tab.id === activeTab;
           return (
@@ -110,16 +110,16 @@ export function IgnitionHubPreview() {
                 setActiveTab(tab.id);
                 setActivePromptIndex(0);
               }}
-              className={`px-4 py-3 rounded-lg border text-left transition-all focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--color-gold)] ${
+              className={`p-4 rounded-xl text-left transition-all focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--color-gold)] ${
                 isActive
-                  ? 'bg-white/[0.08] border-[var(--color-gold)] text-white shadow-lg'
-                  : 'bg-white/[0.02] border-white/10 text-white/60 hover:bg-white/[0.04] hover:text-white/80'
+                  ? 'bg-white/[0.08] text-white shadow-2xl'
+                  : 'bg-transparent text-white/50 hover:bg-white/[0.02] hover:text-white/80'
               }`}
             >
               <div className="text-[10px] font-mono text-[var(--color-gold)] font-bold mb-1">
                 {tab.badge}
               </div>
-              <div className="text-xs sm:text-sm font-serif font-bold text-[var(--color-rim)]">
+              <div className="text-sm font-serif font-bold text-[var(--color-rim)]">
                 {tab.label}
               </div>
             </button>
@@ -127,37 +127,34 @@ export function IgnitionHubPreview() {
         })}
       </div>
 
-      {/* Interactive Display Chamber */}
-      <div className="glass-onyx p-6 sm:p-8 rounded-xl border border-white/15 clinical-rim space-y-6">
+      {/* Zero-Gravity Display Chamber */}
+      <div className="space-y-6">
         <div className="flex flex-wrap items-center justify-between gap-2">
-          <div className="forge-echo-containment">
-            <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-gold)]" aria-hidden="true" />
-            <span className="text-[10px] font-mono font-bold tracking-widest uppercase text-[var(--color-gold)]">
-              {current.badge}
-            </span>
-          </div>
-          <span className="text-[10px] font-mono text-white/50">
+          <span className="floating-pill text-[var(--color-gold)] font-bold">
+            {current.badge}
+          </span>
+          <span className="text-[10px] font-mono text-white/40">
             DELIVERY: NOTEBOOKLM / SHARED KNOWLEDGE ASSET
           </span>
         </div>
 
         <div>
-          <h3 className="text-xl sm:text-2xl font-bold font-serif text-[var(--color-rim)] sword-blade-glow">
+          <h3 className="text-2xl font-bold font-serif text-[var(--color-rim)] sword-blade-glow">
             {current.headline}
           </h3>
-          <p className="text-xs sm:text-sm text-[var(--color-chrome)] leading-relaxed mt-2 max-w-3xl">
+          <p className="text-sm text-white/70 leading-relaxed mt-2 max-w-3xl">
             {current.description}
           </p>
         </div>
 
-        {/* Technical specs grid */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 p-4 rounded-lg border border-white/10 bg-black/40 text-[11px] font-mono">
+        {/* Technical specs */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 text-[11px] font-mono">
           {current.details.map((d, i) => (
             <div key={i} className="space-y-1">
-              <span className="text-white/40 block text-[9px] uppercase tracking-wider">
+              <span className="text-white/30 block text-[9px] uppercase tracking-wider">
                 {d.label}
               </span>
-              <span className="text-[var(--color-chrome-white)] font-bold block">
+              <span className="text-white/90 font-bold block">
                 {d.value}
               </span>
             </div>
@@ -165,8 +162,8 @@ export function IgnitionHubPreview() {
         </div>
 
         {/* Interactive Query Selector Pills */}
-        <div className="space-y-2">
-          <span className="text-[10px] font-mono uppercase tracking-wider text-white/50 block">
+        <div className="space-y-2 pt-2">
+          <span className="text-[10px] font-mono uppercase tracking-wider text-white/40 block">
             TRY TEST INTERROGATION PROMPT:
           </span>
           <div className="flex flex-wrap gap-2">
@@ -176,10 +173,10 @@ export function IgnitionHubPreview() {
                 <button
                   key={pIdx}
                   onClick={() => setActivePromptIndex(pIdx)}
-                  className={`px-3 py-1.5 rounded text-[11px] font-mono transition-all border ${
+                  className={`px-3 py-1.5 rounded-full text-[11px] font-mono transition-all ${
                     isSelected
-                      ? 'bg-white/[0.1] border-[var(--color-gold)] text-[var(--color-gold)] font-bold'
-                      : 'bg-white/[0.02] border-white/10 text-white/60 hover:text-white hover:border-white/20'
+                      ? 'bg-white/[0.12] text-[var(--color-gold)] font-bold'
+                      : 'bg-white/[0.03] text-white/60 hover:text-white hover:bg-white/[0.06]'
                   }`}
                 >
                   &gt; {prompt}
@@ -190,17 +187,17 @@ export function IgnitionHubPreview() {
         </div>
 
         {/* Notebook interactive session simulation snippet */}
-        <div className="space-y-2">
-          <div className="flex items-center justify-between text-[10px] font-mono text-white/50">
+        <div className="space-y-2 pt-2">
+          <div className="flex items-center justify-between text-[10px] font-mono text-white/40">
             <span>QUERY TERMINAL // GEMINI NOTEBOOKLM GROUNDING</span>
             <span className="text-[var(--color-lightning-blue)] font-bold">ACTIVE SESSION : READY</span>
           </div>
-          <div className="p-4 rounded-lg border border-white/10 bg-black/60 font-mono text-xs text-[var(--color-chrome-white)] whitespace-pre-line leading-relaxed">
+          <div className="p-5 rounded-xl bg-black/60 font-mono text-xs text-white/90 whitespace-pre-line leading-relaxed backdrop-blur-md">
             {current.outputSnippet}
           </div>
         </div>
 
-        <div className="pt-2 flex flex-wrap items-center justify-between text-[11px] font-mono text-white/40 border-t border-white/10">
+        <div className="pt-2 flex flex-wrap items-center justify-between text-[11px] font-mono text-white/40">
           <span>ZERO-COGS ARCHITECTURE: $0 COST TO CLIENT</span>
           <span className="text-[var(--color-gold)] font-bold">
             NOTEBOOK REPOSITORY DELIVERED WITHIN 48 HOURS
