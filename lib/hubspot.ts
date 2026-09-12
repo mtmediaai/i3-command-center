@@ -154,7 +154,7 @@ async function createFulfillmentTask(
   tier: 'mass' | 'first_round',
   businessName: string
 ): Promise<string | null> {
-  const taskSubject = `Assemble Lux Snapshot — ${businessName} (${tier})`;
+  const taskSubject = `Assemble Lux Snapshot: ${businessName} (${tier})`;
   const now = new Date();
   const dueDate = new Date(now.getTime() + 48 * 60 * 60 * 1000); // 48h SLA
 

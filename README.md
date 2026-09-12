@@ -3,7 +3,7 @@
 Supporting diagnostic satellite of the **MT Media AI** ecosystem, serving as the front door for the **Invisible Infrastructure Intelligence (I³ System)** and the **Lux Snapshot** AI Visibility diagnostic.
 
 ## Architecture & Status
-- **Status:** Phase A — plumbing
+- **Status:** Phase B: copy and social proof
 - **Apex Entity:** [MT Media AI](https://mtmediaai.com)
 - **Knowledge Core:** [mtm-ai Repository](https://github.com/mtmediaai/mtm-ai)
 - **Identity Mesh:** [@mtmediaai](https://github.com/mtmediaai)

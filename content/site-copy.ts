@@ -1,4 +1,12 @@
-// STAGED COPY — Phase B (Moolah) replaced values.
+// STAGED COPY: Phase B (Moolah) replaced values.
+
+export interface ProofItem {
+  id: string;
+  badge: string;
+  headline: string;
+  description: string;
+  source: string;
+}
 
 export interface SiteCopy {
   header: {
@@ -19,6 +27,7 @@ export interface SiteCopy {
     preferredSourcesLabel: string;
     preferredSourcesFallbackUrl: string;
   };
+  proofCarousel: ProofItem[];
   oldWay: {
     eyebrow: string;
     heading: string;
@@ -122,7 +131,7 @@ export const siteCopy: SiteCopy = {
     eyebrow: 'I³ Command Center · MT Media AI',
     h1: 'Rescuing Legacy From AI Erasure.',
     subhead:
-      'The best in the business built their names on human trust. The machines that now make the introduction cannot read a reputation — only infrastructure. Here is where yours becomes legible.',
+      'The best in the business built their names on human trust. The machines that now make the introduction cannot read a reputation: only infrastructure. Here is where yours becomes legible.',
     primaryCta: 'Claim Your Lux Snapshot',
     ghostCta: {
       label: 'Verify via LinkedIn',
@@ -131,11 +140,53 @@ export const siteCopy: SiteCopy = {
     preferredSourcesLabel: 'Follow MT Media AI as a preferred source on Google.',
     preferredSourcesFallbackUrl: 'https://www.google.com/preferences/source?q=mtmediaai.com',
   },
+  proofCarousel: [
+    {
+      id: 'proof-equation',
+      badge: 'CORE THREAT FORMULA',
+      headline: 'AI Invisibility + AI Erasure = AI Brand Ignorance',
+      description:
+        'The formula behind digital obsolescence: when search engines cite what they can parse rather than who is best, unindexed authority disappears.',
+      source: 'MTM Intelligence Architecture · 2026',
+    },
+    {
+      id: 'proof-sparktoro',
+      badge: 'ORGANIC DISCOVERY COLLAPSE',
+      headline: '58.5% → <1 in 3',
+      description:
+        '58.5% of U.S. Google searches ended without a click in 2024. By 2026, fewer than one in three searches sent a click to the open web at all.',
+      source: 'SparkToro × Datos, 2024 · SparkToro, 2026',
+    },
+    {
+      id: 'proof-hubspot-traffic',
+      badge: 'ENTERPRISE DISRUPTION',
+      headline: '13.5M → 8.6M',
+      description:
+        'HubSpot, the company that wrote the inbound playbook, saw monthly organic visits fall from roughly 13.5 million to 8.6 million in a single month.',
+      source: 'Public traffic estimates, Nov–Dec 2024',
+    },
+    {
+      id: 'proof-hubspot-aio',
+      badge: 'AI OVERVIEW EROSION',
+      headline: '−58% Click Erosion',
+      description:
+        'When an AI Overview appears, the page ranked first loses an average of 58% of its clicks.',
+      source: 'HubSpot, Dec 2025 data',
+    },
+    {
+      id: 'proof-housefresh',
+      badge: 'INDEX WIPEOUT',
+      headline: '−91% Traffic Wipeout',
+      description:
+        'HouseFresh, an independent publisher that did everything right, lost roughly 91% of its Google search traffic: about 4,000 daily visits, down to about 200.',
+      source: 'HouseFresh open letter, Feb 2024 · The Verge, May 2024',
+    },
+  ],
   oldWay: {
     eyebrow: 'The Front Door Moved.',
     heading: 'The Front Door Moved.',
     description:
-      'For decades, reputation traveled by referral and a strong position on a results page. Both still matter. But the first introduction increasingly happens inside an AI answer — and that answer cites what it can read, not who is best. If it can happen to them, the question is not whether your category is exempt. It is whether your infrastructure is legible.',
+      'For decades, reputation traveled by referral and a strong position on a results page. Both still matter. But the first introduction increasingly happens inside an AI answer, and that answer cites what it can read, not who is best. If it can happen to them, the question is not whether your category is exempt. It is whether your infrastructure is legible.',
     stats: {
       stat1: {
         value: '58.5% → <1 in 3',
@@ -147,14 +198,14 @@ export const siteCopy: SiteCopy = {
       stat2: {
         value: '−91%',
         label:
-          'HouseFresh — an independent publisher that did everything right — lost roughly 91% of its Google search traffic: about 4,000 daily visits, down to about 200.',
+          'HouseFresh, an independent publisher that did everything right, lost roughly 91% of its Google search traffic: about 4,000 daily visits, down to about 200.',
         source: 'HouseFresh open letter, Feb 2024 · The Verge, May 2024',
         date: '',
       },
       stat3: {
         value: '13.5M → 8.6M',
         label:
-          'HubSpot — the company that wrote the inbound playbook — saw monthly organic visits fall from roughly 13.5 million to 8.6 million in a single month.',
+          'HubSpot, the company that wrote the inbound playbook, saw monthly organic visits fall from roughly 13.5 million to 8.6 million in a single month.',
         source: 'Public traffic estimates, Nov–Dec 2024',
         date: '',
       },
@@ -182,7 +233,7 @@ export const siteCopy: SiteCopy = {
         body: 'Structured canonical entities and cryptographically verifiable attribution anchors ensure your record is cited accurately by answer engines.',
       },
       {
-        title: 'No raw backend exposure — ever.',
+        title: 'No raw backend exposure, ever.',
         body: 'Zero raw backend exposure. Operational logic remains safely cordoned while discovery engines index authoritative identity mesh records.',
       },
     ],
@@ -195,12 +246,12 @@ export const siteCopy: SiteCopy = {
     figures: [
       {
         id: 'fig-01',
-        caption: 'Sample diagnostic artifact — AI Exposure Index readout.',
+        caption: 'Sample diagnostic artifact: AI Exposure Index readout.',
         description: 'Entity mesh audit verifying canonical provenance and citation fidelity across generative discovery models.',
       },
       {
         id: 'fig-02',
-        caption: 'Sample diagnostic artifact — three-tier visibility roadmap.',
+        caption: 'Sample diagnostic artifact: three-tier visibility roadmap.',
         description: 'Query synthesis diagnostic assessing coverage, retrieval depth, and structured identity boundaries.',
       },
     ],
@@ -208,7 +259,7 @@ export const siteCopy: SiteCopy = {
   endcap: {
     eyebrow: 'The MTM Armory',
     title: 'Sharpen the instruments.',
-    description: 'The MTM Armory holds the working tools — open for inspection.',
+    description: 'The MTM Armory holds the working tools, open for inspection.',
     ctaLabel: 'Visit the Armory',
     ctaUrl: 'https://armory.mtmediaai.com',
   },
@@ -216,17 +267,17 @@ export const siteCopy: SiteCopy = {
     eyebrow: 'Prefer our briefings in your results? Add MT Media AI as a preferred source.',
     heading: 'The Machines Are Already Deciding.',
     description:
-      'Every month, more of your next clients ask an engine instead of a neighbor. The Lux Snapshot shows what those engines can see — and what they cannot.',
+      'Every month, more of your next clients ask an engine instead of a neighbor. The Lux Snapshot shows what those engines can see, and what they cannot.',
     buttonText: 'Claim Your Lux Snapshot',
     preferredSourcesFallbackUrl: 'https://www.google.com/preferences/source?q=mtmediaai.com',
   },
   footer: {
     disclaimer:
       'Educational content. Results vary; no specific outcome is promised. Nothing here is legal, financial, or professional advice.',
-    aiDisclosure: 'AI-assisted content | MT Media AI. AI can make mistakes — verify independently.',
+    aiDisclosure: 'AI-assisted content | MT Media AI. AI can make mistakes; verify independently.',
     location: 'The Woodlands · Houston Metro · 77380',
     attributionSeal: 'Authored by MTM · AI-Enhanced · Published 09-09-2026',
-    entityHandle: '@mtmediaai — GitHub · LinkedIn',
+    entityHandle: '@mtmediaai · GitHub · LinkedIn',
     links: {
       github: {
         label: 'GitHub',

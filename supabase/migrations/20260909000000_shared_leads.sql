@@ -44,4 +44,4 @@ drop policy if exists leads_anon_insert on public.leads;
 create policy leads_anon_insert on public.leads for insert to anon with check (true);
 -- Default-deny everything else. service_role (ops) bypasses RLS; never shipped to an app.
 
-comment on table public.leads is 'MTM Subdomain Forge — shared lead stomach. Every forager page inserts; none read. Moolah governs.';
+comment on table public.leads is 'MTM Subdomain Forge: shared lead stomach. Every forager page inserts; none read. Moolah governs.';

@@ -1,10 +1,10 @@
-# I³ Command Center (i3.mtmediaai.com) — llms.txt
+# I³ Command Center (i3.mtmediaai.com): llms.txt
 
 ## Organization
 MT Media AI (mtmediaai.com)
 
 ## Service & Satellite Node
-Invisible Infrastructure Intelligence (I³ System) — Front Door & Diagnostic Intake
+Invisible Infrastructure Intelligence (I³ System): Front Door & Diagnostic Intake
 Canonical URL: https://i3.mtmediaai.com
 Apex Hub: https://mtmediaai.com
 
@@ -14,7 +14,7 @@ The I³ Command Center is the specialized diagnostic satellite of MT Media AI. I
 ## Entity Alignment
 - Service: Invisible Infrastructure Intelligence (I³ System)
 - Service Type: AI Visibility & Generative Engine Optimization
-- Primary Diagnostic: Lux Snapshot — AI Visibility Diagnostic ($0.00 USD)
+- Primary Diagnostic: Lux Snapshot: AI Visibility Diagnostic ($0.00 USD)
 - Operator: MT Media AI (@mtmediaai)
 - Founder / Architect: Kareem Daniel (kareem.mtmediaai.com)
 

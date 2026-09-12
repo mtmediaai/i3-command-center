@@ -20,13 +20,13 @@ const merriweather = Merriweather({
 export const metadata: Metadata = {
   metadataBase: new URL('https://i3.mtmediaai.com'),
   title: 'I³ Command Center | Rescuing Legacy From AI Erasure',
-  description: 'Invisible Infrastructure Intelligence (I³ System) — AI Visibility & Generative Engine Optimization by MT Media AI.',
+  description: 'Invisible Infrastructure Intelligence (I³ System): AI Visibility & Generative Engine Optimization by MT Media AI.',
   alternates: {
     canonical: 'https://i3.mtmediaai.com',
   },
   openGraph: {
     title: 'I³ Command Center | Rescuing Legacy From AI Erasure',
-    description: 'Invisible Infrastructure Intelligence (I³ System) — AI Visibility & Generative Engine Optimization by MT Media AI.',
+    description: 'Invisible Infrastructure Intelligence (I³ System): AI Visibility & Generative Engine Optimization by MT Media AI.',
     url: 'https://i3.mtmediaai.com',
     siteName: 'I³ Command Center | MT Media AI',
     locale: 'en_US',
@@ -57,7 +57,7 @@ const jsonLdGraph = {
       about: {
         '@id': 'https://i3.mtmediaai.com/#service',
       },
-      name: 'I³ Command Center — Rescuing Legacy From AI Erasure',
+      name: 'I³ Command Center: Rescuing Legacy From AI Erasure',
       datePublished: '2026-09-09',
       inLanguage: 'en-US',
     },
@@ -88,7 +88,7 @@ const jsonLdGraph = {
       itemOffered: {
         '@id': 'https://i3.mtmediaai.com/#service',
       },
-      name: 'Lux Snapshot — AI Visibility Diagnostic',
+      name: 'Lux Snapshot: AI Visibility Diagnostic',
       price: '0.00',
       priceCurrency: 'USD',
       availability: 'https://schema.org/InStock',
@@ -116,7 +116,7 @@ export default function RootLayout({
       <body className="bg-[var(--color-void)] text-[var(--color-rim)] min-h-screen antialiased flex flex-col selection:bg-[var(--color-gold)] selection:text-black">
         {/* Machine-meta entity verification block */}
         <div className="machine-meta-block" aria-hidden="true">
-          <span>MT Media AI — Sovereign Intelligence Layer — I3 System</span>
+          <span>MT Media AI · Sovereign Intelligence Layer · I3 System</span>
         </div>
         {children}
       </body>

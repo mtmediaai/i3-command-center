@@ -31,6 +31,7 @@ export interface SiteConfig {
   publishDate: string;
   fulfillmentSLA: string;
   tableName: string;
+  preferredSourcesEnabled: boolean;
 }
 
 export const siteConfig: SiteConfig = {
@@ -41,7 +42,7 @@ export const siteConfig: SiteConfig = {
   owner: 'Reign Ω (sales door) · Moolah oversight',
   serviceName: 'Invisible Infrastructure Intelligence (I³ System)',
   serviceType: 'AI Visibility & Generative Engine Optimization',
-  offerName: 'Lux Snapshot — AI Visibility Diagnostic',
+  offerName: 'Lux Snapshot: AI Visibility Diagnostic',
   offerPrice: '0.00',
   entryValue: 'i3',
   utmDefaults: {
@@ -55,4 +56,5 @@ export const siteConfig: SiteConfig = {
   publishDate: '2026-09-09',
   fulfillmentSLA: '24–48h',
   tableName: 'leads',
+  preferredSourcesEnabled: false,
 };

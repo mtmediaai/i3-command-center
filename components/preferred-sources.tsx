@@ -1,4 +1,5 @@
 import React from 'react';
+import { siteConfig } from '@/config/site.config';
 
 interface PreferredSourceButtonProps {
   fallbackUrl: string;
@@ -6,6 +7,10 @@ interface PreferredSourceButtonProps {
 }
 
 export function PreferredSourceSlot({ fallbackUrl, label }: PreferredSourceButtonProps) {
+  if (!siteConfig.preferredSourcesEnabled) {
+    return null;
+  }
+
   return (
     <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 pt-2">
       {/* Official Google Preferred Sources Web Component Container */}

@@ -220,12 +220,13 @@ async function runSuite() {
     assert.strictEqual(siteConfig.pageUrl, 'https://i3.mtmediaai.com');
     assert.strictEqual(siteConfig.repo, 'i3-command-center');
     assert.strictEqual(siteConfig.serviceName, 'Invisible Infrastructure Intelligence (I³ System)');
-    assert.strictEqual(siteConfig.offerName, 'Lux Snapshot — AI Visibility Diagnostic');
+    assert.strictEqual(siteConfig.offerName, 'Lux Snapshot: AI Visibility Diagnostic');
     assert.strictEqual(siteConfig.offerPrice, '0.00');
     assert.strictEqual(siteConfig.entryValue, 'i3');
     assert.strictEqual(siteConfig.endcapTarget, 'https://armory.mtmediaai.com');
     assert.strictEqual(siteConfig.stagedH1, 'Rescuing Legacy From AI Erasure.');
     assert.strictEqual(siteConfig.tableName, 'leads');
+    assert.strictEqual(siteConfig.preferredSourcesEnabled, false, 'Preferred Sources must remain gated');
   });
 
   // 10. Phase B Copy Deck Audit: Validate values populated from Phase B deck
@@ -241,6 +242,30 @@ async function runSuite() {
     assert.strictEqual(siteCopy.oldWay.stats.stat2.value, '−91%');
     assert.strictEqual(siteCopy.oldWay.stats.stat3.value, '13.5M → 8.6M');
     assert.strictEqual(siteCopy.oldWay.stats.stat4.value, '−58%');
+  });
+
+  // 11. Social Proof Carousel Probe: 5 items with Master Equation and verified statistics
+  await runAsyncProbe('Social Proof Carousel Probe: 5 proof items present with Master Equation', () => {
+    assert.ok(Array.isArray(siteCopy.proofCarousel), 'proofCarousel must be an array');
+    assert.strictEqual(siteCopy.proofCarousel.length, 5, 'Must contain 5 proof items');
+    assert.strictEqual(
+      siteCopy.proofCarousel[0].headline,
+      'AI Invisibility + AI Erasure = AI Brand Ignorance'
+    );
+    assert.strictEqual(siteCopy.proofCarousel[0].badge, 'CORE THREAT FORMULA');
+    assert.strictEqual(siteCopy.proofCarousel[1].headline, '58.5% → <1 in 3');
+    assert.strictEqual(siteCopy.proofCarousel[2].headline, '13.5M → 8.6M');
+    assert.strictEqual(siteCopy.proofCarousel[3].headline, '−58% Click Erosion');
+    assert.strictEqual(siteCopy.proofCarousel[4].headline, '−91% Traffic Wipeout');
+  });
+
+  // 12. Zero Em-Dash Probe: Ensure no em-dashes exist across copy and codebase
+  await runAsyncProbe('Zero Em-Dash Probe: Ensure zero em-dashes exist in site-copy and site.config', () => {
+    const copyString = JSON.stringify(siteCopy);
+    assert.ok(!copyString.includes('\u2014'), 'siteCopy must contain zero em-dashes');
+    assert.ok(!copyString.includes('&' + 'mdash;'), 'siteCopy must contain zero mdash entities');
+    const configString = JSON.stringify(siteConfig);
+    assert.ok(!configString.includes('\u2014'), 'siteConfig must contain zero em-dashes');
   });
 
   console.log(`\nProbe Results: ${passed} passed, ${failed} failed.`);

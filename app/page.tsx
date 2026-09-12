@@ -3,6 +3,7 @@ import { siteCopy } from '@/content/site-copy';
 import { Monogram } from '@/components/monogram';
 import { PreferredSourceSlot } from '@/components/preferred-sources';
 import { ModalTrigger } from '@/components/modal-trigger';
+import { SocialProofCarousel } from '@/components/social-proof-carousel';
 
 export default function HomePage() {
   return (
@@ -72,6 +73,8 @@ export default function HomePage() {
             fallbackUrl={siteCopy.hero.preferredSourcesFallbackUrl}
             label={siteCopy.hero.preferredSourcesLabel}
           />
+
+          <SocialProofCarousel />
         </section>
 
         {/* Section 2: Old Way */}
@@ -97,7 +100,7 @@ export default function HomePage() {
               >
                 <div>
                   <div className="text-2xl sm:text-3xl font-extrabold text-[var(--color-gold)] tracking-tight font-serif">
-                    {stat.value || '—'}
+                    {stat.value || ''}
                   </div>
                   <p className="text-xs text-[var(--color-rim)]/90 mt-3 leading-relaxed">
                     {stat.label}
