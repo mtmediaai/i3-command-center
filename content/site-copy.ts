@@ -1,14 +1,28 @@
-// STAGED COPY: Phase B (Moolah) replaced values.
+// Typed Human-Visible Copy Module: Phase B AGO Dominator Copy Architecture
+// Governed by MTM Zero-COGS, Strict Evidentiary Standards, and No-Slop Doctrine
 
-export interface ProofItem {
+export interface FastAnswerItem {
+  question: string;
+  answer: string;
+}
+
+export interface MethodItem {
   id: string;
-  badge: string;
-  headline: string;
+  name: string;
+  title: string;
   description: string;
-  source: string;
+}
+
+export interface FaqItem {
+  question: string;
+  answer: string;
 }
 
 export interface SiteCopy {
+  meta: {
+    pageTitle: string;
+    metaDescription: string;
+  };
   header: {
     brandName: string;
     brandMonogramAlt: string;
@@ -23,40 +37,53 @@ export interface SiteCopy {
     h1: string;
     subhead: string;
     primaryCta: string;
-    ghostCta: { label: string; url: string };
+    secondaryCta: string;
+    secondaryCtaTarget: string;
     preferredSourcesLabel: string;
     preferredSourcesFallbackUrl: string;
   };
-  proofCarousel: ProofItem[];
-  oldWay: {
+  fastAnswers: {
     eyebrow: string;
     heading: string;
-    description: string;
-    stats: {
-      stat1: { value: string; label: string; source: string; date: string };
-      stat2: { value: string; label: string; source: string; date: string };
-      stat3: { value: string; label: string; source: string; date: string };
-      stat4: { value: string; label: string; source: string; date: string };
-    };
+    items: FastAnswerItem[];
   };
-  newWay: {
-    eyebrow: string;
-    heading: string;
-    description: string;
-    pillars: Array<{
-      title: string;
-      body: string;
-    }>;
+  structuralAnswer: {
+    h2: string;
+    body: string;
   };
-  evidence: {
-    eyebrow: string;
+  evidenceSection: {
+    h2: string;
+    description: string;
+  };
+  methodSection: {
+    h2: string;
+    description: string;
+    cards: MethodItem[];
+  };
+  mtmFix: {
+    h2: string;
+    body: string;
+  };
+  deliverables: {
+    h2: string;
+    bullets: string[];
+  };
+  limitations: {
+    h2: string;
+    body: string;
+  };
+  decisionFramework: {
+    h2: string;
+    bullets: string[];
+  };
+  faqSection: {
+    h2: string;
+    items: FaqItem[];
+  };
+  finalCta: {
     heading: string;
     description: string;
-    figures: Array<{
-      id: string;
-      caption: string;
-      description: string;
-    }>;
+    buttonText: string;
   };
   endcap: {
     eyebrow: string;
@@ -64,13 +91,6 @@ export interface SiteCopy {
     description: string;
     ctaLabel: string;
     ctaUrl: string;
-  };
-  cta: {
-    eyebrow: string;
-    heading: string;
-    description: string;
-    buttonText: string;
-    preferredSourcesFallbackUrl: string;
   };
   footer: {
     disclaimer: string;
@@ -109,6 +129,12 @@ export interface SiteCopy {
 }
 
 export const siteCopy: SiteCopy = {
+  meta: {
+    pageTitle:
+      'AI Visibility Audit: See How AI Search Describes Your Business | I³',
+    metaDescription:
+      'Map the questions buyers ask, the evidence AI systems can verify, and how your business is represented across AI search. Request an I³ Visibility Snapshot.',
+  },
   header: {
     brandName: 'I³ Command Center',
     brandMonogramAlt: 'MT Media AI Monogram',
@@ -129,154 +155,158 @@ export const siteCopy: SiteCopy = {
   },
   hero: {
     eyebrow: 'I³ Command Center · MT Media AI',
-    h1: 'Rescuing Legacy From AI Erasure.',
+    h1: 'Is AI describing your business correctly when buyers ask who to trust?',
     subhead:
-      'The best in the business built their names on human trust. The machines that now make the introduction cannot read a reputation: only infrastructure. Here is where yours becomes legible.',
-    primaryCta: 'Claim Your Lux Snapshot',
-    ghostCta: {
-      label: 'Verify via LinkedIn',
-      url: 'https://www.linkedin.com/company/mtmediaai',
-    },
+      'I³ maps the questions buyers ask, the sources AI systems rely on, and the evidence your business gives them to work with. You receive a practical AI visibility diagnosis before deciding what to repair.',
+    primaryCta: 'Request Your I³ Visibility Snapshot',
+    secondaryCta: 'See What AI Search Changed',
+    secondaryCtaTarget: '#evidence',
     preferredSourcesLabel: 'Follow MT Media AI as a preferred source on Google.',
-    preferredSourcesFallbackUrl: 'https://www.google.com/preferences/source?q=mtmediaai.com',
+    preferredSourcesFallbackUrl:
+      'https://www.google.com/preferences/source?q=mtmediaai.com',
   },
-  proofCarousel: [
-    {
-      id: 'proof-equation',
-      badge: 'CORE THREAT FORMULA',
-      headline: 'AI Invisibility + AI Erasure = AI Brand Ignorance',
-      description:
-        'The formula behind digital obsolescence: when search engines cite what they can parse rather than who is best, unindexed authority disappears.',
-      source: 'MTM Intelligence Architecture · 2026',
-    },
-    {
-      id: 'proof-sparktoro',
-      badge: 'ORGANIC DISCOVERY COLLAPSE',
-      headline: '58.5% → <1 in 3',
-      description:
-        '58.5% of U.S. Google searches ended without a click in 2024. By 2026, fewer than one in three searches sent a click to the open web at all.',
-      source: 'SparkToro × Datos, 2024 · SparkToro, 2026',
-    },
-    {
-      id: 'proof-hubspot-traffic',
-      badge: 'ENTERPRISE DISRUPTION',
-      headline: '13.5M → 8.6M',
-      description:
-        'HubSpot, the company that wrote the inbound playbook, saw monthly organic visits fall from roughly 13.5 million to 8.6 million in a single month.',
-      source: 'Public traffic estimates, Nov–Dec 2024',
-    },
-    {
-      id: 'proof-hubspot-aio',
-      badge: 'AI OVERVIEW EROSION',
-      headline: '−58% Click Erosion',
-      description:
-        'When an AI Overview appears, the page ranked first loses an average of 58% of its clicks.',
-      source: 'HubSpot, Dec 2025 data',
-    },
-    {
-      id: 'proof-housefresh',
-      badge: 'INDEX WIPEOUT',
-      headline: '−91% Traffic Wipeout',
-      description:
-        'HouseFresh, an independent publisher that did everything right, lost roughly 91% of its Google search traffic: about 4,000 daily visits, down to about 200.',
-      source: 'HouseFresh open letter, Feb 2024 · The Verge, May 2024',
-    },
-  ],
-  oldWay: {
-    eyebrow: 'The Front Door Moved.',
-    heading: 'The Front Door Moved.',
-    description:
-      'For decades, reputation traveled by referral and a strong position on a results page. Both still matter. But the first introduction increasingly happens inside an AI answer, and that answer cites what it can read, not who is best. If it can happen to them, the question is not whether your category is exempt. It is whether your infrastructure is legible.',
-    stats: {
-      stat1: {
-        value: '58.5% → <1 in 3',
-        label:
-          '58.5% of U.S. Google searches ended without a click in 2024. By 2026, fewer than one in three searches sent a click to the open web at all.',
-        source: 'SparkToro × Datos, 2024 · SparkToro, 2026',
-        date: '',
-      },
-      stat2: {
-        value: '−91%',
-        label:
-          'HouseFresh, an independent publisher that did everything right, lost roughly 91% of its Google search traffic: about 4,000 daily visits, down to about 200.',
-        source: 'HouseFresh open letter, Feb 2024 · The Verge, May 2024',
-        date: '',
-      },
-      stat3: {
-        value: '13.5M → 8.6M',
-        label:
-          'HubSpot, the company that wrote the inbound playbook, saw monthly organic visits fall from roughly 13.5 million to 8.6 million in a single month.',
-        source: 'Public traffic estimates, Nov–Dec 2024',
-        date: '',
-      },
-      stat4: {
-        value: '−58%',
-        label:
-          'When an AI Overview appears, the page ranked first loses an average of 58% of its clicks.',
-        source: 'HubSpot, Dec 2025 data',
-        date: '',
-      },
-    },
-  },
-  newWay: {
-    eyebrow: 'Invisible Infrastructure Intelligence',
-    heading: 'Invisible Infrastructure Intelligence',
-    description:
-      'I³ is the layer between your name and the machines. Machine-readable identity. Entity graphs that state who you are in the vocabulary answer engines parse. Citation infrastructure that lets AI systems reference your business with the same confidence your clients do. This does not replace what built your name. It makes what built your name readable.',
-    pillars: [
+  fastAnswers: {
+    eyebrow: 'Fast Answers',
+    heading: 'Core Architecture at a Glance',
+    items: [
       {
-        title: 'Client-controlled data.',
-        body: 'Client-controlled data schemas ensure that proprietary methodologies and domain mastery remain private, never exposed to unpermissioned model ingestion.',
+        question: 'What is I³?',
+        answer:
+          'A structured AI visibility audit that reviews the questions, evidence, and public signals shaping how your business may be represented in AI-assisted search.',
       },
       {
-        title: 'Citations and provenance on everything.',
-        body: 'Structured canonical entities and cryptographically verifiable attribution anchors ensure your record is cited accurately by answer engines.',
+        question: 'What does it examine?',
+        answer:
+          'Your category questions, website evidence, business identity signals, and the external sources buyers and machines can use to verify your claims.',
       },
       {
-        title: 'No raw backend exposure, ever.',
-        body: 'Zero raw backend exposure. Operational logic remains safely cordoned while discovery engines index authoritative identity mesh records.',
+        question: 'What do I receive?',
+        answer:
+          'A practical visibility snapshot with prioritized findings and a recommended next step. It is a diagnosis, not a guarantee of rankings, citations, traffic, or revenue.',
+      },
+      {
+        question: 'What happens after I submit?',
+        answer:
+          'Your request enters the MTM intake queue. A team member reviews the information and routes the appropriate next step.',
       },
     ],
   },
-  evidence: {
-    eyebrow: 'Proof of Process',
-    heading: 'Proof of Process',
+  structuralAnswer: {
+    h2: 'What an AI visibility audit examines',
+    body: 'Traditional search asks whether a page can rank. AI-assisted discovery adds a second question: whether the available evidence lets a system describe the business accurately, confidently, and in the right commercial context. I³ examines the gaps between your real authority, the proof published about your business, and the information a buyer or model can actually retrieve.',
+  },
+  evidenceSection: {
+    h2: 'Search behavior changed. Brand evidence matters more.',
     description:
-      'No testimonials. No borrowed logos. The instrument is the evidence. Samples shown for structure only. Every engagement begins with your own diagnostic.',
-    figures: [
+      'Independent studies and industry measurements document the transition from click-based search to synthesis-driven discovery. The metrics below establish why machine-readable verification is required.',
+  },
+  methodSection: {
+    h2: 'How I³ reads the field',
+    description:
+      'Rather than chasing superficial keywords, the I³ protocol audits the three foundational layers that determine how generative discovery engines interpret your commercial authority.',
+    cards: [
       {
-        id: 'fig-01',
-        caption: 'Sample diagnostic artifact: AI Exposure Index readout.',
-        description: 'Entity mesh audit verifying canonical provenance and citation fidelity across generative discovery models.',
+        id: 'method-question-map',
+        name: 'Question Map',
+        title: 'Commercial Intent & Category Questions',
+        description:
+          'We identify the commercial questions that shape your category, buyer decisions, and local or vertical relevance.',
       },
       {
-        id: 'fig-02',
-        caption: 'Sample diagnostic artifact: three-tier visibility roadmap.',
-        description: 'Query synthesis diagnostic assessing coverage, retrieval depth, and structured identity boundaries.',
+        id: 'method-evidence-map',
+        name: 'Evidence Map',
+        title: 'Verifiable Claims & Identity Mesh',
+        description:
+          'We review whether your website and supporting sources make your claims easy to verify, attribute, and understand.',
+      },
+      {
+        id: 'method-representation-map',
+        name: 'Representation Map',
+        title: 'Model Synthesis & Discovery Coverage',
+        description:
+          'We compare the available evidence with the way a business may be summarized, recommended, or omitted in AI-assisted discovery.',
       },
     ],
+  },
+  mtmFix: {
+    h2: 'The repair is not more noise. It is better evidence.',
+    body: 'The goal is to create a connected system of clear pages, verified claims, structured entities, credible sources, and measurable feedback. That gives people and machines something durable to work with.',
+  },
+  deliverables: {
+    h2: 'Your I³ Visibility Snapshot includes',
+    bullets: [
+      'A category-question map',
+      'An evidence and entity review',
+      'A representation-risk summary',
+      'A prioritized next-step recommendation',
+    ],
+  },
+  limitations: {
+    h2: 'What I³ does not promise',
+    body: 'I³ does not guarantee rankings, AI citations, traffic, leads, or revenue. It identifies where the available evidence is thin, inconsistent, unclear, or disconnected so you can make an informed repair decision.',
+  },
+  decisionFramework: {
+    h2: 'Is an I³ Visibility Snapshot the right next move?',
+    bullets: [
+      'You rely on reputation, expertise, or category authority to win business',
+      'Buyers research before they contact you',
+      'Your website does not clearly show the evidence behind your claims',
+      'You want a structured starting point before committing to a larger visibility build',
+    ],
+  },
+  faqSection: {
+    h2: 'Questions business owners ask about AI visibility',
+    items: [
+      {
+        question: 'What is an AI visibility audit?',
+        answer:
+          'An AI visibility audit reviews the public evidence that helps search systems and buyers understand, verify, and describe a business. It focuses on clarity, consistency, source support, and commercial relevance.',
+      },
+      {
+        question: 'How is AI search visibility different from SEO?',
+        answer:
+          'SEO remains important because websites need to be discoverable and useful. AI search visibility adds focus on whether a system can connect reliable information, entities, claims, and sources into an accurate answer about the business.',
+      },
+      {
+        question: 'What does I³ examine?',
+        answer:
+          'I³ examines commercial questions, website evidence, business identity signals, and supporting source material. The output is a prioritized visibility snapshot.',
+      },
+      {
+        question:
+          'Will an I³ Visibility Snapshot guarantee rankings or AI citations?',
+        answer:
+          'No. Search results and AI-generated answers change across platforms and time. The snapshot identifies evidence gaps and practical next steps; it does not promise a specific placement, citation, traffic level, or revenue outcome.',
+      },
+      {
+        question: 'What happens after I request a snapshot?',
+        answer:
+          'Your submission is recorded in the MTM intake system. The team reviews the business context and routes the appropriate fulfillment or next step.',
+      },
+    ],
+  },
+  finalCta: {
+    heading: 'Start with the evidence your business already gives the market.',
+    description:
+      'Request your zero-cost I³ Visibility Snapshot to see where your public evidence is clear, where it is disconnected, and how generative engines interpret your authority.',
+    buttonText: 'Request Your I³ Visibility Snapshot',
   },
   endcap: {
     eyebrow: 'The MTM Armory',
     title: 'Sharpen the instruments.',
-    description: 'The MTM Armory holds the working tools, open for inspection.',
+    description:
+      'The MTM Armory holds the working tools, protocols, and architectural specifications open for inspection.',
     ctaLabel: 'Visit the Armory',
     ctaUrl: 'https://armory.mtmediaai.com',
-  },
-  cta: {
-    eyebrow: 'Prefer our briefings in your results? Add MT Media AI as a preferred source.',
-    heading: 'The Machines Are Already Deciding.',
-    description:
-      'Every month, more of your next clients ask an engine instead of a neighbor. The Lux Snapshot shows what those engines can see, and what they cannot.',
-    buttonText: 'Claim Your Lux Snapshot',
-    preferredSourcesFallbackUrl: 'https://www.google.com/preferences/source?q=mtmediaai.com',
   },
   footer: {
     disclaimer:
       'Educational content. Results vary; no specific outcome is promised. Nothing here is legal, financial, or professional advice.',
-    aiDisclosure: 'AI-assisted content | MT Media AI. AI can make mistakes; verify independently.',
+    aiDisclosure:
+      'AI-assisted content | MT Media AI. AI can make mistakes; verify independently.',
     location: 'The Woodlands · Houston Metro · 77380',
-    attributionSeal: 'Authored by MTM · AI-Enhanced · Published 09-09-2026',
+    attributionSeal:
+      'Authored by Kareem Daniel, Founder of MT Media AI | Enhanced by Circuit, MT Media AI | Published by MT Media AI · Modern Touch Media',
     entityHandle: '@mtmediaai · GitHub · LinkedIn',
     links: {
       github: {
@@ -296,8 +326,9 @@ export const siteCopy: SiteCopy = {
       'This page hosts a secure intake form. No third-party trackers. What you share stays within your engagement.',
   },
   modal: {
-    title: 'Claim Your Lux Snapshot',
-    description: 'Five fields. One diagnostic. Assembled for your business and delivered to your inbox.',
+    title: 'Request Your I³ Visibility Snapshot',
+    description:
+      'Five fields. One diagnostic. Assembled for your business and delivered to your inbox.',
     fields: {
       fullName: {
         label: 'Full name',
@@ -336,7 +367,8 @@ export const siteCopy: SiteCopy = {
     },
     submitButton: 'Request My Snapshot',
     submittingButton: 'Processing Request...',
-    successMessage: 'Request received. Your Lux Snapshot is assembled and delivered to your inbox.',
+    successMessage:
+      'Request received. Your I³ Visibility Snapshot is assembled and delivered to your inbox.',
     errorMessage: 'One or more fields need attention. Review and resubmit.',
     closeButton: 'Close',
   },
