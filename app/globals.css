@@ -238,3 +238,46 @@ h1, h2, h3, h4, h5, h6 {
 .lenz-cta-glow {
   background: radial-gradient(circle at 50% 0%, rgba(212, 175, 55, 0.15) 0%, rgba(255, 255, 255, 0.03) 60%, transparent 100%);
 }
+
+/* ── PRECISION EDITORIAL SCROLLYTELLING ADDITIONS ── */
+.editorial-outline-num {
+  font-family: var(--font-playfair);
+  font-size: clamp(3.5rem, 8vw, 7rem);
+  font-weight: 900;
+  line-height: 1;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(212, 175, 55, 0.35);
+  user-select: none;
+}
+
+.overhead-light-tube {
+  position: absolute;
+  height: 2px;
+  background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.4) 50%, transparent 100%);
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.6), 0 0 30px rgba(212, 175, 55, 0.3);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.beam-floor-reflection {
+  position: absolute;
+  bottom: 0;
+  left: 10%;
+  right: 10%;
+  height: 60px;
+  background: radial-gradient(ellipse at 50% 100%, rgba(212, 175, 55, 0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+/* ── PREFERS REDUCED MOTION SAFEGUARD (0 CLS / ACCESSIBILITY) ── */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .telemetry-fill {
+    transition: none !important;
+  }
+}

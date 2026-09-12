@@ -7,6 +7,7 @@ import { SocialProofCarousel } from '@/components/social-proof-carousel';
 import { ForgeSectionHeader } from '@/components/forge-section-header';
 import { TelemetryHeader } from '@/components/telemetry-header';
 import { HoustonSpatialMesh } from '@/components/houston-spatial-mesh';
+import { LandmarkShowcase } from '@/components/landmark-showcase';
 import { IgnitionHubPreview } from '@/components/ignition-hub-preview';
 import { Monogram } from '@/components/monogram';
 
@@ -20,22 +21,31 @@ export default function HomePage() {
       <div className="studio-light-canopy" aria-hidden="true" />
       <div className="solar-arc-halo" aria-hidden="true" />
 
+      {/* Mustang Fastback Overhead Studio Light Tube Beams */}
+      <div className="overhead-light-tube top-24 left-[10%] w-[80%]" aria-hidden="true" />
+      <div className="overhead-light-tube top-36 left-[25%] w-[50%] opacity-60" aria-hidden="true" />
+
       <main className="flex-1 max-w-6xl mx-auto w-full px-4 sm:px-6 py-12 space-y-24 relative z-10">
-        {/* 1. Hero Section */}
+        {/* 1. Hero Section (Chapter 01: The AI Erasure) */}
         <section
           id="hero"
+          data-chapter="01"
           className="space-y-6 pt-4 pb-10 border-b border-white/10 relative"
         >
           <div className="lenz-ambient-glow" aria-hidden="true" />
+          <div className="beam-floor-reflection" aria-hidden="true" />
 
-          {/* Echo Containment Eyebrow */}
-          <div>
+          {/* Chapter Outline Tag & Echo Containment Eyebrow */}
+          <div className="flex items-center justify-between gap-4">
             <div className="forge-echo-containment">
               <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-gold)]" aria-hidden="true" />
               <span className="text-[11px] font-mono font-bold tracking-widest uppercase text-[var(--color-gold)]">
                 {siteCopy.hero.eyebrow}
               </span>
             </div>
+            <span className="font-mono text-[10px] text-white/40 tracking-widest uppercase hidden sm:inline">
+              CHAPTER 01 // OVERVIEW
+            </span>
           </div>
 
           <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-[var(--color-rim)] tracking-tight leading-tight max-w-4xl font-serif sword-blade-glow">
@@ -47,7 +57,7 @@ export default function HomePage() {
           </p>
 
           {/* AEO TL;DR Answer Block (40-60 Words for Direct AI Extraction) */}
-          <div className="glass-onyx border-l-4 border-l-[var(--color-gold)] p-5 sm:p-6 rounded-r-xl max-w-3xl shadow-2xl clinical-rim">
+          <div className="glass-onyx border-l-4 border-l-[var(--color-gold)] p-5 sm:p-6 rounded-r-xl max-w-3xl shadow-2xl clinical-rim crosshair">
             <p className="text-xs sm:text-sm text-[var(--color-chrome-white)]/90 leading-relaxed font-serif">
               <strong className="text-[var(--color-gold)] font-sans uppercase tracking-wider text-xs block mb-1">
                 {siteCopy.hero.aeoBlock.title}
@@ -75,16 +85,20 @@ export default function HomePage() {
           <SocialProofCarousel />
         </section>
 
-        {/* 2. Fast Answer Table (First 300px of content beneath hero) */}
+        {/* 2. Fast Answer Table (Chapter 02: Fast Answers) */}
         <section
           id="fast-answers"
-          className="space-y-6 border-b border-white/10 pb-16"
+          data-chapter="02"
+          className="space-y-6 border-b border-white/10 pb-16 relative"
         >
-          <ForgeSectionHeader
-            eyebrow={siteCopy.fastAnswers.eyebrow}
-            title={siteCopy.fastAnswers.heading}
-            subtitle="Core operational answers and deliverable standards for neural discovery engines"
-          />
+          <div className="flex items-center justify-between gap-4">
+            <ForgeSectionHeader
+              eyebrow={siteCopy.fastAnswers.eyebrow}
+              title={siteCopy.fastAnswers.heading}
+              subtitle="Core operational answers and deliverable standards for neural discovery engines"
+            />
+            <span className="editorial-outline-num opacity-20 hidden lg:block">02</span>
+          </div>
 
           <div className="overflow-hidden rounded-xl border border-white/15 glass-onyx shadow-2xl clinical-rim">
             <div className="divide-y divide-white/10">
@@ -125,16 +139,20 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* 4. Evidence Matrix Section */}
+        {/* 4. Evidence Matrix Section (Chapter 03: Evidence Audit) */}
         <section
           id="evidence"
-          className="space-y-8 border-b border-white/10 pb-20"
+          data-chapter="03"
+          className="space-y-8 border-b border-white/10 pb-20 relative"
         >
-          <ForgeSectionHeader
-            eyebrow="EVIDENTIARY AUDIT"
-            title={siteCopy.evidenceSection.h2}
-            subtitle={siteCopy.evidenceSection.description}
-          />
+          <div className="flex items-center justify-between gap-4">
+            <ForgeSectionHeader
+              eyebrow="EVIDENTIARY AUDIT"
+              title={siteCopy.evidenceSection.h2}
+              subtitle={siteCopy.evidenceSection.description}
+            />
+            <span className="editorial-outline-num opacity-20 hidden lg:block">03</span>
+          </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {evidenceLedger.map((item) => (
@@ -173,17 +191,23 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* 5. Houston Metropolitan Spatial Architecture (God's Eye View & Local SEO Grounding) */}
-        <section id="houston-gev" className="space-y-8 border-b border-white/10 pb-20">
-          <ForgeSectionHeader
-            eyebrow="GEOGRAPHIC GROUNDING"
-            title="Metropolitan Entity Architecture: Grounding Prestige in Physical Space"
-            subtitle="Neural search models evaluate local geographic corroboration before citing high-value service firms in Greater Houston"
-          />
+        {/* 5. Houston Metropolitan Spatial Architecture (Chapter 04: Spatial Radar) */}
+        <section id="houston-gev" data-chapter="04" className="space-y-8 border-b border-white/10 pb-20 relative">
+          <div className="flex items-center justify-between gap-4">
+            <ForgeSectionHeader
+              eyebrow="GEOGRAPHIC GROUNDING"
+              title="Metropolitan Entity Architecture: Grounding Prestige in Physical Space"
+              subtitle="Neural search models evaluate local geographic corroboration before citing high-value service firms in Greater Houston"
+            />
+            <span className="editorial-outline-num opacity-20 hidden lg:block">04</span>
+          </div>
           <HoustonSpatialMesh />
         </section>
 
-        {/* 6. I³ Method Section */}
+        {/* 6. Machine-Legible Houston Architectural Dossier (Chapter 05: Architectural Dossier) */}
+        <LandmarkShowcase />
+
+        {/* 7. I³ Method Section */}
         <section id="method" className="space-y-8 border-b border-white/10 pb-20">
           <ForgeSectionHeader
             eyebrow="DIAGNOSTIC FRAMEWORK"
@@ -208,7 +232,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* 7. MTM Fix Section */}
+        {/* 8. MTM Fix Section */}
         <section
           id="mtm-fix"
           className="space-y-6 border-b border-white/10 pb-16"
@@ -225,11 +249,24 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* 8. Deliverables & Limitations Section with Living Inspiration Ignition Hub */}
+        {/* 9. Deliverables & Limitations Section with Living Inspiration Ignition Hub (Chapter 06: Living Deliverable) */}
         <section
           id="deliverables"
-          className="space-y-12 border-b border-white/10 pb-20"
+          data-chapter="06"
+          className="space-y-12 border-b border-white/10 pb-20 relative"
         >
+          <div className="flex items-center justify-between gap-4">
+            <div className="space-y-1">
+              <span className="font-mono text-xs tracking-widest text-[var(--color-gold)] uppercase font-bold">
+                [ CHAPTER 06 // LIVING DELIVERABLE ]
+              </span>
+              <h2 className="text-2xl sm:text-3xl font-bold font-serif text-[var(--color-rim)]">
+                The Inspiration Ignition Hub™
+              </h2>
+            </div>
+            <span className="editorial-outline-num opacity-20 hidden lg:block">06</span>
+          </div>
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div className="glass-onyx p-7 space-y-5 clinical-rim flex flex-col justify-between">
               <div className="space-y-5">
@@ -246,9 +283,9 @@ export default function HomePage() {
                   </div>
                 </div>
 
-                <h2 className="text-xl sm:text-2xl font-bold text-[var(--color-rim)] font-serif">
+                <h3 className="text-xl sm:text-2xl font-bold text-[var(--color-rim)] font-serif">
                   {siteCopy.deliverables.h2}
-                </h2>
+                </h3>
 
                 <ul className="space-y-3.5 text-xs sm:text-sm text-[var(--color-chrome)]">
                   {siteCopy.deliverables.bullets.map((bullet, idx) => (
@@ -272,9 +309,9 @@ export default function HomePage() {
                   TRUTH BOUNDARY
                 </span>
               </div>
-              <h2 className="text-xl sm:text-2xl font-bold text-[var(--color-rim)] font-serif">
+              <h3 className="text-xl sm:text-2xl font-bold text-[var(--color-rim)] font-serif">
                 {siteCopy.limitations.h2}
-              </h2>
+              </h3>
               <p className="text-xs sm:text-sm text-[var(--color-chrome)] leading-relaxed">
                 {siteCopy.limitations.body}
               </p>
@@ -285,7 +322,7 @@ export default function HomePage() {
           <IgnitionHubPreview />
         </section>
 
-        {/* 9. Decision Framework Section */}
+        {/* 10. Decision Framework Section */}
         <section
           id="decision-framework"
           className="space-y-6 border-b border-white/10 pb-20"
@@ -310,7 +347,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* 10. Visible FAQs Section (Server-Rendered HTML) */}
+        {/* 11. Visible FAQs Section (Server-Rendered HTML) */}
         <section id="faq" className="space-y-8 border-b border-white/10 pb-20">
           <ForgeSectionHeader
             eyebrow="KNOWLEDGE BASE"
@@ -335,14 +372,15 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* 11. Final CTA Section */}
+        {/* 12. Final CTA Section (Chapter 07: Sovereign Intake) */}
         <section
           id="final-cta"
+          data-chapter="07"
           className="space-y-6 pt-4 pb-12 text-center max-w-3xl mx-auto relative"
         >
           <div className="lenz-cta-glow glass-onyx p-8 sm:p-12 rounded-2xl border border-white/15 clinical-rim space-y-6 shadow-2xl">
             <div className="inline-block text-[11px] font-mono font-bold tracking-widest uppercase text-[var(--color-gold)]">
-              SOVEREIGN ENTRANCE
+              [ CHAPTER 07 // SOVEREIGN ENTRANCE ]
             </div>
             <h2 className="text-2xl sm:text-4xl font-bold text-[var(--color-rim)] font-serif sword-blade-glow">
               {siteCopy.finalCta.heading}
@@ -356,7 +394,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* 12. Armory Endcap */}
+        {/* 13. Armory Endcap */}
         <section
           id="endcap"
           className="border-t border-white/10 pt-10 pb-4 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[var(--color-chrome)]"

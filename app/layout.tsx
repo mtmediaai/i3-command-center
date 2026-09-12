@@ -66,13 +66,28 @@ const jsonLdGraph = {
       name: siteCopy.meta.pageTitle,
       description: siteCopy.meta.metaDescription,
       datePublished: '2026-09-09',
+      dateModified: '2026-09-12',
       inLanguage: 'en-US',
     },
     {
       '@type': 'Organization',
       '@id': 'https://mtmediaai.com/#organization',
       name: 'MT Media AI',
+      alternateName: 'Modern Touch Media',
       url: 'https://mtmediaai.com',
+      sameAs: [
+        'https://www.linkedin.com/company/104424194/',
+        'https://www.linkedin.com/in/kareemdaniel/',
+        'https://kareemdanielmtm.substack.com/',
+        'https://substack.com/@mtmediaai',
+        'https://www.youtube.com/@mtmediaai',
+        'https://www.facebook.com/mtmediaai',
+        'https://www.instagram.com/mtmediaai',
+        'https://x.com/mtmediaai',
+        'https://www.threads.com/@mtmediaai',
+        'https://www.tiktok.com/@mtmediaai',
+        'https://www.pinterest.com/mtmediaai/'
+      ],
     },
     {
       '@type': 'Person',
@@ -86,7 +101,70 @@ const jsonLdGraph = {
       provider: {
         '@id': 'https://mtmediaai.com/#organization',
       },
-      areaServed: ['The Woodlands', 'Houston Metro', 'United States'],
+      areaServed: [
+        {
+          '@type': 'AdministrativeArea',
+          'name': 'The Woodlands',
+          'postalCode': '77380',
+          'addressRegion': 'TX',
+          'sameAs': 'https://en.wikipedia.org/wiki/The_Woodlands,_Texas',
+        },
+        {
+          '@type': 'City',
+          'name': 'Houston',
+          'addressRegion': 'TX',
+          'sameAs': 'https://en.wikipedia.org/wiki/Houston',
+        },
+        {
+          '@type': 'LandmarksOrHistoricalBuildings',
+          'name': 'Williams Tower',
+          'geo': {
+            '@type': 'GeoCoordinates',
+            'latitude': 29.7533,
+            'longitude': -95.4611,
+          },
+          'sameAs': 'https://en.wikipedia.org/wiki/Williams_Tower',
+        },
+        {
+          '@type': 'TouristAttraction',
+          'name': 'Space Center Houston',
+          'geo': {
+            '@type': 'GeoCoordinates',
+            'latitude': 29.5519,
+            'longitude': -95.0974,
+          },
+          'sameAs': 'https://en.wikipedia.org/wiki/Space_Center_Houston',
+        },
+        {
+          '@type': 'TouristAttraction',
+          'name': 'The Woodlands Waterway',
+          'geo': {
+            '@type': 'GeoCoordinates',
+            'latitude': 30.1588,
+            'longitude': -95.4608,
+          },
+        },
+        {
+          '@type': 'LandmarksOrHistoricalBuildings',
+          'name': 'Heritage Plaza',
+          'geo': {
+            '@type': 'GeoCoordinates',
+            'latitude': 29.7583,
+            'longitude': -95.3698,
+          },
+          'sameAs': 'https://en.wikipedia.org/wiki/Heritage_Plaza',
+        },
+        {
+          '@type': 'ArtGallery',
+          'name': 'The Museum of Fine Arts, Houston',
+          'geo': {
+            '@type': 'GeoCoordinates',
+            'latitude': 29.7219,
+            'longitude': -95.3905,
+          },
+          'sameAs': 'https://en.wikipedia.org/wiki/Museum_of_Fine_Arts,_Houston',
+        },
+      ],
       serviceType: [
         'AI Visibility Audit',
         'Generative Engine Optimization',

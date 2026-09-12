@@ -6,12 +6,13 @@ import { ModalTrigger } from './modal-trigger';
 import { siteCopy } from '@/content/site-copy';
 
 const CHAPTERS = [
-  { id: 'hero', code: '01', title: 'AI ERASURE' },
+  { id: 'hero', code: '01', title: 'THE AI ERASURE' },
   { id: 'fast-answers', code: '02', title: 'FAST ANSWERS' },
   { id: 'evidence', code: '03', title: 'EVIDENCE AUDIT' },
-  { id: 'houston-gev', code: '04', title: 'SPATIAL ARCHITECTURE' },
-  { id: 'deliverables', code: '05', title: 'LIVING DELIVERABLE' },
-  { id: 'final-cta', code: '06', title: 'SOVEREIGN INTAKE' },
+  { id: 'houston-gev', code: '04', title: 'SPATIAL RADAR' },
+  { id: 'houston-landmarks', code: '05', title: 'ARCHITECTURAL DOSSIER' },
+  { id: 'deliverables', code: '06', title: 'LIVING DELIVERABLE' },
+  { id: 'final-cta', code: '07', title: 'SOVEREIGN INTAKE' },
 ];
 
 export function TelemetryHeader() {
@@ -50,6 +51,10 @@ export function TelemetryHeader() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Frame calculation for precision editorial motion capture (0001 to 0120)
+  const currentFrame = String(Math.min(120, Math.max(1, Math.round((scrollProgress / 100) * 119) + 1))).padStart(4, '0');
+  const formattedProgress = String(Math.round(scrollProgress)).padStart(3, '0');
+
   return (
     <header className="border-b border-white/10 bg-[var(--color-obsidian)]/95 sticky top-0 z-50 backdrop-blur-md clinical-rim">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between gap-4">
@@ -62,19 +67,27 @@ export function TelemetryHeader() {
             </span>
             <div className="flex items-center gap-2 text-[10px] font-mono text-white/50">
               <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-gold)] animate-pulse" aria-hidden="true" />
-              <span className="tracking-widest uppercase">HOUSTON SPATIAL GRID : 29°45'N 95°22'W</span>
+              <span className="tracking-widest uppercase">HOUSTON SPATIAL GRID : 29°45&apos;N 95°22&apos;W</span>
             </div>
           </div>
         </div>
 
-        {/* Center: Dynamic Chapter Indicator (Hidden on smallest screens) */}
-        <div className="hidden md:flex items-center gap-2.5 px-3.5 py-1 rounded-full border border-white/10 bg-white/[0.02]">
+        {/* Center: Dynamic Chapter & Telemetry Readout */}
+        <div className="hidden md:flex items-center gap-3 px-4 py-1.5 rounded-full border border-white/10 bg-white/[0.02]">
           <span className="text-[10px] font-mono font-bold text-[var(--color-gold)]">
-            CHAPTER {activeChapter.code} / 06
+            CH {activeChapter.code} / 07
           </span>
           <span className="text-white/30 text-xs">|</span>
-          <span className="text-[10px] font-mono tracking-wider text-white/70 uppercase">
+          <span className="text-[10px] font-mono tracking-wider text-white/80 uppercase">
             {activeChapter.title}
+          </span>
+          <span className="text-white/30 text-xs">|</span>
+          <span className="text-[10px] font-mono text-[var(--color-lightning-blue)] font-bold">
+            F {currentFrame} / 0120
+          </span>
+          <span className="text-white/30 text-xs">|</span>
+          <span className="text-[10px] font-mono text-white/60">
+            {formattedProgress}%
           </span>
         </div>
 
@@ -112,7 +125,7 @@ export function TelemetryHeader() {
         </div>
       </div>
 
-      {/* Persistent 1px Telemetry Scroll Progress Rail */}
+      {/* Persistent Precision Telemetry Scroll Progress Rail */}
       <div className="telemetry-rail" role="progressbar" aria-valuenow={Math.round(scrollProgress)} aria-valuemin={0} aria-valuemax={100} aria-label="Reading progress">
         <div className="telemetry-fill" style={{ width: `${scrollProgress}%` }} />
       </div>
