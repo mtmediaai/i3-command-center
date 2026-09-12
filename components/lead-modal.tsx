@@ -101,7 +101,7 @@ export function LeadModal({ open, onOpenChange }: LeadModalProps) {
     <Dialog.Root open={open} onOpenChange={onOpenChange}>
       <Dialog.Portal>
         <Dialog.Overlay className="fixed inset-0 z-50 bg-black/85 backdrop-blur-xs transition-opacity" />
-        <Dialog.Content className="fixed left-1/2 top-1/2 z-50 w-[94vw] max-w-lg -translate-x-1/2 -translate-y-1/2 rounded-lg border border-[var(--color-gold)] bg-[var(--color-void)] p-6 sm:p-8 shadow-[0_0_30px_rgba(212,175,55,0.25)] text-[var(--color-rim)] max-h-[90vh] overflow-y-auto focus:outline-none">
+        <Dialog.Content className="fixed left-1/2 top-1/2 z-50 w-[94vw] max-w-lg -translate-x-1/2 -translate-y-1/2 rounded-xl border border-white/20 bg-[#0A0A0A] p-6 sm:p-8 shadow-[0_0_50px_rgba(0,0,0,0.9),0_0_30px_rgba(212,175,55,0.2)] text-[var(--color-chrome-white)] max-h-[90vh] overflow-y-auto focus:outline-none clinical-rim">
           <div className="flex items-start justify-between mb-4 border-b border-white/10 pb-3">
             <div>
               <Dialog.Title className="text-xl font-bold tracking-tight text-[var(--color-rim)] font-serif">
@@ -279,7 +279,7 @@ export function LeadModal({ open, onOpenChange }: LeadModalProps) {
               <button
                 type="submit"
                 disabled={loading || !consent}
-                className="w-full py-3 rounded font-semibold text-sm transition-all duration-150 border border-[var(--color-gold)] bg-[var(--color-gold)] text-black hover:bg-[var(--color-gold)]/90 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+                className="w-full py-3.5 rounded-lg font-semibold text-sm transition-all duration-150 border border-[var(--color-gold)] midas-glow-button text-black disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-gold)]"
               >
                 {loading ? siteCopy.modal.submittingButton : siteCopy.modal.submitButton}
               </button>

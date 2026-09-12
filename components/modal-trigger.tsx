@@ -16,7 +16,7 @@ export function ModalTrigger({ label, className }: ModalTriggerProps) {
       <button
         type="button"
         onClick={() => setOpen(true)}
-        className={className || "px-6 py-3 rounded border border-[var(--color-gold)] bg-[var(--color-gold)] text-black font-semibold text-sm hover:bg-[var(--color-gold)]/90 transition-all cursor-pointer shadow-[0_0_15px_rgba(212,175,55,0.25)]"}
+        className={className || "px-7 py-3.5 rounded-lg border border-[var(--color-gold)] midas-glow-button text-black font-semibold text-sm cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-gold)] active:scale-[0.98]"}
       >
         {label}
       </button>

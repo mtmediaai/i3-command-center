@@ -30,7 +30,7 @@ The primary intent cluster targets **Bottom-of-the-Funnel (BOFU) commercial inte
    `Is AI Erasing Your Business When High-Net-Worth Buyers Ask Who To Trust?`
    (Path: `app/page.tsx`, `content/site-copy.ts`, `config/site.config.ts`)
 4. **The Opening Sentence & AEO Answer Block**:
-   - First sentence introduces the full name: `MT Media AI's I³ System, Invisible Infrastructure Intelligence, translates your real-world prestige and referral trust into machine-readable data across ChatGPT, Gemini, and Perplexity.`
+   - First sentence introduces the full name: `MT Media AI's I³ System, Invisible Infrastructure Intelligence, translates your real-world prestige and referral trust into machine-readable data across Google AI Overviews, Google AI Mode, ChatGPT, Gemini, and Perplexity.`
    - AEO TL;DR Answer Block (48 words, within 40–60 word mandate for direct LLM extraction):
      `What is the I³ AI Visibility Diagnosis? The Invisible Infrastructure Intelligence (I³ System) diagnoses AI Brand Ignorance by mapping buyer conversational queries, analyzing large language model retrieval sources, and auditing first-party entity evidence. It identifies where AI engines erase established referral businesses and delivers a structured diagnostic roadmap to restore machine legibility and citation authority.`
    (Path: `app/page.tsx`, `content/site-copy.ts`)
@@ -42,10 +42,10 @@ The primary intent cluster targets **Bottom-of-the-Funnel (BOFU) commercial inte
    - FAQ Header: `Questions Business Owners Ask About AI Visibility and AI Erasure`
      - Q1: `What is an AI visibility audit?`
      - Q2: `How is AI search visibility different from traditional SEO?`
-     - Q3: `Why isn't my referral business showing up in ChatGPT, Gemini, or Perplexity?`
+     - Q3: `Why isn't my referral business showing up in Google AI Overviews, Google AI Mode, ChatGPT, Gemini, or Perplexity?`
      - Q4: `What is AI Brand Ignorance and how does the I³ System resolve it?`
      - Q5: `Will an I³ Visibility Snapshot guarantee AI search citations or rankings?`
-     - Q6: `What happens after I request an I³ Visibility Snapshot?`
+     - Q6: `What happens after I request an I³ Visibility Snapshot?` (Inspiration Ignition Hub via Gemini Notebook / NotebookLM)
    (Path: `app/page.tsx`, `content/site-copy.ts`)
 
 ---

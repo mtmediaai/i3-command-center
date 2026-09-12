@@ -303,6 +303,10 @@ async function runSuite() {
       siteCopy.hero.subhead.includes('Invisible Infrastructure Intelligence'),
       'Layer 2: Hero subhead must introduce the full system name upfront'
     );
+    assert.ok(
+      siteCopy.hero.subhead.includes('Google AI Overviews') && siteCopy.hero.subhead.includes('Google AI Mode'),
+      'Layer 2: Hero subhead must include Google AI Overviews and Google AI Mode'
+    );
 
     // 2b. AEO Answer Block (40-60 words)
     assert.ok(siteCopy.hero.aeoBlock, 'AEO Answer block must exist');
@@ -323,7 +327,7 @@ async function runSuite() {
     assert.strictEqual(siteCopy.faqSection.items.length, 6, 'Layer 4: 6 visible FAQs verified');
     const faqTitles = siteCopy.faqSection.items.map((i) => i.question).join(' ');
     assert.ok(faqTitles.includes('What is an AI visibility audit?'), 'FAQ 1 verified');
-    assert.ok(faqTitles.includes('Why isn\'t my referral business showing up in ChatGPT, Gemini, or Perplexity?'), 'FAQ 3 verified');
+    assert.ok(faqTitles.includes('Google AI Overviews') && faqTitles.includes('Google AI Mode'), 'FAQ 3 verified');
     assert.ok(faqTitles.includes('What is AI Brand Ignorance and how does the I³ System resolve it?'), 'FAQ 4 verified');
 
     // 5. Machine layer
@@ -332,7 +336,28 @@ async function runSuite() {
     assert.ok(llmsContent.includes('I³ Visibility Snapshot'), 'Layer 5: llms.txt verified');
   });
 
-  // 15. Preferred Sources Gating Probe
+  // 15. Anti-Static Deliverable & Inspiration Ignition Hub Probe
+  await runAsyncProbe('Anti-Static Deliverable Probe: Inspiration Ignition Hub notebook deliverable verified', () => {
+    const fastAnswer3 = siteCopy.fastAnswers.items[2].answer;
+    assert.ok(
+      fastAnswer3.includes('Inspiration Ignition Hub') && fastAnswer3.includes('Gemini Notebook / NotebookLM'),
+      'Fast answer 3 must name Inspiration Ignition Hub and Gemini Notebook / NotebookLM'
+    );
+    assert.ok(
+      fastAnswer3.includes('Anti-Static Deliverables Doctrine'),
+      'Fast answer 3 must reference Anti-Static Deliverables Doctrine'
+    );
+    const delivBullets = siteCopy.deliverables.bullets.join(' ');
+    assert.ok(
+      delivBullets.includes('Inspiration Ignition Hub') && delivBullets.includes('Perplexity AI'),
+      'Deliverables bullets must include Inspiration Ignition Hub and Perplexity AI benchmark'
+    );
+    const pageHtml = fs.readFileSync(path.join(process.cwd(), 'app/page.tsx'), 'utf8');
+    assert.ok(pageHtml.includes('Anti-Static Deliverable'), 'Page must display Anti-Static Deliverable badge');
+    assert.ok(pageHtml.includes('<ForgeSectionHeader'), 'Page must utilize ForgeSectionHeader component');
+  });
+
+  // 16. Preferred Sources Gating Probe
   await runAsyncProbe('Preferred Sources Gating Probe: Flag false, component returns null, zero destination emitted', () => {
     assert.strictEqual(siteConfig.preferredSourcesEnabled, false, 'Flag must be false');
     const pageHtml = fs.readFileSync(path.join(process.cwd(), 'app/page.tsx'), 'utf8');
