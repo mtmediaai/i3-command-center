@@ -24,6 +24,7 @@
   --font-georgia-italic: Georgia, serif;
   --font-machine-meta: 'Times New Roman', Times, serif;
   --font-ui: system-ui, -apple-system, sans-serif;
+  --scroll-progress: 0%;
 }
 
 body {
@@ -34,6 +35,7 @@ body {
   margin: 0;
   padding: 0;
   -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -41,31 +43,51 @@ h1, h2, h3, h4, h5, h6 {
   letter-spacing: -0.01em;
 }
 
-/* L1-L4 Lighting Protocol & Lenz Effect: Atmospheric Depth */
-.lenz-ambient-glow {
+/* ── GEV STUDIO LIGHT CANOPY (Mustang Fastback Linear Studio Light Reference) ── */
+.studio-light-canopy {
   position: absolute;
-  top: -100px;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+  background-image: 
+    linear-gradient(115deg, rgba(255,255,255,0.025) 0%, transparent 40%, transparent 60%, rgba(212,175,55,0.025) 100%),
+    linear-gradient(65deg, transparent 20%, rgba(255,255,255,0.02) 48%, rgba(255,255,255,0.06) 50%, rgba(255,255,255,0.02) 52%, transparent 80%),
+    linear-gradient(135deg, transparent 30%, rgba(212,175,55,0.03) 49%, rgba(212,175,55,0.08) 50%, rgba(212,175,55,0.03) 51%, transparent 70%);
+}
+
+/* ── SOLAR ARC HALO (Elephant Queen Golden Solar Eclipse Arc Reference) ── */
+.solar-arc-halo {
+  position: absolute;
+  top: -120px;
   left: 50%;
   transform: translateX(-50%);
-  width: 850px;
-  height: 480px;
-  background: radial-gradient(circle, rgba(212, 175, 55, 0.12) 0%, rgba(212, 175, 55, 0.02) 45%, rgba(5, 5, 5, 0) 70%);
+  width: min(1000px, 95vw);
+  height: 520px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 50% 30%, rgba(212, 175, 55, 0.16) 0%, rgba(182, 134, 44, 0.06) 40%, transparent 70%);
+  border-top: 1px solid rgba(212, 175, 55, 0.35);
+  box-shadow: 0 -20px 80px -10px rgba(212, 175, 55, 0.2);
   pointer-events: none;
   z-index: 0;
 }
 
-.lenz-cta-glow {
-  background: radial-gradient(circle at 50% 0%, rgba(212, 175, 55, 0.15) 0%, rgba(255, 255, 255, 0.03) 60%, transparent 100%);
+/* ── GEV SPATIAL GRID MESH (Bilawal Sidhu God's Eye View Spatial Architecture) ── */
+.gev-grid-pattern {
+  background-size: 48px 48px;
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
 }
 
-/* Sword-Blade Glow: High-Intensity White-Hot Outer Glow for Primary Titles */
+/* ── SWORD-BLADE GLOW: High-Intensity White-Hot Chiaroscuro ── */
 .sword-blade-glow {
   text-shadow: 0 0 20px rgba(245, 245, 245, 0.9),
                0 0 40px rgba(245, 245, 245, 0.6),
                0 0 80px rgba(212, 175, 55, 0.35);
 }
 
-/* The Forge Section Header Protocol (Echo + Nina + Goldie + Roman) */
+/* ── FORGE ECHO CONTAINMENT BADGE ── */
 .forge-echo-containment {
   display: inline-flex;
   align-items: center;
@@ -73,7 +95,7 @@ h1, h2, h3, h4, h5, h6 {
   padding: 0.25rem 0.75rem;
   border-radius: 9999px;
   border: 1px solid rgba(128, 128, 128, 0.4);
-  background: rgba(10, 10, 10, 0.7);
+  background: rgba(10, 10, 10, 0.75);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
@@ -95,9 +117,9 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 600;
 }
 
-/* Woke Up Protocol: High Gloss Onyx Foreground Surface & Clinical Rim */
+/* ── HIGH GLOSS ONYX FOREGROUND SURFACE & CLINICAL RIM ── */
 .glass-onyx {
-  background: rgba(10, 10, 10, 0.85);
+  background: rgba(10, 10, 10, 0.88);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border: 1px solid rgba(255, 255, 255, 0.14);
@@ -111,7 +133,7 @@ h1, h2, h3, h4, h5, h6 {
   box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.7), 0 0 25px rgba(212, 175, 55, 0.14);
 }
 
-/* Clinical Rim (10,000K HID cold surgical edge) */
+/* Clinical Rim: 10,000K HID cold surgical edge */
 .clinical-rim {
   border: 1px solid rgba(255, 255, 255, 0.16);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
@@ -138,6 +160,59 @@ h1, h2, h3, h4, h5, h6 {
   box-shadow: 0 0 14px rgba(0, 229, 255, 0.25);
 }
 
+/* ── PRECISION TELEMETRY PROGRESS RAIL (animated-website skill) ── */
+.telemetry-rail {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+}
+
+.telemetry-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #B6862C 0%, #D4AF37 50%, #00E5FF 100%);
+  width: var(--scroll-progress, 0%);
+  transition: width 0.1s linear;
+}
+
+/* Alignment crosshairs */
+.crosshair {
+  position: relative;
+}
+.crosshair::before {
+  content: "+";
+  position: absolute;
+  top: -8px;
+  left: -8px;
+  font-family: monospace;
+  font-size: 11px;
+  color: rgba(212, 175, 55, 0.4);
+}
+.crosshair::after {
+  content: "+";
+  position: absolute;
+  bottom: -8px;
+  right: -8px;
+  font-family: monospace;
+  font-size: 11px;
+  color: rgba(212, 175, 55, 0.4);
+}
+
+/* Ghosted Architectural Watermark */
+.watermark-ghost {
+  font-family: var(--font-playfair);
+  font-weight: 900;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.02);
+  user-select: none;
+  pointer-events: none;
+  letter-spacing: 0.15em;
+  white-space: nowrap;
+}
+
 /* Legacy utility alias kept for backward compatibility */
 .glass-panel {
   background: rgba(10, 10, 10, 0.8);
@@ -148,33 +223,18 @@ h1, h2, h3, h4, h5, h6 {
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-.glass-panel:hover {
-  border-color: rgba(212, 175, 55, 0.4);
-  box-shadow: 0 0 22px rgba(212, 175, 55, 0.12);
-}
-
-.machine-meta-block {
-  font-family: var(--font-machine-meta);
+.lenz-ambient-glow {
   position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border-width: 0;
+  top: -100px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 850px;
+  height: 480px;
+  background: radial-gradient(circle, rgba(212, 175, 55, 0.12) 0%, rgba(212, 175, 55, 0.02) 45%, rgba(5, 5, 5, 0) 70%);
+  pointer-events: none;
+  z-index: 0;
 }
 
-.footer-disclaimer {
-  font-family: var(--font-georgia-italic);
-  font-style: italic;
-}
-
-.attribution-seal-box {
-  border: 1px solid rgba(212, 175, 55, 0.3);
-  background: rgba(212, 175, 55, 0.03);
-  padding: 12px 16px;
-  border-radius: 8px;
-  box-shadow: inset 0 1px 0 rgba(212, 175, 55, 0.15);
+.lenz-cta-glow {
+  background: radial-gradient(circle at 50% 0%, rgba(212, 175, 55, 0.15) 0%, rgba(255, 255, 255, 0.03) 60%, transparent 100%);
 }
