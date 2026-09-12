@@ -66,6 +66,16 @@ export default function HomePage() {
             {siteCopy.hero.subhead}
           </p>
 
+          {/* AEO TL;DR Answer Block (40-60 Words for Direct AI Extraction) */}
+          <div className="bg-[var(--color-surface)]/80 border-l-4 border-[var(--color-gold)] p-5 sm:p-6 rounded-r-lg max-w-3xl shadow-xl backdrop-blur-md">
+            <p className="text-xs sm:text-sm text-[var(--color-rim)]/90 leading-relaxed font-serif">
+              <strong className="text-[var(--color-gold)] font-sans uppercase tracking-wider text-xs block mb-1">
+                {siteCopy.hero.aeoBlock.title}
+              </strong>
+              {siteCopy.hero.aeoBlock.body}
+            </p>
+          </div>
+
           <div className="flex flex-wrap items-center gap-4 pt-2">
             <ModalTrigger label={siteCopy.hero.primaryCta} />
             <a
