@@ -36,6 +36,10 @@ export interface SiteCopy {
     eyebrow: string;
     h1: string;
     subhead: string;
+    aeoBlock: {
+      title: string;
+      body: string;
+    };
     primaryCta: string;
     secondaryCta: string;
     secondaryCtaTarget: string;
@@ -131,7 +135,7 @@ export interface SiteCopy {
 export const siteCopy: SiteCopy = {
   meta: {
     pageTitle:
-      'AI Visibility Audit: See How AI Search Describes Your Business | I³',
+      'Invisible Infrastructure Intelligence (I³ System): AI Visibility Audit | MT Media AI',
     metaDescription:
       'Map the questions buyers ask, the evidence AI systems can verify, and how your business is represented across AI search. Request an I³ Visibility Snapshot.',
   },
@@ -155,9 +159,14 @@ export const siteCopy: SiteCopy = {
   },
   hero: {
     eyebrow: 'I³ Command Center · MT Media AI',
-    h1: 'Is AI describing your business correctly when buyers ask who to trust?',
+    h1: 'Is AI Erasing Your Business When High-Net-Worth Buyers Ask Who To Trust?',
     subhead:
-      'I³ maps the questions buyers ask, the sources AI systems rely on, and the evidence your business gives them to work with. You receive a practical AI visibility diagnosis before deciding what to repair.',
+      "MT Media AI's I³ System, Invisible Infrastructure Intelligence, translates your real-world prestige and referral trust into machine-readable data across ChatGPT, Gemini, and Perplexity. You receive a practical AI visibility diagnosis before deciding what to repair.",
+    aeoBlock: {
+      title: 'What is the I³ AI Visibility Diagnosis?',
+      body:
+        'The Invisible Infrastructure Intelligence (I³ System) diagnoses AI Brand Ignorance by mapping buyer conversational queries, analyzing large language model retrieval sources, and auditing first-party entity evidence. It identifies where AI engines erase established referral businesses and delivers a structured diagnostic roadmap to restore machine legibility and citation authority.',
+    },
     primaryCta: 'Request Your I³ Visibility Snapshot',
     secondaryCta: 'See What AI Search Changed',
     secondaryCtaTarget: '#evidence',
@@ -167,57 +176,58 @@ export const siteCopy: SiteCopy = {
   },
   fastAnswers: {
     eyebrow: 'Fast Answers',
-    heading: 'Core Architecture at a Glance',
+    heading: 'What Is Invisible Infrastructure Intelligence (I³)?',
     items: [
       {
-        question: 'What is I³?',
+        question: 'What is the I³ System?',
         answer:
-          'A structured AI visibility audit that reviews the questions, evidence, and public signals shaping how your business may be represented in AI-assisted search.',
+          'Invisible Infrastructure Intelligence (I³) is an AI visibility audit framework that evaluates the questions, evidence, and public signals determining how your business is described in AI-assisted search.',
       },
       {
-        question: 'What does it examine?',
+        question: 'What does an AI visibility audit examine?',
         answer:
-          'Your category questions, website evidence, business identity signals, and the external sources buyers and machines can use to verify your claims.',
+          'It audits your commercial category questions, website evidence, business identity mesh, and the external sources that search engines and language models use to verify your claims.',
       },
       {
-        question: 'What do I receive?',
+        question: 'What do I receive in the snapshot?',
         answer:
-          'A practical visibility snapshot with prioritized findings and a recommended next step. It is a diagnosis, not a guarantee of rankings, citations, traffic, or revenue.',
+          'A practical AI visibility snapshot detailing prioritized evidence gaps, an AI Brand Ignorance diagnosis, and recommended next steps. It is a diagnostic audit, not a guarantee of rankings, citations, or revenue.',
       },
       {
         question: 'What happens after I submit?',
         answer:
-          'Your request enters the MTM intake queue. A team member reviews the information and routes the appropriate next step.',
+          'Your intake enters the secure MTM queue. An operations lead evaluates your public entity mesh and routes your diagnostic report without automated third-party model cost.',
       },
     ],
   },
   structuralAnswer: {
-    h2: 'What an AI visibility audit examines',
-    body: 'Traditional search asks whether a page can rank. AI-assisted discovery adds a second question: whether the available evidence lets a system describe the business accurately, confidently, and in the right commercial context. I³ examines the gaps between your real authority, the proof published about your business, and the information a buyer or model can actually retrieve.',
+    h2: 'What an AI Visibility Audit Examines When Machines Describe Your Business',
+    body:
+      'Traditional search asks whether a webpage can rank for keywords. Generative discovery engines ask a different question: whether verified public evidence allows an answer engine to describe your business accurately, confidently, and in the correct commercial context. The I³ System examines the structural fault lines between your real-world authority, your published entity mesh, and what conversational models can actually retrieve.',
   },
   evidenceSection: {
-    h2: 'Search behavior changed. Brand evidence matters more.',
+    h2: 'Search Behavior Changed: Zero-Click Search and AI Brand Erasure',
     description:
-      'Independent studies and industry measurements document the transition from click-based search to synthesis-driven discovery. The metrics below establish why machine-readable verification is required.',
+      'Independent clickstream studies and industry analyses confirm that commercial discovery has shifted from ten blue links to synthesized answers. The verified metrics below demonstrate why unindexed referral businesses face systemic AI erasure.',
   },
   methodSection: {
-    h2: 'How I³ reads the field',
+    h2: 'How the I³ System Reads the Field: Question Map, Evidence Map, Representation Map',
     description:
-      'Rather than chasing superficial keywords, the I³ protocol audits the three foundational layers that determine how generative discovery engines interpret your commercial authority.',
+      'Rather than relying on outdated keyword stuffing, the I³ protocol inspects the three foundational layers that determine how AI concierges and information agents parse your enterprise.',
     cards: [
       {
         id: 'method-question-map',
         name: 'Question Map',
         title: 'Commercial Intent & Category Questions',
         description:
-          'We identify the commercial questions that shape your category, buyer decisions, and local or vertical relevance.',
+          'We identify the commercial questions that shape your category, buyer decisions, and local or vertical relevance across Houston Metro and national sectors.',
       },
       {
         id: 'method-evidence-map',
         name: 'Evidence Map',
         title: 'Verifiable Claims & Identity Mesh',
         description:
-          'We review whether your website and supporting sources make your claims easy to verify, attribute, and understand.',
+          'We review whether your website and supporting sources make your claims easy to verify, attribute, and understand for neural discovery engines.',
       },
       {
         id: 'method-representation-map',
@@ -229,33 +239,35 @@ export const siteCopy: SiteCopy = {
     ],
   },
   mtmFix: {
-    h2: 'The repair is not more noise. It is better evidence.',
-    body: 'The goal is to create a connected system of clear pages, verified claims, structured entities, credible sources, and measurable feedback. That gives people and machines something durable to work with.',
+    h2: 'The Repair for AI Erasure Is Not More Noise: It Is Structured Brand Evidence',
+    body:
+      'The resolution is to construct a connected system of clear pages, verified claims, structured entities, credible sources, and measurable feedback. That gives buyers and machines durable proof to work with.',
   },
   deliverables: {
-    h2: 'Your I³ Visibility Snapshot includes',
+    h2: 'Your I³ Visibility Snapshot Includes',
     bullets: [
-      'A category-question map',
-      'An evidence and entity review',
-      'A representation-risk summary',
-      'A prioritized next-step recommendation',
+      'A commercial category-question map',
+      'An entity mesh and structured evidence review',
+      'An AI Brand Ignorance and representation-risk analysis',
+      'A prioritized next-step remediation roadmap',
     ],
   },
   limitations: {
-    h2: 'What I³ does not promise',
-    body: 'I³ does not guarantee rankings, AI citations, traffic, leads, or revenue. It identifies where the available evidence is thin, inconsistent, unclear, or disconnected so you can make an informed repair decision.',
+    h2: 'What an AI Visibility Audit Does Not Promise',
+    body:
+      'The I³ System does not guarantee search rankings, AI citations, traffic, leads, or revenue. It identifies where your available brand evidence is thin, inconsistent, unclear, or disconnected so you can make an informed repair decision.',
   },
   decisionFramework: {
-    h2: 'Is an I³ Visibility Snapshot the right next move?',
+    h2: 'Is an I³ Visibility Snapshot the Right Next Move for Your Practice?',
     bullets: [
-      'You rely on reputation, expertise, or category authority to win business',
-      'Buyers research before they contact you',
-      'Your website does not clearly show the evidence behind your claims',
-      'You want a structured starting point before committing to a larger visibility build',
+      'You rely on reputation, expertise, or category authority to win high-value business',
+      'High-net-worth buyers research your practice before making contact',
+      'Your website does not clearly present machine-readable proof behind your claims',
+      'You want an objective diagnostic baseline before committing to a larger visibility build',
     ],
   },
   faqSection: {
-    h2: 'Questions business owners ask about AI visibility',
+    h2: 'Questions Business Owners Ask About AI Visibility and AI Erasure',
     items: [
       {
         question: 'What is an AI visibility audit?',
@@ -263,32 +275,39 @@ export const siteCopy: SiteCopy = {
           'An AI visibility audit reviews the public evidence that helps search systems and buyers understand, verify, and describe a business. It focuses on clarity, consistency, source support, and commercial relevance.',
       },
       {
-        question: 'How is AI search visibility different from SEO?',
+        question: 'How is AI search visibility different from traditional SEO?',
         answer:
-          'SEO remains important because websites need to be discoverable and useful. AI search visibility adds focus on whether a system can connect reliable information, entities, claims, and sources into an accurate answer about the business.',
-      },
-      {
-        question: 'What does I³ examine?',
-        answer:
-          'I³ examines commercial questions, website evidence, business identity signals, and supporting source material. The output is a prioritized visibility snapshot.',
+          'Traditional SEO focuses on rankings for specific web pages. AI search visibility focuses on entity clarity: ensuring large language models and answer engines can connect reliable facts, credentials, and citations to accurately describe your business.',
       },
       {
         question:
-          'Will an I³ Visibility Snapshot guarantee rankings or AI citations?',
+          "Why isn't my referral business showing up in ChatGPT, Gemini, or Perplexity?",
         answer:
-          'No. Search results and AI-generated answers change across platforms and time. The snapshot identifies evidence gaps and practical next steps; it does not promise a specific placement, citation, traffic level, or revenue outcome.',
+          'Language models cannot read offline reputation or private handshakes. If your business lacks structured entity proof, canonical citations, and verifiable web evidence, generative engines omit your business when buyers ask for recommendations.',
       },
       {
-        question: 'What happens after I request a snapshot?',
+        question:
+          'What is AI Brand Ignorance and how does the I³ System resolve it?',
         answer:
-          'Your submission is recorded in the MTM intake system. The team reviews the business context and routes the appropriate fulfillment or next step.',
+          'AI Brand Ignorance occurs when AI Invisibility combines with AI Erasure: search models synthesize competitor answers while remaining completely unaware of your practice. The I³ System maps this gap and outlines the structured evidence needed for machine recall.',
+      },
+      {
+        question:
+          'Will an I³ Visibility Snapshot guarantee AI search citations or rankings?',
+        answer:
+          'No. Algorithmic outputs change across platforms and queries. The snapshot provides an objective audit of your evidence gaps and recommended repairs; it does not promise a specific citation, ranking, or financial outcome.',
+      },
+      {
+        question: 'What happens after I request an I³ Visibility Snapshot?',
+        answer:
+          'Your request enters the MTM intake queue. A team member reviews your public business footprint and prepares your visibility diagnosis within 24 to 48 hours.',
       },
     ],
   },
   finalCta: {
-    heading: 'Start with the evidence your business already gives the market.',
+    heading: 'Start With the Evidence Your Business Already Gives the Market',
     description:
-      'Request your zero-cost I³ Visibility Snapshot to see where your public evidence is clear, where it is disconnected, and how generative engines interpret your authority.',
+      'Request your zero-cost I³ Visibility Snapshot to discover how generative search engines currently describe your enterprise and where citation gaps exist.',
     buttonText: 'Request Your I³ Visibility Snapshot',
   },
   endcap: {
