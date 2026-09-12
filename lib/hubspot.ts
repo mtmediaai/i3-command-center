@@ -13,6 +13,7 @@ export interface HubspotSyncResult {
   status: 'synced' | 'deferred' | 'skipped';
   contactId?: string;
   taskId?: string;
+  dealId?: string;
   error?: string;
 }
 
@@ -29,7 +30,13 @@ export async function syncLeadToHubspot(lead: HubspotLeadData): Promise<HubspotS
     }
 
     const taskId = await createFulfillmentTask(token, contactId, lead.fulfillment_tier, lead.business_name);
-    return { status: 'synced', contactId, taskId: taskId || undefined };
+    const dealId = await createOrUpdateDeal(token, contactId, lead);
+    return {
+      status: 'synced',
+      contactId,
+      taskId: taskId || undefined,
+      dealId: dealId || undefined,
+    };
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : String(err);
     console.error('[HubSpot Sync Error]:', message);
@@ -200,10 +207,88 @@ async function createFulfillmentTask(
   }
 }
 
+async function createOrUpdateDeal(
+  token: string,
+  contactId: string,
+  lead: HubspotLeadData
+): Promise<string | null> {
+  const dealName = `[I3 Diagnostic] ${lead.business_name} (${lead.category})`;
+  const now = new Date();
+  const closeDate = new Date(now.getTime() + 30 * 24 * 60 * 60 * 1000); // 30 day target
+
+  const headers = {
+    Authorization: `Bearer ${token}`,
+    'Content-Type': 'application/json',
+  };
+
+  const properties: Record<string, string> = {
+    dealname: dealName,
+    pipeline: 'default',
+    dealstage: 'appointmentscheduled',
+    amount: '0',
+    closedate: closeDate.toISOString(),
+    description: `I3 System Lux Diagnostic Lead for ${lead.full_name} (${lead.email}). Category: ${lead.category}. Referred by: ${lead.referred_by_surface}. Tier: ${lead.fulfillment_tier}. Target Portal: 44694233 Dashboard: 13393897.`,
+  };
+
+  try {
+    const res = await fetch('https://api.hubapi.com/crm/v3/objects/deals', {
+      method: 'POST',
+      headers,
+      body: JSON.stringify({
+        properties,
+        associations: [
+          {
+            to: { id: contactId },
+            types: [
+              {
+                associationCategory: 'HUBSPOT_DEFINED',
+                associationTypeId: 3, // deal_to_contact association ID in HubSpot v3
+              },
+            ],
+          },
+        ],
+      }),
+    });
+
+    if (!res.ok) {
+      const errText = await res.text();
+      // Fallback: create deal without association if association error occurs
+      if (res.status === 400) {
+        console.warn('[HubSpot Deal Fallback - attempting basic deal creation]:', errText);
+        const fallbackRes = await fetch('https://api.hubapi.com/crm/v3/objects/deals', {
+          method: 'POST',
+          headers,
+          body: JSON.stringify({
+            properties: {
+              dealname: dealName,
+              pipeline: 'default',
+              dealstage: 'appointmentscheduled',
+              amount: '0',
+            },
+          }),
+        });
+        if (fallbackRes.ok) {
+          const fallbackData = await fallbackRes.json();
+          return fallbackData?.id || null;
+        }
+      }
+      console.warn('[HubSpot Deal Creation Warning - non-fatal]:', errText);
+      return null;
+    }
+
+    const data = await res.json();
+    return data?.id || null;
+  } catch (err) {
+    console.warn('[HubSpot Deal Creation Warning]:', err);
+    return null;
+  }
+}
+
 export async function updateLeadFulfillment(
   contactId: string,
   fulfillmentUrl: string,
-  taskId?: string
+  taskId?: string,
+  dealId?: string
 ): Promise<boolean> {
   const token = process.env.HUBSPOT_PRIVATE_APP_TOKEN;
   if (!token) return false;
@@ -235,6 +320,20 @@ export async function updateLeadFulfillment(
           properties: {
             hs_task_status: 'COMPLETED',
             hs_task_body: `Inspiration Ignition Hub delivered. Shareable workspace: ${fulfillmentUrl}`,
+          },
+        }),
+      });
+    }
+
+    // 3. If dealId is provided, update deal stage and description
+    if (dealId) {
+      await fetch(`https://api.hubapi.com/crm/v3/objects/deals/${dealId}`, {
+        method: 'PATCH',
+        headers,
+        body: JSON.stringify({
+          properties: {
+            dealstage: 'decisionmakerboughtin',
+            description: `Deliverable generated: ${fulfillmentUrl}`,
           },
         }),
       });

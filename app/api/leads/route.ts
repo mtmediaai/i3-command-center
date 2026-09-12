@@ -3,6 +3,7 @@ import { validateLeadSubmission } from '@/lib/validation';
 import { getSupabaseClient } from '@/lib/supabase';
 import { syncLeadToHubspot } from '@/lib/hubspot';
 import { triggerLeadFulfillment } from '@/lib/fulfillment';
+import { sendMosSignal } from '@/lib/mos';
 import { siteConfig } from '@/config/site.config';
 
 // In-Memory Rate Limiter (sliding window per IP)
@@ -182,6 +183,20 @@ export async function POST(request: NextRequest) {
         },
         hubspotResult
       );
+
+      // 8. Emit signal to local MOS Command Center (non-blocking)
+      sendMosSignal({
+        type: 'i3_lead_intake',
+        entity: 'woodlands',
+        level: 'zip',
+        text: `I3 System intake: ${sanitized.business_name} (${sanitized.category}) [${sanitized.fulfillment_tier}]`,
+        metadata: {
+          lead_id: dbData.id,
+          category: sanitized.category,
+          tier: sanitized.fulfillment_tier,
+          crm_status: hubspotResult.status,
+        },
+      }).catch(() => {});
     }
 
     return secureJsonResponse({ ok: true, crm: hubspotResult.status, fulfillment: 'dispatched' }, 200);

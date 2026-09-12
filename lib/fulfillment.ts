@@ -152,7 +152,7 @@ export async function fulfillLead(
   const contactId = payload.hubspot_id;
   if (contactId) {
     try {
-      await updateLeadFulfillment(contactId, fulfillmentUrl, hubspotResult?.taskId);
+      await updateLeadFulfillment(contactId, fulfillmentUrl, hubspotResult?.taskId, hubspotResult?.dealId);
     } catch (hsErr) {
       console.warn('[Fulfillment HubSpot Update Warning]:', hsErr);
     }
