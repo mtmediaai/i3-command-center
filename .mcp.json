@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "graft": {
+      "command": "node",
+      "args": [
+        "C:/Users/kcjd6/graft-build/dist/cli.js",
+        "mcp"
+      ]
+    }
+  }
+}
