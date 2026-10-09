@@ -7,6 +7,10 @@ import { validateLeadSubmission } from '../lib/validation';
 import { siteConfig } from '../config/site.config';
 import { siteCopy } from '../content/site-copy';
 import { evidenceLedger } from '../content/evidence-ledger';
+import { IntakePayloadSchema } from '../src/lib/validations/intake';
+import { evaluateTif } from '../src/lib/tif';
+import { I3_CONTENT } from '../src/config/content';
+import { POST as handleIntakePost } from '../app/api/intake/route';
 
 console.log('--- RUNNING MTM I³ SCIENCE SQUAD QUALITY PROBES (PHASE B v2) ---');
 
@@ -363,10 +367,86 @@ async function runSuite() {
     const pageHtml = fs.readFileSync(path.join(process.cwd(), 'app/page.tsx'), 'utf8');
     assert.ok(!pageHtml.includes('google-add-preferred-source-btn'), 'Button container must not render directly in page');
   });
+ 
+  // 17. Intake Zod & Disposable Email Probe
+  await runAsyncProbe('Intake Validation Probe: Zod schema & disposable email filtering active', () => {
+    const valid = IntakePayloadSchema.safeParse({
+      zipCode: '77380',
+      companyName: 'Bespoke Custom Builders',
+      workEmail: 'info@bespokebuilders.com',
+      craftVector: 'BUILDER',
+    });
+    assert.strictEqual(valid.success, true);
 
-  // 16. Universal Zero Em-Dash Probe across the entire repository
+    const disposable = IntakePayloadSchema.safeParse({
+      zipCode: '77380',
+      companyName: 'Bespoke Custom Builders',
+      workEmail: 'info@mailinator.com',
+      craftVector: 'BUILDER',
+    });
+    assert.strictEqual(disposable.success, false);
+  });
+
+  // 18. TIF v1.0 Disqualifier & Scoring Probe
+  await runAsyncProbe('TIF v1.0 Probe: Disqualifier detection & Draft Pick scoring (>=85)', () => {
+    const medspa = evaluateTif({
+      companyName: 'Woodlands MedSpa Aesthetics',
+      craftVector: 'OTHER',
+      craftOtherSpecification: 'MedSpa Clinic',
+      zipCode: '77380',
+    });
+    assert.strictEqual(medspa.disqualified, true);
+    assert.strictEqual(medspa.tier, 'HOLD');
+
+    const builder = evaluateTif({
+      companyName: 'Apex Estate Builders',
+      craftVector: 'BUILDER',
+      zipCode: '77380',
+    });
+    assert.strictEqual(builder.disqualified, false);
+    assert.strictEqual(builder.score, 95);
+    assert.strictEqual(builder.tier, 'DRAFT_PICK');
+    assert.strictEqual(builder.isDraftPick, true);
+  });
+
+  // 19. Copy Staging Probe: I3_CONTENT dictionary
+  await runAsyncProbe('Copy Staging Probe: I3_CONTENT dictionary structure & scene copy', () => {
+    assert.strictEqual(I3_CONTENT.hero.superTitle, 'ELITE IN THE FIELD. INVISIBLE IN THE FEED.');
+    assert.strictEqual(I3_CONTENT.scenes.scene1_curbAppeal, '25+ years of reputation. One search away from invisibility.');
+    assert.strictEqual(I3_CONTENT.scenes.scene2_interiorAudio, 'Master craftsmanship inside the room. Completely invisible to the machines outside.');
+    assert.strictEqual(I3_CONTENT.scenes.scene3_outdoorOasis, 'Your clients demand perfection. Conversational search recommends whoever it can read and trust.');
+    assert.strictEqual(I3_CONTENT.scenes.scene4_motorCourt, 'Reputation is built by hand. We make sure modern search engines cannot bypass it for louder competitors.');
+    assert.strictEqual(I3_CONTENT.intakeConsole.tagline, 'MT Media AI: The Infrastructure Beneath YOUR Kingdom');
+    assert.strictEqual(I3_CONTENT.craftOptions.length, 7);
+  });
+
+  // 20. Intake API Route Probe
+  await runAsyncProbe('Intake API Route Probe: POST /api/intake executes through Citadel', async () => {
+    const req = new NextRequest('http://localhost:3000/api/intake', {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+        'x-forwarded-for': '198.51.100.99',
+      },
+      body: JSON.stringify({
+        zipCode: '77380',
+        companyName: 'Haley Garcia Luxury Advisory',
+        workEmail: 'haley@luxuryadvisory.com',
+        craftVector: 'REALTOR',
+      }),
+    });
+    const res = await handleIntakePost(req);
+    assert.strictEqual(res.status, 200);
+    const data = await res.json();
+    assert.strictEqual(data.ok, true);
+    assert.strictEqual(data.status, 'QUALIFIED');
+    assert.strictEqual(data.tier, 'DRAFT_PICK');
+    assert.strictEqual(data.isDraftPick, true);
+  });
+
+  // 21. Universal Zero Em-Dash Probe across the entire repository
   await runAsyncProbe('Zero Em-Dash Probe: 0 em-dashes across all repo files', () => {
-    const scanDirs = ['app', 'components', 'config', 'content', 'scripts', 'docs', 'public'];
+    const scanDirs = ['app', 'components', 'config', 'content', 'scripts', 'docs', 'public', 'src'];
     for (const dir of scanDirs) {
       const fullDir = path.join(process.cwd(), dir);
       if (!fs.existsSync(fullDir)) continue;

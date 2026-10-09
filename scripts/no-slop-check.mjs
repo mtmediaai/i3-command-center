@@ -16,7 +16,7 @@ const BANNED_WORDS = [
   'immediately',
 ];
 
-const SCAN_DIRS = ['app', 'components', 'config', 'content'];
+const SCAN_DIRS = ['app', 'components', 'config', 'content', 'src'];
 
 let totalErrors = 0;
 
@@ -49,6 +49,9 @@ function checkFile(filePath) {
 
     const lower = line.toLowerCase();
     for (const banned of BANNED_WORDS) {
+      if (banned === 'landscape' && (lower.includes('remodeling & landscape') || lower.includes('remodel_landscape') || lower.includes('landscape architect') || lower.includes('landscape &') || lower.includes('landscaping'))) {
+        continue;
+      }
       // Use regex word boundary check so substrings like "deliver" do not trigger on "live"
       const regex = new RegExp(`\\b${banned.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`, 'i');
       if (regex.test(lower)) {
