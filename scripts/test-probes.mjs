@@ -456,6 +456,9 @@ async function runSuite() {
           const p = path.join(d, entry.name);
           if (entry.isDirectory()) walk(p);
           else if (entry.isFile()) {
+            const ext = path.extname(entry.name).toLowerCase();
+            const binaryExts = ['.webp', '.png', '.jpg', '.jpeg', '.gif', '.ico', '.mp4', '.webm', '.woff', '.woff2', '.ttf'];
+            if (binaryExts.includes(ext)) continue;
             const content = fs.readFileSync(p, 'utf8');
             assert.ok(!content.includes('\u2014'), `Found em-dash in ${p}`);
             assert.ok(!content.includes('&' + 'mdash;'), `Found forbidden mdash entity in ${p}`);

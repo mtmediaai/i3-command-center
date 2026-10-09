@@ -162,7 +162,7 @@ async function runSuite() {
     assert.strictEqual(I3_CONTENT.intakeConsole.tagline, 'MT Media AI: The Infrastructure Beneath YOUR Kingdom');
     assert.strictEqual(I3_CONTENT.intakeConsole.header, 'Verify Your Zip Code');
     assert.strictEqual(I3_CONTENT.intakeConsole.constraint, 'One category leader per craft. One firm per zip code.');
-    assert.strictEqual(I3_CONTENT.intakeConsole.submitButton, 'Check Seat Availability');
+    assert.strictEqual(I3_CONTENT.intakeConsole.submitButton, 'Verify Your Territory');
     assert.strictEqual(I3_CONTENT.craftOptions.length, 7);
   });
 

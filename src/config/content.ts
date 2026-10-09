@@ -15,7 +15,7 @@ export const I3_CONTENT = {
     header: "Verify Your Zip Code",
     subtext: "Enter your 5-digit zip code to see if your category seat is open, reserved, or currently held on the waiting list.",
     constraint: "One category leader per craft. One firm per zip code.",
-    submitButton: "Check Seat Availability"
+    submitButton: "Verify Your Territory"
   },
   craftOptions: [
     { id: "REALTOR", label: "Luxury Real Estate Advisor", isConstant: true },

@@ -1,0 +1,561 @@
+'use client';
+
+import React, { useEffect, useRef, useState, useCallback } from 'react';
+import { I3_CONTENT } from '@/src/config/content';
+
+const TOTAL_FRAMES = 120;
+
+function formatFrameNumber(num: number): string {
+  return String(num).padStart(4, '0');
+}
+
+export function EstateCanvasScroll() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  const [scrollProgress, setScrollProgress] = useState(0);
+  const [activeFrameIndex, setActiveFrameIndex] = useState(0);
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+  const [loadedCount, setLoadedCount] = useState(0);
+
+  // Form State
+  const [zipCode, setZipCode] = useState('');
+  const [companyName, setCompanyName] = useState('');
+  const [workEmail, setWorkEmail] = useState('');
+  const [craftVector, setCraftVector] = useState(I3_CONTENT.craftOptions[0].id);
+  const [craftOtherSpecification, setCraftOtherSpecification] = useState('');
+  const [formSubmitting, setFormSubmitting] = useState(false);
+  const [diagnosticResult, setDiagnosticResult] = useState<any>(null);
+  const [formError, setFormError] = useState<string | null>(null);
+
+  // Frame Cache & Drawing Refs
+  const loadedFramesRef = useRef<(HTMLImageElement | null)[]>(new Array(TOTAL_FRAMES).fill(null));
+  const isMobileRef = useRef<boolean>(false);
+  const tickingRef = useRef<boolean>(false);
+  const isDocumentVisibleRef = useRef<boolean>(true);
+  const lastRenderedIndexRef = useRef<number>(-1);
+
+  // Helper to draw an image to canvas with object-fit: cover math
+  const drawCover = useCallback((img: HTMLImageElement) => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d', { alpha: false });
+    if (!ctx) return;
+
+    const w = canvas.width;
+    const h = canvas.height;
+
+    const hRatio = w / img.width;
+    const vRatio = h / img.height;
+    const ratio = Math.max(hRatio, vRatio);
+
+    const centerShiftX = (w - img.width * ratio) / 2;
+    const centerShiftY = (h - img.height * ratio) / 2;
+
+    ctx.drawImage(
+      img,
+      0,
+      0,
+      img.width,
+      img.height,
+      centerShiftX,
+      centerShiftY,
+      img.width * ratio,
+      img.height * ratio
+    );
+  }, []);
+
+  // Nearest frame fallback lookup
+  const getNearestAvailableFrame = useCallback((targetIndex: number): HTMLImageElement | null => {
+    const frames = loadedFramesRef.current;
+    if (frames[targetIndex]) return frames[targetIndex];
+
+    let distance = 1;
+    while (targetIndex - distance >= 0 || targetIndex + distance < TOTAL_FRAMES) {
+      const lower = targetIndex - distance;
+      if (lower >= 0 && frames[lower]) {
+        return frames[lower];
+      }
+      const upper = targetIndex + distance;
+      if (upper < TOTAL_FRAMES && frames[upper]) {
+        return frames[upper];
+      }
+      distance++;
+    }
+    return null;
+  }, []);
+
+  // Render specific frame index
+  const renderFrame = useCallback((index: number) => {
+    if (!isDocumentVisibleRef.current) return;
+    const img = getNearestAvailableFrame(index);
+    if (img) {
+      drawCover(img);
+      lastRenderedIndexRef.current = index;
+    }
+  }, [getNearestAvailableFrame, drawCover]);
+
+  // Viewport resize handling
+  const handleResize = useCallback(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const dpr = typeof window !== 'undefined' ? window.devicePixelRatio || 1 : 1;
+    const displayWidth = window.innerWidth;
+    const displayHeight = window.innerHeight;
+
+    isMobileRef.current = displayWidth < 768;
+
+    if (canvas.width !== displayWidth * dpr || canvas.height !== displayHeight * dpr) {
+      canvas.width = displayWidth * dpr;
+      canvas.height = displayHeight * dpr;
+    }
+
+    const currentIdx = lastRenderedIndexRef.current >= 0 ? lastRenderedIndexRef.current : 0;
+    renderFrame(currentIdx);
+  }, [renderFrame]);
+
+  // Initialize Canvas and Progressive Loading Engine
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    // Check reduced motion preference
+    const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    setPrefersReducedMotion(motionQuery.matches);
+
+    const motionListener = (e: MediaQueryListEvent) => {
+      setPrefersReducedMotion(e.matches);
+    };
+    motionQuery.addEventListener('change', motionListener);
+
+    // Initial resize setup
+    handleResize();
+    window.addEventListener('resize', handleResize);
+
+    const isMobile = window.innerWidth < 768;
+    isMobileRef.current = isMobile;
+    const folder = isMobile ? 'mobile' : 'desktop';
+
+    // 1. Immediate paint of frame-0001
+    const firstImg = new Image();
+    firstImg.src = `/frames/${folder}/frame-0001.webp`;
+    firstImg.onload = () => {
+      loadedFramesRef.current[0] = firstImg;
+      setLoadedCount((prev) => prev + 1);
+      renderFrame(0);
+    };
+
+    // 2. Keyframe pre-fetch: Every 10th frame (12 keyframes)
+    const keyframeIndices = [9, 19, 29, 39, 49, 59, 69, 79, 89, 99, 109, 119];
+    keyframeIndices.forEach((idx) => {
+      const img = new Image();
+      img.src = `/frames/${folder}/frame-${formatFrameNumber(idx + 1)}.webp`;
+      img.onload = () => {
+        loadedFramesRef.current[idx] = img;
+        setLoadedCount((prev) => prev + 1);
+      };
+    });
+
+    // 3. Background stream: load remaining 107 frames in idle batches
+    let cancelStream = false;
+    const remainingIndices = Array.from({ length: TOTAL_FRAMES }, (_, i) => i).filter(
+      (i) => i !== 0 && !keyframeIndices.includes(i)
+    );
+
+    let batchPointer = 0;
+    const batchSize = 6;
+
+    function streamNextBatch() {
+      if (cancelStream || batchPointer >= remainingIndices.length) return;
+
+      const batch = remainingIndices.slice(batchPointer, batchPointer + batchSize);
+      batchPointer += batchSize;
+
+      batch.forEach((idx) => {
+        const img = new Image();
+        img.src = `/frames/${folder}/frame-${formatFrameNumber(idx + 1)}.webp`;
+        img.onload = () => {
+          if (!cancelStream) {
+            loadedFramesRef.current[idx] = img;
+            setLoadedCount((prev) => prev + 1);
+          }
+        };
+      });
+
+      if (batchPointer < remainingIndices.length) {
+        if ('requestIdleCallback' in window) {
+          (window as any).requestIdleCallback(streamNextBatch, { timeout: 250 });
+        } else {
+          setTimeout(streamNextBatch, 80);
+        }
+      }
+    }
+
+    // Begin background stream after keyframe initiation
+    const streamTimeout = setTimeout(streamNextBatch, 200);
+
+    // 4. Tab visibility listener (Battery & CPU Governance)
+    const handleVisibility = () => {
+      isDocumentVisibleRef.current = !document.hidden;
+      if (!document.hidden && lastRenderedIndexRef.current >= 0) {
+        renderFrame(lastRenderedIndexRef.current);
+      }
+    };
+    document.addEventListener('visibilitychange', handleVisibility);
+
+    return () => {
+      cancelStream = true;
+      clearTimeout(streamTimeout);
+      motionQuery.removeEventListener('change', motionListener);
+      window.removeEventListener('resize', handleResize);
+      document.removeEventListener('visibilitychange', handleVisibility);
+    };
+  }, [handleResize, renderFrame]);
+
+  // Scroll listener with RAF ticking flag (0% Idle CPU)
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    const handleScroll = () => {
+      if (!tickingRef.current) {
+        window.requestAnimationFrame(() => {
+          const container = containerRef.current;
+          if (container) {
+            const rect = container.getBoundingClientRect();
+            const totalScrollable = rect.height - window.innerHeight;
+            if (totalScrollable > 0) {
+              const currentScroll = -rect.top;
+              const progress = Math.max(0, Math.min(1, currentScroll / totalScrollable));
+              setScrollProgress(progress);
+
+              const targetFrame = Math.min(TOTAL_FRAMES - 1, Math.max(0, Math.floor(progress * TOTAL_FRAMES)));
+              setActiveFrameIndex(targetFrame);
+              renderFrame(targetFrame);
+            }
+          }
+          tickingRef.current = false;
+        });
+        tickingRef.current = true;
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [renderFrame]);
+
+  // Form submission handler
+  const handleIntakeSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setFormSubmitting(true);
+    setFormError(null);
+
+    try {
+      const payload = {
+        zipCode: zipCode.trim(),
+        companyName: companyName.trim(),
+        workEmail: workEmail.trim(),
+        craftVector,
+        craftOtherSpecification: craftVector === 'OTHER' ? craftOtherSpecification.trim() : undefined,
+      };
+
+      const res = await fetch('/api/intake', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+
+      const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data.message || data.error || 'Submission failed');
+      }
+
+      setDiagnosticResult(data);
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : String(err);
+      setFormError(message);
+    } finally {
+      setFormSubmitting(false);
+    }
+  };
+
+  // Scene overlay visibility calculation
+  const isHeroActive = scrollProgress < 0.18;
+  const isScene1Active = scrollProgress >= 0.18 && scrollProgress < 0.36;
+  const isScene2Active = scrollProgress >= 0.36 && scrollProgress < 0.54;
+  const isScene3Active = scrollProgress >= 0.54 && scrollProgress < 0.72;
+  const isScene4Active = scrollProgress >= 0.72 && scrollProgress < 0.88;
+  const isIntakeActive = scrollProgress >= 0.88;
+
+  return (
+    <div
+      ref={containerRef}
+      className="relative w-full"
+      style={{ height: '400vh' }}
+    >
+      {/* Sticky Canvas Viewport */}
+      <div className="sticky top-0 h-screen w-full overflow-hidden bg-black">
+        {/* Living Video Canvas */}
+        <canvas
+          ref={canvasRef}
+          className="absolute inset-0 h-full w-full object-cover"
+          style={{ display: prefersReducedMotion ? 'none' : 'block' }}
+        />
+
+        {/* Reduced motion static fallback image */}
+        {prefersReducedMotion && (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src="/frames/desktop/frame-0001.webp"
+            alt="The Woodlands modern estate exterior"
+            className="absolute inset-0 h-full w-full object-cover"
+          />
+        )}
+
+        {/* Chiaroscuro Shadow Gradient Plates */}
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black via-black/40 to-black/60" />
+
+        {/* Telemetry Indicator (HUD Header Placeholder) */}
+        <div className="pointer-events-none absolute top-6 left-6 right-6 flex justify-between items-center text-xs font-mono text-white/50 z-20">
+          <div>
+            <span>FRAME: </span>
+            <span className="text-white font-bold">{formatFrameNumber(activeFrameIndex + 1)} / {TOTAL_FRAMES}</span>
+          </div>
+          <div>
+            <span>PROGRESS: </span>
+            <span className="text-white font-bold">{Math.round(scrollProgress * 100)}%</span>
+          </div>
+          <div>
+            <span>BUFFER: </span>
+            <span className="text-white font-bold">{loadedCount} / {TOTAL_FRAMES}</span>
+          </div>
+        </div>
+
+        {/* ── SCENE OVERLAYS (SEMANTIC PLACEHOLDERS BOUND TO I3_CONTENT) ── */}
+        <div className="relative z-10 h-full w-full max-w-5xl mx-auto px-6 flex flex-col justify-center pointer-events-none">
+          {/* Movement 0: Hero Title & Lead */}
+          {isHeroActive && (
+            <section className="space-y-4 max-w-3xl text-left pointer-events-auto">
+              <span className="text-xs font-mono tracking-widest text-[#D4AF37] uppercase font-bold block">
+                {I3_CONTENT.hero.superTitle}
+              </span>
+              <h1 className="text-3xl sm:text-5xl font-serif text-white font-bold leading-tight">
+                {I3_CONTENT.hero.statement}
+              </h1>
+            </section>
+          )}
+
+          {/* Movement 1: The Curb Appeal */}
+          {isScene1Active && (
+            <section className="space-y-4 max-w-2xl text-left pointer-events-auto">
+              <span className="text-xs font-mono tracking-widest text-[#D4AF37] uppercase font-bold block">
+                THE CURB APPEAL
+              </span>
+              <p className="text-2xl sm:text-4xl font-serif text-white font-semibold leading-relaxed">
+                {I3_CONTENT.scenes.scene1_curbAppeal}
+              </p>
+            </section>
+          )}
+
+          {/* Movement 2: Interior Sanctuary & Private Audio */}
+          {isScene2Active && (
+            <section className="space-y-4 max-w-2xl text-left pointer-events-auto">
+              <span className="text-xs font-mono tracking-widest text-[#D4AF37] uppercase font-bold block">
+                INTERIOR SANCTUARY
+              </span>
+              <p className="text-2xl sm:text-4xl font-serif text-white font-semibold leading-relaxed">
+                {I3_CONTENT.scenes.scene2_interiorAudio}
+              </p>
+            </section>
+          )}
+
+          {/* Movement 3: The Outdoor Oasis */}
+          {isScene3Active && (
+            <section className="space-y-4 max-w-2xl text-left pointer-events-auto">
+              <span className="text-xs font-mono tracking-widest text-[#D4AF37] uppercase font-bold block">
+                OUTDOOR OASIS
+              </span>
+              <p className="text-2xl sm:text-4xl font-serif text-white font-semibold leading-relaxed">
+                {I3_CONTENT.scenes.scene3_outdoorOasis}
+              </p>
+            </section>
+          )}
+
+          {/* Movement 4: The Motor Court */}
+          {isScene4Active && (
+            <section className="space-y-4 max-w-2xl text-left pointer-events-auto">
+              <span className="text-xs font-mono tracking-widest text-[#D4AF37] uppercase font-bold block">
+                THE MOTOR COURT
+              </span>
+              <p className="text-2xl sm:text-4xl font-serif text-white font-semibold leading-relaxed">
+                {I3_CONTENT.scenes.scene4_motorCourt}
+              </p>
+            </section>
+          )}
+
+          {/* Movement 5: The Foundation Medallion & Intake Console */}
+          {isIntakeActive && (
+            <section className="space-y-6 max-w-2xl mx-auto w-full text-center pointer-events-auto bg-black/80 p-8 rounded-2xl backdrop-blur-md">
+              <div className="space-y-2">
+                <span className="text-xs font-mono tracking-widest text-[#D4AF37] uppercase font-bold block">
+                  {I3_CONTENT.intakeConsole.tagline}
+                </span>
+                <h2 className="text-2xl sm:text-3xl font-serif text-white font-bold">
+                  {I3_CONTENT.intakeConsole.header}
+                </h2>
+                <p className="text-xs sm:text-sm text-white/70 max-w-lg mx-auto">
+                  {I3_CONTENT.intakeConsole.subtext}
+                </p>
+                <p className="text-[11px] font-mono text-[#D4AF37]">
+                  {I3_CONTENT.intakeConsole.constraint}
+                </p>
+              </div>
+
+              {!diagnosticResult ? (
+                <form onSubmit={handleIntakeSubmit} className="space-y-4 text-left pt-2">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div>
+                      <label className="text-[11px] font-mono uppercase text-white/60 block mb-1">
+                        Zip Code (5 digits)
+                      </label>
+                      <input
+                        type="text"
+                        required
+                        maxLength={5}
+                        pattern="^\d{5}$"
+                        value={zipCode}
+                        onChange={(e) => setZipCode(e.target.value)}
+                        placeholder="77380"
+                        className="w-full bg-white/5 border border-white/20 rounded px-3 py-2 text-sm text-white placeholder-white/30 focus:outline-none focus:border-[#D4AF37]"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="text-[11px] font-mono uppercase text-white/60 block mb-1">
+                        Company Name
+                      </label>
+                      <input
+                        type="text"
+                        required
+                        value={companyName}
+                        onChange={(e) => setCompanyName(e.target.value)}
+                        placeholder="Firm Name"
+                        className="w-full bg-white/5 border border-white/20 rounded px-3 py-2 text-sm text-white placeholder-white/30 focus:outline-none focus:border-[#D4AF37]"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div>
+                      <label className="text-[11px] font-mono uppercase text-white/60 block mb-1">
+                        Work Email
+                      </label>
+                      <input
+                        type="email"
+                        required
+                        value={workEmail}
+                        onChange={(e) => setWorkEmail(e.target.value)}
+                        placeholder="principal@firm.com"
+                        className="w-full bg-white/5 border border-white/20 rounded px-3 py-2 text-sm text-white placeholder-white/30 focus:outline-none focus:border-[#D4AF37]"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="text-[11px] font-mono uppercase text-white/60 block mb-1">
+                        Craft Vector
+                      </label>
+                      <select
+                        value={craftVector}
+                        onChange={(e) => setCraftVector(e.target.value)}
+                        className="w-full bg-black border border-white/20 rounded px-3 py-2 text-sm text-white focus:outline-none focus:border-[#D4AF37]"
+                      >
+                        {I3_CONTENT.craftOptions.map((opt) => (
+                          <option key={opt.id} value={opt.id}>
+                            {opt.label}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
+
+                  {craftVector === 'OTHER' && (
+                    <div>
+                      <label className="text-[11px] font-mono uppercase text-white/60 block mb-1">
+                        Specify Your Craft Specialty
+                      </label>
+                      <input
+                        type="text"
+                        required
+                        value={craftOtherSpecification}
+                        onChange={(e) => setCraftOtherSpecification(e.target.value)}
+                        placeholder="e.g. Bespoke Architectural Millwork"
+                        className="w-full bg-white/5 border border-white/20 rounded px-3 py-2 text-sm text-white placeholder-white/30 focus:outline-none focus:border-[#D4AF37]"
+                      />
+                    </div>
+                  )}
+
+                  {formError && (
+                    <div className="text-red-400 text-xs font-mono">{formError}</div>
+                  )}
+
+                  <div className="pt-2">
+                    <button
+                      type="submit"
+                      disabled={formSubmitting}
+                      className="w-full bg-[#D4AF37] hover:bg-[#b89528] text-black font-bold uppercase tracking-wider py-3 rounded text-xs transition-colors disabled:opacity-50"
+                    >
+                      {formSubmitting ? 'Evaluating Seat...' : I3_CONTENT.intakeConsole.submitButton}
+                    </button>
+                  </div>
+                </form>
+              ) : (
+                <div className="space-y-4 text-left pt-2">
+                  <div className="p-4 rounded bg-white/5 border border-[#D4AF37]/30 space-y-2">
+                    <div className="flex justify-between items-center">
+                      <span className="text-xs font-mono text-[#D4AF37] font-bold">
+                        {diagnosticResult.tier === 'DRAFT_PICK'
+                          ? 'FIRST-ROUND DRAFT PICK'
+                          : diagnosticResult.tier === 'WAITING_LIST'
+                          ? 'TERRITORIAL WAITING LIST'
+                          : 'INQUIRY HELD FOR REVIEW'}
+                      </span>
+                      <span className="text-xs font-mono text-white/50">
+                        ZIP {diagnosticResult.territory?.zipCode}
+                      </span>
+                    </div>
+
+                    <h4 className="text-lg font-serif text-white font-semibold">
+                      {diagnosticResult.ignitionHub?.title || 'Territory Diagnostic Output'}
+                    </h4>
+
+                    <p className="text-xs text-white/70 leading-relaxed font-serif">
+                      {diagnosticResult.ignitionHub?.diagnosticSummary || diagnosticResult.message}
+                    </p>
+                  </div>
+
+                  {diagnosticResult.ignitionHub?.querySimulations && (
+                    <div className="space-y-2 pt-1">
+                      <span className="text-[10px] font-mono uppercase tracking-widest text-white/50 block">
+                        Conversational Search Simulations:
+                      </span>
+                      {diagnosticResult.ignitionHub.querySimulations.map((sim: any, idx: number) => (
+                        <div key={idx} className="p-2.5 rounded bg-black/60 border border-white/10 text-xs space-y-1">
+                          <p className="text-white font-mono font-medium">{sim.query}</p>
+                          <p className="text-red-400 font-mono text-[11px]">{sim.status}: {sim.engineRecommendation}</p>
+                          <p className="text-white/60 text-[11px]">Remedy: {sim.remedy}</p>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              )}
+            </section>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
