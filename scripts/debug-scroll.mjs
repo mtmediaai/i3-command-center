@@ -15,6 +15,11 @@ async function run() {
     { name: '03_motor_court', scrollY: 1500 },
     { name: '04_foyer_hero_shot', scrollY: 1900 },
     { name: '05_intake_console', scrollY: 2300 },
+    { name: '06_evidentiary_audit', scrollY: 3300 },
+    { name: '07_pain_points_carousel', scrollY: 3950 },
+    { name: '08_deliverables_hub', scrollY: 4600 },
+    { name: '09_founders_want_to_know', scrollY: 5200 },
+    { name: '10_footer', scrollY: 5800 },
   ];
 
   for (const pt of points) {

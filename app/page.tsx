@@ -1,10 +1,10 @@
 import React from 'react';
+import Image from 'next/image';
 import { siteCopy } from '@/content/site-copy';
 import { evidenceLedger } from '@/content/evidence-ledger';
 import { SocialProofCarousel } from '@/components/social-proof-carousel';
 import { ForgeSectionHeader } from '@/components/forge-section-header';
 import { TelemetryHeader } from '@/components/telemetry-header';
-import { Monogram } from '@/components/monogram';
 import { EstateCanvasScroll } from '@/components/estate-canvas-scroll';
 import { AmbientVoidVideo } from '@/components/ambient-void-video';
 
@@ -96,51 +96,69 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* ── SECTION 02: UHNW REPUTATION & PROOF POINTS ── */}
+        {/* ── SECTION 02: THE INVISIBLE ELITE REALITY & VULNERABILITIES ── */}
         <section id="proof" className="space-y-8 text-center">
-          <div className="space-y-2 max-w-3xl mx-auto">
-            <span className="text-[10px] font-mono tracking-widest text-[var(--color-gold)] uppercase font-bold block">
-              VALIDATED REPUTATION MATRICES
-            </span>
-            <h3 className="text-xl sm:text-3xl font-serif text-white font-bold">
-              Market Authority Benchmarks
+          <div className="space-y-3 max-w-4xl mx-auto">
+            <div className="floating-pill text-[var(--color-gold)] font-bold mx-auto">
+              <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-gold)] animate-pulse" />
+              <span>THE INVISIBLE ELITE REALITY // 4 VULNERABILITIES</span>
+            </div>
+
+            <h3 className="hid-sword-blade text-2xl sm:text-4xl lg:text-5xl font-bold tracking-[0.16em]">
+              THE INVISIBLE ELITE REALITY
             </h3>
+
+            <div className="hid-subtitle-shield text-xs sm:text-sm text-[#D4AF37] font-serif uppercase tracking-widest pt-1">
+              What Happens When 25 Years of Offline Reputation Meets Zero-Click AI Search Engines
+            </div>
           </div>
           <div className="flex justify-center">
             <SocialProofCarousel />
           </div>
         </section>
 
-        {/* ── SECTION 03: ANTI-STATIC DELIVERABLE ARCHITECTURE ── */}
+        {/* ── SECTION 03: INSPIRATION IGNITION HUB DELIVERABLE ARCHITECTURE ── */}
         <section id="deliverables" className="space-y-8">
           <div className="text-center space-y-3 max-w-4xl mx-auto">
             <ForgeSectionHeader
-              eyebrow="ANTI-STATIC DELIVERABLE"
+              eyebrow="DIAGNOSTIC DELIVERABLE"
               title="The Inspiration Ignition Hub Architecture"
-              subtitle="Grounded AI Notebook Deliverable"
+              subtitle="Grounded AI Diagnostic Deliverable"
             />
           </div>
 
-          <div className="max-w-4xl mx-auto p-6 sm:p-8 rounded-2xl bg-[#010101] border border-[#E5E4E2]/20 space-y-4">
+          <div className="max-w-4xl mx-auto p-6 sm:p-8 rounded-2xl bg-[#010101] border border-[#E5E4E2]/20 space-y-6">
             <div className="flex items-center gap-3">
               <span className="floating-pill text-[var(--color-gold)] font-bold">
                 {siteCopy.deliverables.h2}
               </span>
-              <span className="text-[10px] font-mono text-[#00E5FF] font-bold">
-                Anti-Static Deliverable
-              </span>
             </div>
 
-            <ul className="space-y-2.5 text-xs sm:text-sm text-white/70 font-serif">
+            <ul className="space-y-3 text-xs sm:text-sm text-white/70 font-serif">
               {siteCopy.deliverables.bullets.map((bullet, idx) => (
-                <li key={idx} className="flex items-start gap-2.5">
-                  <span className="text-[var(--color-gold)] font-bold mt-0.5">✓</span>
-                  <span>{bullet}</span>
+                <li key={idx} className="flex items-start gap-3">
+                  <span className="text-[var(--color-gold)] font-bold mt-0.5 text-base">✓</span>
+                  <span className="leading-relaxed">{bullet}</span>
                 </li>
               ))}
             </ul>
 
-            <div id="mtm-fix" className="pt-2 border-t border-white/5">
+            {/* Scope & Solar Ascension Nudge */}
+            {siteCopy.deliverables.scopeNote && (
+              <div className="p-4 rounded-xl border border-[#D4AF37]/30 bg-[#D4AF37]/[0.05] space-y-1.5">
+                <div className="flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-[#D4AF37] animate-pulse" />
+                  <span className="text-[11px] font-mono tracking-widest text-[#D4AF37] uppercase font-bold">
+                    SCOPE & AS-OF TIMESTAMP PROTOCOL
+                  </span>
+                </div>
+                <p className="text-xs text-white/80 leading-relaxed font-serif">
+                  {siteCopy.deliverables.scopeNote}
+                </p>
+              </div>
+            )}
+
+            <div id="mtm-fix" className="pt-3 border-t border-white/5">
               <p className="text-xs text-white/50 leading-relaxed font-serif">
                 {siteCopy.mtmFix.body}
               </p>
@@ -148,25 +166,29 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* ── SECTION 04: FREQUENTLY ASKED QUESTIONS (FAQ SCHEMA) ── */}
-        <section id="faq" className="max-w-4xl mx-auto text-left space-y-6">
-          <div className="text-center space-y-1">
-            <span className="text-[10px] font-mono tracking-widest text-[var(--color-gold)] uppercase font-bold">
-              KNOWLEDGE BASE
-            </span>
-            <h3 className="text-xl sm:text-2xl font-serif text-white font-bold">
-              {siteCopy.faqSection.h2}
-            </h3>
+        {/* ── SECTION 04: FOUNDERS WANT TO KNOW (FAQ) ── */}
+        <section id="faq" className="max-w-4xl mx-auto text-left space-y-8">
+          <div className="text-center space-y-3">
+            <div className="floating-pill text-[var(--color-gold)] font-bold mx-auto">
+              <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-gold)] animate-pulse" />
+              <span>EXECUTIVE BRIEFING & DIRECT ANSWERS</span>
+            </div>
+            <h2 className="hid-sword-blade text-2xl sm:text-4xl lg:text-5xl font-bold tracking-[0.16em]">
+              FOUNDERS WANT TO KNOW
+            </h2>
+            <div className="hid-subtitle-shield text-xs sm:text-sm text-[#D4AF37] font-serif uppercase tracking-widest pt-1">
+              Questions Business Owners Ask About AI Visibility and AI Erasure
+            </div>
           </div>
 
           <div className="space-y-3">
             {siteCopy.faqSection.items.map((item, idx) => (
-              <div key={idx} className="p-5 rounded-2xl bg-white/[0.02] border border-white/5 space-y-1.5">
-                <h4 className="text-sm sm:text-base font-bold text-white font-serif flex items-start gap-2">
-                  <span className="text-[var(--color-gold)] font-mono text-xs">Q:</span>
+              <div key={idx} className="p-5 rounded-2xl bg-white/[0.02] border border-white/10 space-y-2 hover:border-[#D4AF37]/30 transition-colors">
+                <h4 className="text-sm sm:text-base font-bold text-white font-serif flex items-start gap-2.5">
+                  <span className="text-[var(--color-gold)] font-mono text-xs mt-0.5">Q:</span>
                   <span>{item.question}</span>
                 </h4>
-                <p className="text-xs sm:text-sm text-white/60 leading-relaxed pl-5 font-serif">
+                <p className="text-xs sm:text-sm text-white/60 leading-relaxed pl-6 font-serif">
                   {item.answer}
                 </p>
               </div>
@@ -174,16 +196,25 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* ── FOOTER ── */}
-        <footer className="pt-16 pb-8 border-t border-white/10 text-center space-y-4">
-          <div className="flex justify-center items-center gap-3">
-            <Monogram size={28} />
-            <span className="text-xs font-mono tracking-widest uppercase text-white/80 font-bold">
-              MT MEDIA AI // THE INFRASTRUCTURE BENEATH YOUR KINGDOM
+        {/* ── FOOTER: OFFICIAL MTM DYNASTY & SATELLITE ANCHOR ── */}
+        <footer className="pt-16 pb-12 border-t border-white/10 text-center space-y-5">
+          <div className="flex flex-col items-center justify-center gap-3">
+            <Image
+              src="/brand/black-jewel-mt-media-logo.webp"
+              alt="MT Media AI Black Jewel Brand Mark"
+              width={84}
+              height={42}
+              className="object-contain filter drop-shadow-[0_0_15px_rgba(212,175,55,0.35)] select-none pointer-events-none"
+            />
+            <span className="text-[10px] sm:text-xs font-mono tracking-[0.24em] uppercase text-[#D4AF37] font-bold">
+              THE INFRASTRUCTURE BENEATH YOUR KINGDOM
+            </span>
+            <span className="text-xs sm:text-sm font-sans tracking-[0.16em] uppercase text-[#E5E4E2] font-semibold">
+              MINDSET. TECH. MASTERY. | MARKETING MASTERY FOR MODERN MINDS
             </span>
           </div>
-          <p className="text-[11px] font-mono text-white/40">
-            © 2026 MT Media AI. All rights reserved. One category leader per zip code.
+          <p className="text-[11px] font-mono text-white/40 pt-2">
+            © 2026 MT Media AI · Modern Touch Media. All rights reserved. One category leader per craft. One firm per zip code.
           </p>
         </footer>
       </main>

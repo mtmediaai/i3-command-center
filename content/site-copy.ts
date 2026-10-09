@@ -71,6 +71,7 @@ export interface SiteCopy {
   deliverables: {
     h2: string;
     bullets: string[];
+    scopeNote?: string;
   };
   limitations: {
     h2: string;
@@ -149,11 +150,11 @@ export const siteCopy: SiteCopy = {
       },
       founder: {
         label: 'Founder · Kareem Daniel',
-        url: 'https://www.linkedin.com/in/kareemdan',
+        url: 'https://www.linkedin.com/in/kareemdaniel/',
       },
       network: {
         label: 'LinkedIn',
-        url: 'https://www.linkedin.com/company/mtmediaai',
+        url: 'https://www.linkedin.com/in/kareemdaniel/',
       },
     },
   },
@@ -244,13 +245,15 @@ export const siteCopy: SiteCopy = {
       'The resolution is to construct a connected system of clear pages, verified claims, structured entities, credible sources, and measurable feedback. That gives buyers and machines durable proof to work with.',
   },
   deliverables: {
-    h2: 'Your I³ Visibility Snapshot Includes',
+    h2: 'Your Inspiration Ignition Hub Includes',
     bullets: [
-      'An interactive Inspiration Ignition Hub (Gemini Notebook / NotebookLM shared workspace)',
-      'A timestamped AI visibility benchmark based on Perplexity AI retrieval data',
-      'An AI Brand Ignorance and representation-risk gap diagnosis across public citation sources',
-      'A prioritized remediation roadmap for machine legibility (Anti-Static Deliverables Doctrine)',
+      'Interactive Inspiration Ignition Hub (powered by a private Gemini Notebook environment): a queryable workspace pre-loaded with your first-party evidence, allowing your executive team to ask natural-language questions and inspect machine citations',
+      'Timestamped AI visibility benchmark based on Perplexity AI retrieval data: objective scoring of how Google AI Overviews, Gemini, Perplexity, and ChatGPT currently describe your firm vs. local competitors',
+      'AI Brand Ignorance and representation-risk diagnosis: exact pinpoints of missing schema graph nodes and citation voids that keep your practice below machine retrieval thresholds',
+      'Machine-legible JSON-LD schema blueprint tailored for immediate CMS deployment (Anti-Static Deliverables Doctrine): production-ready entity code engineered for direct crawler recognition',
     ],
+    scopeNote:
+      'Notice: Your I³ Visibility Snapshot is an automated, one-time diagnostic snapshot as of your request timestamp. For continuous monitoring, ongoing citation drift protection, and active multi-agent defense, inquire about the MTM Solar Ascension Tiers (Sol Invictus DWY & Amun-Ra DFY).',
   },
   limitations: {
     h2: 'What an AI Visibility Audit Does Not Promise',

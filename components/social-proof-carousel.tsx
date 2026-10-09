@@ -1,10 +1,76 @@
 'use client';
 
 import React, { useState, useEffect, useCallback, useRef } from 'react';
-import { evidenceLedger } from '@/content/evidence-ledger';
+
+export interface PainPointSlide {
+  id: string;
+  ambassador: string;
+  personaTitle: string;
+  badge: string;
+  metric: string;
+  headline: string;
+  operationalTruth: string;
+  accentColor: string;
+  glowColor: string;
+}
+
+export const INVISIBLE_ELITE_PAIN_POINTS: PainPointSlide[] = [
+  {
+    id: 'referral-paradox',
+    ambassador: 'ROMAN',
+    personaTitle: 'Structural Business Spine',
+    badge: 'THE REFERRAL TRAP // 01 OF 04',
+    metric: '97% Offline Trust vs. 0% Machine Recognition',
+    headline:
+      'You spent 25 years building peerless word-of-mouth. But when your best client’s successor asks AI who to hire, your name does not exist.',
+    operationalTruth:
+      'Conversational answer engines cannot attend charity galas, shake hands at private clubs, or inspect completed estates. If your practice lacks structured JSON-LD entity graphs, autonomous algorithms evaluate a quarter-century of mastery as if you opened yesterday.',
+    accentColor: '#E5E4E2', // Lightning Platinum
+    glowColor: 'rgba(229, 228, 226, 0.25)',
+  },
+  {
+    id: 'digital-counterfeit',
+    ambassador: 'NEGATIVE NINA',
+    personaTitle: 'Adversarial Logic Gate',
+    badge: 'THE ALGORITHMIC THREAT // 02 OF 04',
+    metric: 'Data Coherence Trumps Real-World Mastery',
+    headline:
+      'A competitor with 18 months in business and mediocre craftsmanship ranks above you simply because an agency flooded their site with schema.',
+    operationalTruth:
+      'Search generative models do not evaluate stone masonry, timber joinery, or operational ethics. They evaluate mathematical data density. The loudest, most structured entity wins the multi-agent recommendation loop every single time.',
+    accentColor: '#F5F5F5', // Clinical HID White
+    glowColor: 'rgba(245, 245, 245, 0.3)',
+  },
+  {
+    id: 'generational-shift',
+    ambassador: 'ECHO',
+    personaTitle: 'Customer Experience Sentinel',
+    badge: 'THE DISCOVERY SHIFT // 03 OF 04',
+    metric: '69%+ Zero-Click Answer Dominance',
+    headline:
+      'Next-generation family office trustees and estate principals do not browse ten blue links or click ads. They query private AI agents.',
+    operationalTruth:
+      'Zero-click searches now dominate high-net-worth commercial intent. When wealth transfers to the next generation, their discovery gatekeeper is an LLM answer engine. Being omitted from that direct answer block is systemic commercial erasure.',
+    accentColor: '#00E5FF', // Lightning Blue
+    glowColor: 'rgba(0, 229, 255, 0.25)',
+  },
+  {
+    id: 'quiet-bleed',
+    ambassador: 'GOLDIE',
+    personaTitle: 'Visionary Catalyst & ROI Engine',
+    badge: 'THE MONETARY REALITY // 04 OF 04',
+    metric: '$250k–$1M+ Lost Per Missed Inquiry',
+    headline:
+      'You never hear the phone call you did not receive. High-ticket estate contracts vanish before you even know the buyer was looking.',
+    operationalTruth:
+      'AI answers intercept the buyer at the exact moment of decision. When an answer engine recommends a competitor, the buyer never visits your website, never requests your portfolio, and never knows you exist.',
+    accentColor: '#D4AF37', // Molten Midas Gold
+    glowColor: 'rgba(212, 175, 55, 0.3)',
+  },
+];
 
 export function SocialProofCarousel() {
-  const items = evidenceLedger;
+  const items = INVISIBLE_ELITE_PAIN_POINTS;
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const touchStartX = useRef<number | null>(null);
@@ -33,7 +99,7 @@ export function SocialProofCarousel() {
     if (isPaused) return;
     const interval = setInterval(() => {
       nextSlide();
-    }, 6500);
+    }, 7000);
     return () => clearInterval(interval);
   }, [isPaused, nextSlide]);
 
@@ -77,8 +143,8 @@ export function SocialProofCarousel() {
       tabIndex={0}
       onKeyDown={handleKeyDown}
       aria-roledescription="carousel"
-      aria-label="Verified Market Evidence and AI Visibility Analysis"
-      className="w-full max-w-3xl mt-6 rounded-xl border border-white/15 bg-[var(--color-surface)]/70 backdrop-blur-md p-5 sm:p-6 relative overflow-hidden transition-all duration-300 hover:border-[var(--color-gold)]/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-gold)] shadow-2xl"
+      aria-label="The Invisible Elite Daily Reality and Emotional Pain Points"
+      className="w-full max-w-4xl mt-6 rounded-2xl border border-white/15 bg-[#050505]/90 backdrop-blur-xl p-6 sm:p-8 relative overflow-hidden transition-all duration-300 hover:border-[#D4AF37]/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37] shadow-2xl"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
       onFocus={() => setIsPaused(true)}
@@ -86,30 +152,46 @@ export function SocialProofCarousel() {
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
     >
-      {/* Ambient gold glow highlight */}
+      {/* Dynamic ambient persona aura */}
       <div
-        className="absolute -top-16 -right-16 w-36 h-36 rounded-full bg-[var(--color-gold)]/10 blur-2xl pointer-events-none"
+        className="absolute -top-24 -right-24 w-56 h-56 rounded-full blur-3xl pointer-events-none transition-all duration-700"
+        style={{ backgroundColor: currentItem.glowColor }}
         aria-hidden="true"
       />
 
-      {/* Top row: Badge and pagination controls */}
-      <div className="flex items-center justify-between gap-3 mb-4">
-        <div className="inline-flex items-center gap-2">
-          <span className="inline-block w-2 h-2 rounded-full bg-[var(--color-gold)] animate-pulse" />
-          <span className="text-[10px] sm:text-xs font-mono font-bold tracking-widest text-[var(--color-gold)] uppercase bg-[var(--color-gold)]/10 px-2.5 py-0.5 rounded border border-[var(--color-gold)]/20">
-            {currentItem.badge}
-          </span>
-        </div>
+      {/* Top Header Row: Ambassador badge, slide indicator, and controls */}
+      <div className="flex items-center justify-between gap-4 mb-6 relative z-10 border-b border-white/10 pb-4">
+        {/* Ambassador Persona Cluster */}
         <div className="flex items-center gap-3">
-          <span className="text-[11px] font-mono text-[var(--color-chrome)]">
+          <div
+            className="w-3 h-3 rounded-full animate-pulse shadow-md"
+            style={{ backgroundColor: currentItem.accentColor }}
+            aria-hidden="true"
+          />
+          <div className="flex flex-col text-left">
+            <span
+              className="text-[11px] sm:text-xs font-mono font-bold tracking-[0.2em] uppercase"
+              style={{ color: currentItem.accentColor }}
+            >
+              {currentItem.ambassador} // {currentItem.personaTitle}
+            </span>
+            <span className="text-[10px] font-mono tracking-widest text-white/50 uppercase">
+              {currentItem.badge}
+            </span>
+          </div>
+        </div>
+
+        {/* Counter and manual navigation */}
+        <div className="flex items-center gap-3">
+          <span className="text-xs font-mono tracking-widest text-[#E5E4E2]">
             {currentIndex + 1} / {items.length}
           </span>
           <div className="flex items-center gap-1.5">
             <button
               type="button"
               onClick={prevSlide}
-              aria-label="Previous evidence card"
-              className="p-1 rounded text-[var(--color-chrome)] hover:text-[var(--color-gold)] hover:bg-white/5 transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--color-gold)]"
+              aria-label="Previous vulnerability insight"
+              className="p-1.5 rounded-lg border border-white/10 text-white/70 hover:text-white hover:bg-white/10 transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#D4AF37]"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -129,8 +211,8 @@ export function SocialProofCarousel() {
             <button
               type="button"
               onClick={nextSlide}
-              aria-label="Next evidence card"
-              className="p-1 rounded text-[var(--color-chrome)] hover:text-[var(--color-gold)] hover:bg-white/5 transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--color-gold)]"
+              aria-label="Next vulnerability insight"
+              className="p-1.5 rounded-lg border border-white/10 text-white/70 hover:text-white hover:bg-white/10 transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#D4AF37]"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -151,50 +233,53 @@ export function SocialProofCarousel() {
         </div>
       </div>
 
-      {/* Main card claim */}
+      {/* Main Slide Content: Metric, Emotional Hook, and Operational Reality */}
       <div
         key={currentItem.id}
         role="status"
         aria-atomic="true"
-        className="space-y-3 min-h-[110px] sm:min-h-[96px] flex flex-col justify-center transition-all duration-300"
+        className="space-y-4 min-h-[160px] flex flex-col justify-center text-left relative z-10 transition-all duration-300"
       >
-        <div className="text-base sm:text-xl font-bold font-serif text-[var(--color-rim)] tracking-tight">
-          {currentItem.approvedClaim}
+        {/* Metric Pill */}
+        <div className="inline-flex items-center gap-2 self-start px-3 py-1 rounded-full border border-white/15 bg-white/[0.04]">
+          <span className="text-[10px] sm:text-[11px] font-mono tracking-widest uppercase font-bold text-[#D4AF37]">
+            DIAGNOSTIC REALITY:
+          </span>
+          <span className="text-[10px] sm:text-[11px] font-mono text-[#E5E4E2] font-semibold">
+            {currentItem.metric}
+          </span>
         </div>
-        <p className="text-xs sm:text-sm text-[var(--color-chrome)] leading-relaxed">
-          {currentItem.methodologyNote}
+
+        {/* Visceral Headline */}
+        <h4 className="text-lg sm:text-2xl font-serif font-bold text-white leading-snug drop-shadow-md">
+          {currentItem.headline}
+        </h4>
+
+        {/* The Operational Truth */}
+        <p className="text-xs sm:text-sm text-white/70 font-serif leading-relaxed">
+          {currentItem.operationalTruth}
         </p>
       </div>
 
-      {/* Footer bar: Source attribution, link, and dot navigation */}
-      <div className="mt-4 pt-3 border-t border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
-        <div className="text-[10px] sm:text-[11px] font-mono text-white/50 flex flex-wrap items-center gap-1.5">
-          <span className="text-[var(--color-gold)] font-bold">SOURCE:</span>
-          <span>{currentItem.sourceOrganization}</span>
-          <span className="text-white/30">·</span>
-          <span>{currentItem.publicationDate}</span>
-          <a
-            href={currentItem.sourceUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-[var(--color-gold)] hover:underline ml-1 inline-flex items-center gap-0.5 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--color-gold)] rounded px-1"
-            aria-label={`Verify source: ${currentItem.sourceTitle}`}
-          >
-            <span>Verify source</span>
-            <span aria-hidden="true">↗</span>
-          </a>
+      {/* Footer Navigation Bar: Progress Dots and Open-Loop Swipe Cue */}
+      <div className="mt-6 pt-4 border-t border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-3 relative z-10">
+        <div className="text-[10px] sm:text-[11px] font-mono text-white/50 flex items-center gap-2">
+          <span className="text-[#D4AF37] font-bold">INSIGHT:</span>
+          <span>The Sovereign Truth Behind AI Invisibility</span>
         </div>
-        <div className="flex items-center gap-1.5 self-center sm:self-auto">
+
+        {/* Slide navigation dots */}
+        <div className="flex items-center gap-2 self-center sm:self-auto">
           {items.map((item, idx) => (
             <button
               key={item.id}
               type="button"
               onClick={() => goToSlide(idx)}
-              aria-label={`Go to slide ${idx + 1}: ${item.badge}`}
-              className={`h-1.5 rounded-full transition-all duration-300 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--color-gold)] ${
+              aria-label={`Go to insight ${idx + 1}: ${item.ambassador}`}
+              className={`h-2 rounded-full transition-all duration-300 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#D4AF37] ${
                 idx === currentIndex
-                  ? 'w-6 bg-[var(--color-gold)]'
-                  : 'w-1.5 bg-white/20 hover:bg-white/40'
+                  ? 'w-8 bg-[#D4AF37] shadow-[0_0_8px_rgba(212,175,55,0.6)]'
+                  : 'w-2 bg-white/20 hover:bg-white/40'
               }`}
             />
           ))}
