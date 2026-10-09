@@ -56,7 +56,7 @@ export function TelemetryHeader() {
   const formattedProgress = String(Math.round(scrollProgress)).padStart(3, '0');
 
   return (
-    <header className="bg-black/50 sticky top-0 z-50 backdrop-blur-lg">
+    <header className="bg-black/50 fixed top-0 inset-x-0 z-50 backdrop-blur-lg border-b border-white/5">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3.5 flex items-center justify-between gap-4">
         {/* Left: Brand Monogram & Entity Badge */}
         <div className="flex items-center gap-3">

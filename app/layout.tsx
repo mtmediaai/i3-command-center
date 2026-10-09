@@ -237,7 +237,7 @@ export default function RootLayout({
       </head>
       <body className="bg-[var(--color-void)] text-[var(--color-rim)] min-h-screen antialiased flex flex-col selection:bg-[var(--color-gold)] selection:text-black">
         {/* Machine-meta entity verification block */}
-        <div className="machine-meta-block" aria-hidden="true">
+        <div className="sr-only machine-meta-block" aria-hidden="true">
           <span>MT Media AI · Sovereign Intelligence Layer · I3 System</span>
         </div>
         {children}
