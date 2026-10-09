@@ -143,6 +143,10 @@ export function EstateCanvasScroll() {
       setLoadedCount((prev) => prev + 1);
       renderFrame(0);
     };
+    if (firstImg.complete && firstImg.naturalWidth > 0) {
+      loadedFramesRef.current[0] = firstImg;
+      renderFrame(0);
+    }
 
     // 2. Keyframe pre-fetch: Every 10th frame (12 keyframes)
     const keyframeIndices = [9, 19, 29, 39, 49, 59, 69, 79, 89, 99, 109, 119];
@@ -332,6 +336,7 @@ export function EstateCanvasScroll() {
 
         {/* Chiaroscuro Shadow Gradient Plates (Material Physics: High Gloss Onyx into Matte Obsidian) */}
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#050505] via-[#010101]/40 to-[#050505]/70" />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-[#050505]/80 via-[#050505]/40 to-transparent" />
 
         {/* Telemetry Indicator with Lightning Blue Kinetic Pulses */}
         <div className="pointer-events-none absolute top-16 sm:top-20 left-6 right-6 flex justify-between items-center text-xs font-mono text-white/50 z-20">
@@ -351,14 +356,14 @@ export function EstateCanvasScroll() {
         </div>
 
         {/* ── SCENE OVERLAYS (SEMANTIC PLACEHOLDERS BOUND TO I3_CONTENT) ── */}
-        <div className="relative z-10 h-full w-full max-w-5xl mx-auto px-6 flex flex-col justify-center pointer-events-none">
+        <div className="relative z-10 h-full w-full max-w-5xl mx-auto px-4 sm:px-6 flex flex-col justify-center pointer-events-none">
           {/* Movement 0: Hero Title & Lead */}
           {isHeroActive && (
             <section className="space-y-4 max-w-3xl text-left pointer-events-auto">
-              <span className="text-xs font-mono tracking-widest text-[#D4AF37] uppercase font-bold block">
+              <span className="text-xs font-mono tracking-widest text-[#D4AF37] uppercase font-bold block drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]">
                 {I3_CONTENT.hero.superTitle}
               </span>
-              <h1 className="text-3xl sm:text-5xl font-serif text-[#F5F5F5] font-bold leading-tight">
+              <h1 className="text-3xl sm:text-5xl font-serif text-[#F5F5F5] font-bold leading-tight drop-shadow-[0_4px_16px_rgba(0,0,0,0.95)]">
                 {I3_CONTENT.hero.statement}
               </h1>
             </section>
@@ -367,10 +372,10 @@ export function EstateCanvasScroll() {
           {/* Movement 1: The Curb Appeal */}
           {isScene1Active && (
             <section className="space-y-4 max-w-2xl text-left pointer-events-auto">
-              <span className="text-xs font-mono tracking-widest text-[#D4AF37] uppercase font-bold block">
+              <span className="text-xs font-mono tracking-widest text-[#D4AF37] uppercase font-bold block drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]">
                 THE CURB APPEAL
               </span>
-              <p className="text-2xl sm:text-4xl font-serif text-[#F5F5F5] font-semibold leading-relaxed">
+              <p className="text-2xl sm:text-4xl font-serif text-[#F5F5F5] font-semibold leading-relaxed drop-shadow-[0_4px_16px_rgba(0,0,0,0.95)]">
                 {I3_CONTENT.scenes.scene1_curbAppeal}
               </p>
             </section>
@@ -379,10 +384,10 @@ export function EstateCanvasScroll() {
           {/* Movement 2: Interior Sanctuary & Private Audio */}
           {isScene2Active && (
             <section className="space-y-4 max-w-2xl text-left pointer-events-auto">
-              <span className="text-xs font-mono tracking-widest text-[#D4AF37] uppercase font-bold block">
+              <span className="text-xs font-mono tracking-widest text-[#D4AF37] uppercase font-bold block drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]">
                 INTERIOR SANCTUARY
               </span>
-              <p className="text-2xl sm:text-4xl font-serif text-[#F5F5F5] font-semibold leading-relaxed">
+              <p className="text-2xl sm:text-4xl font-serif text-[#F5F5F5] font-semibold leading-relaxed drop-shadow-[0_4px_16px_rgba(0,0,0,0.95)]">
                 {I3_CONTENT.scenes.scene2_interiorAudio}
               </p>
             </section>
@@ -391,10 +396,10 @@ export function EstateCanvasScroll() {
           {/* Movement 3: The Outdoor Oasis */}
           {isScene3Active && (
             <section className="space-y-4 max-w-2xl text-left pointer-events-auto">
-              <span className="text-xs font-mono tracking-widest text-[#D4AF37] uppercase font-bold block">
+              <span className="text-xs font-mono tracking-widest text-[#D4AF37] uppercase font-bold block drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]">
                 OUTDOOR OASIS
               </span>
-              <p className="text-2xl sm:text-4xl font-serif text-[#F5F5F5] font-semibold leading-relaxed">
+              <p className="text-2xl sm:text-4xl font-serif text-[#F5F5F5] font-semibold leading-relaxed drop-shadow-[0_4px_16px_rgba(0,0,0,0.95)]">
                 {I3_CONTENT.scenes.scene3_outdoorOasis}
               </p>
             </section>
@@ -403,10 +408,10 @@ export function EstateCanvasScroll() {
           {/* Movement 4: The Motor Court */}
           {isScene4Active && (
             <section className="space-y-4 max-w-2xl text-left pointer-events-auto">
-              <span className="text-xs font-mono tracking-widest text-[#D4AF37] uppercase font-bold block">
+              <span className="text-xs font-mono tracking-widest text-[#D4AF37] uppercase font-bold block drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]">
                 THE MOTOR COURT
               </span>
-              <p className="text-2xl sm:text-4xl font-serif text-[#F5F5F5] font-semibold leading-relaxed">
+              <p className="text-2xl sm:text-4xl font-serif text-[#F5F5F5] font-semibold leading-relaxed drop-shadow-[0_4px_16px_rgba(0,0,0,0.95)]">
                 {I3_CONTENT.scenes.scene4_motorCourt}
               </p>
             </section>
@@ -414,7 +419,7 @@ export function EstateCanvasScroll() {
 
           {/* Movement 5: The Foundation Medallion & Interactive Diagnostic State Machine */}
           {isIntakeActive && (
-            <section className="space-y-6 max-w-2xl mx-auto w-full text-center pointer-events-auto bg-[#050505]/95 border border-[#E5E4E2]/20 p-8 rounded-2xl backdrop-blur-xl shadow-2xl">
+            <section className="space-y-6 max-w-2xl mx-auto w-full text-center pointer-events-auto bg-[#050505]/95 border border-[#E5E4E2]/20 p-5 sm:p-8 rounded-2xl backdrop-blur-xl shadow-2xl">
               <div className="space-y-2">
                 <span className="text-xs font-mono tracking-widest text-[#D4AF37] uppercase font-bold block">
                   {I3_CONTENT.intakeConsole.tagline}
