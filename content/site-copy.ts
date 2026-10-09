@@ -289,7 +289,7 @@ export const siteCopy: SiteCopy = {
         question:
           'What is AI Brand Ignorance and how does the I³ System resolve it?',
         answer:
-          'AI Brand Ignorance occurs when AI Invisibility combines with AI Erasure: search models synthesize competitor answers while remaining completely unaware of your practice. The I³ System maps this gap and outlines the structured evidence needed for machine recall.',
+          'AI Brand Ignorance occurs when AI Invisibility (unindexed schemas), AI Erasure (LLM training gaps), and AI Mode Exclusion (zero-click answer shadows) combine: autonomous crawlers and answer engines synthesize competitor answers while overlooking your practice. Machines do not act with malice; without structured, accessible schema data, your entity falls below generative retrieval thresholds. The I³ System maps these gaps and builds the structured machine-readable evidence needed for citation recall.',
       },
       {
         question:

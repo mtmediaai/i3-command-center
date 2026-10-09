@@ -12,7 +12,7 @@ The primary intent cluster targets **Bottom-of-the-Funnel (BOFU) commercial inte
 - **Invisible Infrastructure Intelligence (I³ System)**
 - **AI visibility audit** / **AI search visibility**
 - **local business AI erasure**
-- **AI Brand Ignorance** (*AI Invisibility + AI Erasure = AI Brand Ignorance*)
+- **AI Brand Ignorance** (*AI Invisibility + AI Erasure + AI Mode Exclusion = AI Brand Ignorance*)
 - **why isn't my business showing up in AI search**
 - **referral business invisible to AI**
 - **zero-click search local business impact**

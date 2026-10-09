@@ -9,12 +9,12 @@ async function run() {
   await page.goto('http://localhost:3000', { waitUntil: 'networkidle' });
 
   const points = [
-    { name: '00_hero', scrollY: 0 },
-    { name: '01_curb_appeal', scrollY: 600 },
-    { name: '02_interior_sanctuary', scrollY: 1200 },
-    { name: '03_outdoor_oasis', scrollY: 1800 },
-    { name: '04_motor_court', scrollY: 2400 },
-    { name: '05_intake_console', scrollY: 3000 },
+    { name: '00_hero', scrollY: 100 },
+    { name: '01_grand_entryway', scrollY: 600 },
+    { name: '02_outdoor_oasis', scrollY: 1100 },
+    { name: '03_motor_court', scrollY: 1500 },
+    { name: '04_foyer_hero_shot', scrollY: 1900 },
+    { name: '05_intake_console', scrollY: 2300 },
   ];
 
   for (const pt of points) {

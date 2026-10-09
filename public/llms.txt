@@ -11,6 +11,10 @@ Apex Hub: https://mtmediaai.com
 ## Summary
 The I³ Command Center is the specialized diagnostic satellite of MT Media AI. It introduces the Invisible Infrastructure Intelligence (I³ System) framework for established private and commercial enterprises. The entry diagnostic is the I³ Visibility Snapshot ($0 AI Visibility diagnostic), assessing public brand evidence, entity consistency, and representation across AI search and generative discovery systems.
 
+## Diagnostic Framework: AI Brand Ignorance
+Equation: AI Invisibility (Unindexed Schemas) + AI Erasure (LLM Training Gaps) + AI Mode Exclusion (Zero-Click Answer Shadows) = AI Brand Ignorance.
+Crawlers and LLMs do not actively erase local businesses; without structured, accessible schema data, entities fall below retrieval thresholds and are simply overlooked and ignored. The I³ System repairs this gap by engineering machine-readable structured authority.
+
 ## Entity Alignment
 - Service: Invisible Infrastructure Intelligence (I³ System)
 - Service Type: AI Visibility & Generative Engine Optimization

@@ -13,6 +13,15 @@ Supporting diagnostic satellite of the **MT Media AI** ecosystem, serving as the
 - Fail-isolated lead intake pipeline with multi-tier spam screening
 - Secure CRM handoff architecture and asynchronous fulfillment queuing
 
+## MTM Algorithmic Decay Diagnostic Equation
+$$\text{AI Invisibility (Unindexed Schemas)} + \text{AI Erasure (LLM Training Gaps)} + \text{AI Mode Exclusion (Zero-Click Answer Shadows)} = \text{AI Brand Ignorance}$$
+
+Component Form:
+$$\mathbf{AI\ Invisibility} + \mathbf{AI\ Erasure} + \mathbf{AI\ Visibility\ Gaps\ (or\ AI\ Distortion)} = \mathbf{AI\ Brand\ Ignorance}$$
+
+### Coining AI Brand Ignorance
+Crawlers and LLMs do not actively or maliciously erase local practices; machines are bound by mathematical optimization. When a business lacks structured, machine-readable JSON-LD schemas and canonical entity graphs, its semantic signal falls below generative retrieval thresholds. Autonomous agents simply overlook and ignore the entity, prioritizing conglomerates with massive pools of structured data. For the business owner, it feels like physical erasure; in reality, it is **AI Brand Ignorance** resulting from unindexed infrastructure.
+
 ## Verification & Quality
 ```bash
 npm run gate:instatic

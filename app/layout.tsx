@@ -189,7 +189,7 @@ const jsonLdGraph = {
       '@id': 'https://i3.mtmediaai.com/#term-ai-brand-ignorance',
       name: 'AI Brand Ignorance',
       description:
-        'The condition where AI Invisibility and AI Erasure combine, leaving conversational engines and answer models unaware of an established commercial practice.',
+        'The condition where AI Invisibility, AI Erasure, and AI Mode Exclusion combine: leaving conversational engines, AI Overviews, and zero-click answer models unaware of an established commercial practice due to unindexed schemas, LLM training gaps, and machine-unreadable brand signals.',
       inDefinedTermSet: 'https://i3.mtmediaai.com/#service',
     },
     {

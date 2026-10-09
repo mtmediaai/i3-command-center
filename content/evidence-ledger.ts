@@ -72,7 +72,7 @@ export const evidenceLedger: EvidenceLedgerItem[] = [
     title: 'MTM AI Brand Ignorance Working Model',
     badge: 'MTM WORKING MODEL',
     approvedClaim:
-      'MTM working model: AI Invisibility + AI Erasure can produce AI Brand Ignorance.',
+      'MTM diagnostic equation: AI Invisibility (Unindexed Schemas) + AI Erasure (LLM Training Gaps) + AI Mode Exclusion (Zero-Click Answer Shadows) = AI Brand Ignorance.',
     sourceOrganization: 'MT Media AI Research',
     sourceTitle: 'I³ System: Invisible Infrastructure Intelligence Framework',
     sourceUrl:

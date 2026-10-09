@@ -149,7 +149,8 @@ def generate_i3_framework_source() -> str:
 The best businesses built their names on human trust, direct referrals, and elite craftsmanship. Modern answer engines cannot read a reputation; they read infrastructure. When a prospective client queries ChatGPT, Gemini, Perplexity, or Google AI Overviews, the machine recommends who is machine-legible, not necessarily who is best.
 
 ### The Equation
-AI Invisibility + AI Erasure = AI Brand Ignorance.
+AI Invisibility (Unindexed Schemas) + AI Erasure (LLM Training Gaps) + AI Mode Exclusion (Zero-Click Answer Shadows) = AI Brand Ignorance.
+Component Form: AI Invisibility + AI Erasure + AI Visibility Gaps (or AI Distortion) = AI Brand Ignorance.
 
 ### The 5 Primary Placement Spots for Maximum Machine Legibility:
 1. **HTML Title Tag:** Exact target entity and primary intent placed at the earliest string index.
