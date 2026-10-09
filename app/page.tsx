@@ -11,24 +11,13 @@ import { HoustonSpatialMesh } from '@/components/houston-spatial-mesh';
 import { IgnitionHubPreview } from '@/components/ignition-hub-preview';
 import { Monogram } from '@/components/monogram';
 import { EstateCanvasScroll } from '@/components/estate-canvas-scroll';
+import { AmbientVoidVideo } from '@/components/ambient-void-video';
 
 export default function HomePage() {
   return (
     <div className="flex flex-col min-h-screen relative overflow-hidden bg-black text-[var(--color-chrome-white)] selection:bg-[var(--color-gold)] selection:text-black">
-      {/* ── 1. CONTINUOUS LIVING VOID (FIXED LOOPING VIDEO & ATMOSPHERE) ── */}
-      <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden" aria-hidden="true">
-        <video
-          autoPlay
-          loop
-          muted
-          playsInline
-          className="w-full h-full object-cover opacity-25 scale-105"
-        >
-          <source src="/assets/houston-ambient-void.mp4" type="video/mp4" />
-        </video>
-        <div className="absolute inset-0 bg-gradient-to-b from-black/85 via-black/90 to-black pointer-events-none" />
-        <div className="solar-arc-halo opacity-40" />
-      </div>
+      {/* ── 1. CONTINUOUS LIVING VOID (OPTIMIZED GPU-DECODED AMBIENT BACKGROUND) ── */}
+      <AmbientVoidVideo />
 
       {/* ── 2. PRECISION TELEMETRY HEADER WITH SCROLL PROGRESS RAIL ── */}
       <TelemetryHeader />
@@ -45,11 +34,27 @@ export default function HomePage() {
       {/* ── 3. PHASE 2B: HEADLESS ESTATE CANVAS SCRUB ENGINE (400vh) ── */}
       <EstateCanvasScroll />
 
+      {/* ── 4. TRANSITION BRIDGE: ESTATE WALKTHROUGH TO INSTITUTIONAL DOSSIER ── */}
+      <div className="relative z-10 w-full max-w-5xl mx-auto px-6 pt-24 pb-4">
+        <div className="relative flex items-center justify-center">
+          <div className="absolute inset-0 flex items-center" aria-hidden="true">
+            <div className="w-full border-t border-[#E5E4E2]/20" />
+          </div>
+          <div className="relative bg-[#050505] px-6 py-2 border border-[#E5E4E2]/20 rounded-full shadow-[0_0_15px_rgba(212,175,55,0.08)] flex items-center gap-3">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#D4AF37] animate-pulse" />
+            <span className="text-[10px] font-mono tracking-widest text-[#D4AF37] uppercase font-bold">
+              MT MEDIA AI // INSTITUTIONAL EVIDENCE DOSSIER
+            </span>
+            <span className="w-1.5 h-1.5 rounded-full bg-[#00E5FF]" />
+          </div>
+        </div>
+      </div>
+
       <main className="flex-1 max-w-6xl mx-auto w-full px-4 sm:px-6 py-16 relative z-10 space-y-36">
         {/* ═══════════════════════════════════════════════════════════════
             MOVEMENT 01: THE HOUSTON BASELINE & AI ERASURE (DOWNTOWN)
             GPS: 29.7604° N, 95.3698° W · ELEV: 15M
-        ═══════════════════════════════════════════════════════════════ */}
+            ═══════════════════════════════════════════════════════════════ */}
         <section id="hero" data-chapter="01" className="space-y-12 text-center pt-8">
           {/* Beacon: Centered HID Sword-Blade Header */}
           <div className="space-y-4 max-w-4xl mx-auto">
@@ -58,9 +63,9 @@ export default function HomePage() {
               <span>{siteCopy.hero.eyebrow}</span>
             </div>
 
-            <h1 className="hid-sword-blade text-3xl sm:text-5xl lg:text-6xl font-bold tracking-[0.16em] leading-tight">
+            <h2 className="hid-sword-blade text-3xl sm:text-5xl lg:text-6xl font-bold tracking-[0.16em] leading-tight">
               {siteCopy.hero.h1}
-            </h1>
+            </h2>
 
             <div className="hid-subtitle-shield text-xs sm:text-sm">
               WHEN HIGH-NET-WORTH BUYERS ASK WHO TO TRUST IN GREATER HOUSTON
