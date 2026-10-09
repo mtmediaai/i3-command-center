@@ -336,90 +336,134 @@ export function EstateCanvasScroll() {
 
         {/* Chiaroscuro Shadow Gradient Plates (Material Physics: High Gloss Onyx into Matte Obsidian) */}
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#050505] via-[#010101]/40 to-[#050505]/70" />
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-[#050505]/80 via-[#050505]/40 to-transparent" />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-[#050505]/90 via-[#050505]/60 to-transparent" />
 
-        {/* Telemetry Indicator with Lightning Blue Kinetic Pulses */}
-        <div className="pointer-events-none absolute top-16 sm:top-20 left-6 right-6 flex justify-between items-center text-xs font-mono text-white/50 z-20">
-          <div className="flex items-center gap-2">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#00E5FF] animate-pulse" />
-            <span>FRAME: </span>
-            <span className="text-white font-bold">{formatFrameNumber(activeFrameIndex + 1)} / {TOTAL_FRAMES}</span>
+        {/* ── LOWER LEFT SCENE OVERLAYS (THE FORGE PROTOCOL: NINA HID GLOW + GOLDIE STRATEGIC SUBTITLE) ── */}
+        {!isIntakeActive && (
+          <div className="relative z-10 h-full w-full max-w-7xl mx-auto px-6 sm:px-12 md:px-16 flex flex-col justify-end pb-12 sm:pb-16 md:pb-20 pointer-events-none">
+            {/* Movement 0: Hero Title & Lead */}
+            {isHeroActive && (
+              <section className="space-y-4 max-w-3xl text-left pointer-events-auto">
+                {/* Product Name Badge / Eyebrow (Echo Container) */}
+                <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-white/15 bg-black/60 backdrop-blur-md shadow-[0_0_15px_rgba(0,0,0,0.8)]">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#00E5FF] animate-pulse" aria-hidden="true" />
+                  <span className="text-[10px] sm:text-xs font-mono tracking-[0.2em] uppercase text-[#E5E4E2] font-bold">
+                    INVISIBLE INFRASTRUCTURE INTELLIGENCE (I³ SYSTEM)
+                  </span>
+                </div>
+
+                {/* Prominent Gold Subtitle H2 (Goldie Spark) */}
+                <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-serif font-bold text-[#D4AF37] tracking-[0.14em] uppercase drop-shadow-[0_2px_10px_rgba(0,0,0,0.95)] leading-tight">
+                  {I3_CONTENT.hero.superTitle}
+                </h2>
+
+                {/* Surgical HID Glow H1 (Nina Shield / Sword-Blade Glow) */}
+                <h1
+                  className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-serif font-black text-white leading-[1.16] uppercase tracking-[0.03em] drop-shadow-[0_4px_24px_rgba(0,0,0,0.95)]"
+                  style={{
+                    textShadow:
+                      '0 0 15px rgba(255,255,255,0.95), 0 0 30px rgba(255,255,255,0.65), 0 0 60px rgba(212,175,55,0.35)',
+                  }}
+                >
+                  {I3_CONTENT.hero.statement}
+                </h1>
+              </section>
+            )}
+
+            {/* Movement 1: The Curb Appeal */}
+            {isScene1Active && (
+              <section className="space-y-3.5 max-w-2xl text-left pointer-events-auto">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/15 bg-black/60 backdrop-blur-md">
+                  <span className="text-[10px] font-mono tracking-widest text-[#E5E4E2] uppercase font-bold">
+                    MOVEMENT 01 // ARCHITECTURAL THRESHOLD
+                  </span>
+                </div>
+                <h2 className="text-xl sm:text-2xl md:text-3xl font-serif font-bold text-[#D4AF37] tracking-[0.14em] uppercase drop-shadow-[0_2px_10px_rgba(0,0,0,0.95)]">
+                  THE CURB APPEAL
+                </h2>
+                <p
+                  className="text-xl sm:text-3xl md:text-4xl font-serif font-bold text-white leading-snug drop-shadow-[0_4px_20px_rgba(0,0,0,0.95)]"
+                  style={{
+                    textShadow: '0 0 14px rgba(255,255,255,0.85), 0 0 28px rgba(255,255,255,0.5)',
+                  }}
+                >
+                  {I3_CONTENT.scenes.scene1_curbAppeal}
+                </p>
+              </section>
+            )}
+
+            {/* Movement 2: Interior Sanctuary */}
+            {isScene2Active && (
+              <section className="space-y-3.5 max-w-2xl text-left pointer-events-auto">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/15 bg-black/60 backdrop-blur-md">
+                  <span className="text-[10px] font-mono tracking-widest text-[#E5E4E2] uppercase font-bold">
+                    MOVEMENT 02 // SANCTUARY AUDIT
+                  </span>
+                </div>
+                <h2 className="text-xl sm:text-2xl md:text-3xl font-serif font-bold text-[#D4AF37] tracking-[0.14em] uppercase drop-shadow-[0_2px_10px_rgba(0,0,0,0.95)]">
+                  INTERIOR SANCTUARY
+                </h2>
+                <p
+                  className="text-xl sm:text-3xl md:text-4xl font-serif font-bold text-white leading-snug drop-shadow-[0_4px_20px_rgba(0,0,0,0.95)]"
+                  style={{
+                    textShadow: '0 0 14px rgba(255,255,255,0.85), 0 0 28px rgba(255,255,255,0.5)',
+                  }}
+                >
+                  {I3_CONTENT.scenes.scene2_interiorAudio}
+                </p>
+              </section>
+            )}
+
+            {/* Movement 3: The Outdoor Oasis */}
+            {isScene3Active && (
+              <section className="space-y-3.5 max-w-2xl text-left pointer-events-auto">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/15 bg-black/60 backdrop-blur-md">
+                  <span className="text-[10px] font-mono tracking-widest text-[#E5E4E2] uppercase font-bold">
+                    MOVEMENT 03 // CLIENT STANDARDS
+                  </span>
+                </div>
+                <h2 className="text-xl sm:text-2xl md:text-3xl font-serif font-bold text-[#D4AF37] tracking-[0.14em] uppercase drop-shadow-[0_2px_10px_rgba(0,0,0,0.95)]">
+                  OUTDOOR OASIS
+                </h2>
+                <p
+                  className="text-xl sm:text-3xl md:text-4xl font-serif font-bold text-white leading-snug drop-shadow-[0_4px_20px_rgba(0,0,0,0.95)]"
+                  style={{
+                    textShadow: '0 0 14px rgba(255,255,255,0.85), 0 0 28px rgba(255,255,255,0.5)',
+                  }}
+                >
+                  {I3_CONTENT.scenes.scene3_outdoorOasis}
+                </p>
+              </section>
+            )}
+
+            {/* Movement 4: The Motor Court */}
+            {isScene4Active && (
+              <section className="space-y-3.5 max-w-2xl text-left pointer-events-auto">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/15 bg-black/60 backdrop-blur-md">
+                  <span className="text-[10px] font-mono tracking-widest text-[#E5E4E2] uppercase font-bold">
+                    MOVEMENT 04 // REPUTATION CAPITAL
+                  </span>
+                </div>
+                <h2 className="text-xl sm:text-2xl md:text-3xl font-serif font-bold text-[#D4AF37] tracking-[0.14em] uppercase drop-shadow-[0_2px_10px_rgba(0,0,0,0.95)]">
+                  THE MOTOR COURT
+                </h2>
+                <p
+                  className="text-xl sm:text-3xl md:text-4xl font-serif font-bold text-white leading-snug drop-shadow-[0_4px_20px_rgba(0,0,0,0.95)]"
+                  style={{
+                    textShadow: '0 0 14px rgba(255,255,255,0.85), 0 0 28px rgba(255,255,255,0.5)',
+                  }}
+                >
+                  {I3_CONTENT.scenes.scene4_motorCourt}
+                </p>
+              </section>
+            )}
           </div>
-          <div>
-            <span>PROGRESS: </span>
-            <span className="text-[#00E5FF] font-bold">{Math.round(scrollProgress * 100)}%</span>
-          </div>
-          <div className="hidden sm:block">
-            <span>BUFFER: </span>
-            <span className="text-white font-bold">{loadedCount} / {TOTAL_FRAMES}</span>
-          </div>
-        </div>
+        )}
 
-        {/* ── SCENE OVERLAYS (SEMANTIC PLACEHOLDERS BOUND TO I3_CONTENT) ── */}
-        <div className="relative z-10 h-full w-full max-w-5xl mx-auto px-4 sm:px-6 flex flex-col justify-center pointer-events-none">
-          {/* Movement 0: Hero Title & Lead */}
-          {isHeroActive && (
-            <section className="space-y-4 max-w-3xl text-left pointer-events-auto">
-              <span className="text-xs font-mono tracking-widest text-[#D4AF37] uppercase font-bold block drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]">
-                {I3_CONTENT.hero.superTitle}
-              </span>
-              <h1 className="text-3xl sm:text-5xl font-serif text-[#F5F5F5] font-bold leading-tight drop-shadow-[0_4px_16px_rgba(0,0,0,0.95)]">
-                {I3_CONTENT.hero.statement}
-              </h1>
-            </section>
-          )}
-
-          {/* Movement 1: The Curb Appeal */}
-          {isScene1Active && (
-            <section className="space-y-4 max-w-2xl text-left pointer-events-auto">
-              <span className="text-xs font-mono tracking-widest text-[#D4AF37] uppercase font-bold block drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]">
-                THE CURB APPEAL
-              </span>
-              <p className="text-2xl sm:text-4xl font-serif text-[#F5F5F5] font-semibold leading-relaxed drop-shadow-[0_4px_16px_rgba(0,0,0,0.95)]">
-                {I3_CONTENT.scenes.scene1_curbAppeal}
-              </p>
-            </section>
-          )}
-
-          {/* Movement 2: Interior Sanctuary & Private Audio */}
-          {isScene2Active && (
-            <section className="space-y-4 max-w-2xl text-left pointer-events-auto">
-              <span className="text-xs font-mono tracking-widest text-[#D4AF37] uppercase font-bold block drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]">
-                INTERIOR SANCTUARY
-              </span>
-              <p className="text-2xl sm:text-4xl font-serif text-[#F5F5F5] font-semibold leading-relaxed drop-shadow-[0_4px_16px_rgba(0,0,0,0.95)]">
-                {I3_CONTENT.scenes.scene2_interiorAudio}
-              </p>
-            </section>
-          )}
-
-          {/* Movement 3: The Outdoor Oasis */}
-          {isScene3Active && (
-            <section className="space-y-4 max-w-2xl text-left pointer-events-auto">
-              <span className="text-xs font-mono tracking-widest text-[#D4AF37] uppercase font-bold block drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]">
-                OUTDOOR OASIS
-              </span>
-              <p className="text-2xl sm:text-4xl font-serif text-[#F5F5F5] font-semibold leading-relaxed drop-shadow-[0_4px_16px_rgba(0,0,0,0.95)]">
-                {I3_CONTENT.scenes.scene3_outdoorOasis}
-              </p>
-            </section>
-          )}
-
-          {/* Movement 4: The Motor Court */}
-          {isScene4Active && (
-            <section className="space-y-4 max-w-2xl text-left pointer-events-auto">
-              <span className="text-xs font-mono tracking-widest text-[#D4AF37] uppercase font-bold block drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]">
-                THE MOTOR COURT
-              </span>
-              <p className="text-2xl sm:text-4xl font-serif text-[#F5F5F5] font-semibold leading-relaxed drop-shadow-[0_4px_16px_rgba(0,0,0,0.95)]">
-                {I3_CONTENT.scenes.scene4_motorCourt}
-              </p>
-            </section>
-          )}
-
-          {/* Movement 5: The Foundation Medallion & Interactive Diagnostic State Machine */}
-          {isIntakeActive && (
-            <section className="space-y-6 max-w-2xl mx-auto w-full text-center pointer-events-auto bg-[#050505]/95 border border-[#E5E4E2]/20 p-5 sm:p-8 rounded-2xl backdrop-blur-xl shadow-2xl">
+        {/* Movement 5: The Foundation Medallion & Interactive Diagnostic State Machine */}
+        {isIntakeActive && (
+          <div className="relative z-10 h-full w-full max-w-2xl mx-auto px-4 sm:px-6 flex flex-col justify-center items-center pointer-events-none">
+            <section className="space-y-6 w-full text-center pointer-events-auto bg-[#050505]/95 border border-[#E5E4E2]/20 p-5 sm:p-8 rounded-2xl backdrop-blur-xl shadow-2xl">
               <div className="space-y-2">
                 <span className="text-xs font-mono tracking-widest text-[#D4AF37] uppercase font-bold block">
                   {I3_CONTENT.intakeConsole.tagline}
@@ -656,8 +700,8 @@ export function EstateCanvasScroll() {
                 </div>
               )}
             </section>
-          )}
-        </div>
+          </div>
+        )}
       </div>
     </div>
   );

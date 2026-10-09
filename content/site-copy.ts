@@ -140,16 +140,16 @@ export const siteCopy: SiteCopy = {
       'Map the questions buyers ask, the evidence AI systems can verify, and how your business is represented across AI search. Request an I³ Visibility Snapshot.',
   },
   header: {
-    brandName: 'I³ Command Center',
-    brandMonogramAlt: 'MT Media AI Monogram',
+    brandName: 'MT Media AI',
+    brandMonogramAlt: 'MT Media AI Black Jewel Brand Mark',
     nav: {
       palace: {
         label: 'The Palace',
         url: 'https://mtmediaai.com',
       },
       founder: {
-        label: 'The Architect',
-        url: 'https://kareem.mtmediaai.com',
+        label: 'Founder · Kareem Daniel',
+        url: 'https://www.linkedin.com/in/kareemdan',
       },
       network: {
         label: 'LinkedIn',
