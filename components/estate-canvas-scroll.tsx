@@ -27,6 +27,7 @@ export function EstateCanvasScroll() {
   const [formSubmitting, setFormSubmitting] = useState(false);
   const [diagnosticResult, setDiagnosticResult] = useState<any>(null);
   const [formError, setFormError] = useState<string | null>(null);
+  const [submissionHash, setSubmissionHash] = useState<string>('');
 
   // Frame Cache & Drawing Refs
   const loadedFramesRef = useRef<(HTMLImageElement | null)[]>(new Array(TOTAL_FRAMES).fill(null));
@@ -119,7 +120,6 @@ export function EstateCanvasScroll() {
   useEffect(() => {
     if (typeof window === 'undefined') return;
 
-    // Check reduced motion preference
     const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
     setPrefersReducedMotion(motionQuery.matches);
 
@@ -128,7 +128,6 @@ export function EstateCanvasScroll() {
     };
     motionQuery.addEventListener('change', motionListener);
 
-    // Initial resize setup
     handleResize();
     window.addEventListener('resize', handleResize);
 
@@ -156,7 +155,7 @@ export function EstateCanvasScroll() {
       };
     });
 
-    // 3. Background stream: load remaining 107 frames in idle batches
+    // 3. Background stream: load remaining frames in idle batches
     let cancelStream = false;
     const remainingIndices = Array.from({ length: TOTAL_FRAMES }, (_, i) => i).filter(
       (i) => i !== 0 && !keyframeIndices.includes(i)
@@ -191,7 +190,6 @@ export function EstateCanvasScroll() {
       }
     }
 
-    // Begin background stream after keyframe initiation
     const streamTimeout = setTimeout(streamNextBatch, 200);
 
     // 4. Tab visibility listener (Battery & CPU Governance)
@@ -270,9 +268,14 @@ export function EstateCanvasScroll() {
 
       const data = await res.json();
       if (!res.ok) {
-        throw new Error(data.message || data.error || 'Submission failed');
+        if (res.status === 429) {
+          throw new Error('Rate limit active: Maximum 5 inquiries per 10-minute window. Please retry in 10 minutes.');
+        }
+        throw new Error(data.message || data.error || 'Submission verification failed. Please check inputs.');
       }
 
+      const generatedHash = `MTM-TX-${zipCode.trim()}-${Date.now().toString(36).toUpperCase()}`;
+      setSubmissionHash(generatedHash);
       setDiagnosticResult(data);
     } catch (err: unknown) {
       const message = err instanceof Error ? err.message : String(err);
@@ -280,6 +283,11 @@ export function EstateCanvasScroll() {
     } finally {
       setFormSubmitting(false);
     }
+  };
+
+  const resetForm = () => {
+    setDiagnosticResult(null);
+    setFormError(null);
   };
 
   // Scene overlay visibility calculation
@@ -290,6 +298,13 @@ export function EstateCanvasScroll() {
   const isScene4Active = scrollProgress >= 0.72 && scrollProgress < 0.88;
   const isIntakeActive = scrollProgress >= 0.88;
 
+  // Selected craft label lookup
+  const activeCraftOption = I3_CONTENT.craftOptions.find((c) => c.id === craftVector);
+  const displayedCraftLabel =
+    craftVector === 'OTHER' && craftOtherSpecification
+      ? craftOtherSpecification
+      : activeCraftOption?.label || craftVector;
+
   return (
     <div
       ref={containerRef}
@@ -297,7 +312,7 @@ export function EstateCanvasScroll() {
       style={{ height: '400vh' }}
     >
       {/* Sticky Canvas Viewport */}
-      <div className="sticky top-0 h-screen w-full overflow-hidden bg-black">
+      <div className="sticky top-0 h-screen w-full overflow-hidden bg-[#050505]">
         {/* Living Video Canvas */}
         <canvas
           ref={canvasRef}
@@ -315,20 +330,21 @@ export function EstateCanvasScroll() {
           />
         )}
 
-        {/* Chiaroscuro Shadow Gradient Plates */}
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black via-black/40 to-black/60" />
+        {/* Chiaroscuro Shadow Gradient Plates (Material Physics: High Gloss Onyx into Matte Obsidian) */}
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#050505] via-[#010101]/40 to-[#050505]/70" />
 
-        {/* Telemetry Indicator (HUD Header Placeholder) */}
-        <div className="pointer-events-none absolute top-6 left-6 right-6 flex justify-between items-center text-xs font-mono text-white/50 z-20">
-          <div>
+        {/* Telemetry Indicator with Lightning Blue Kinetic Pulses */}
+        <div className="pointer-events-none absolute top-16 sm:top-20 left-6 right-6 flex justify-between items-center text-xs font-mono text-white/50 z-20">
+          <div className="flex items-center gap-2">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#00E5FF] animate-pulse" />
             <span>FRAME: </span>
             <span className="text-white font-bold">{formatFrameNumber(activeFrameIndex + 1)} / {TOTAL_FRAMES}</span>
           </div>
           <div>
             <span>PROGRESS: </span>
-            <span className="text-white font-bold">{Math.round(scrollProgress * 100)}%</span>
+            <span className="text-[#00E5FF] font-bold">{Math.round(scrollProgress * 100)}%</span>
           </div>
-          <div>
+          <div className="hidden sm:block">
             <span>BUFFER: </span>
             <span className="text-white font-bold">{loadedCount} / {TOTAL_FRAMES}</span>
           </div>
@@ -342,7 +358,7 @@ export function EstateCanvasScroll() {
               <span className="text-xs font-mono tracking-widest text-[#D4AF37] uppercase font-bold block">
                 {I3_CONTENT.hero.superTitle}
               </span>
-              <h1 className="text-3xl sm:text-5xl font-serif text-white font-bold leading-tight">
+              <h1 className="text-3xl sm:text-5xl font-serif text-[#F5F5F5] font-bold leading-tight">
                 {I3_CONTENT.hero.statement}
               </h1>
             </section>
@@ -354,7 +370,7 @@ export function EstateCanvasScroll() {
               <span className="text-xs font-mono tracking-widest text-[#D4AF37] uppercase font-bold block">
                 THE CURB APPEAL
               </span>
-              <p className="text-2xl sm:text-4xl font-serif text-white font-semibold leading-relaxed">
+              <p className="text-2xl sm:text-4xl font-serif text-[#F5F5F5] font-semibold leading-relaxed">
                 {I3_CONTENT.scenes.scene1_curbAppeal}
               </p>
             </section>
@@ -366,7 +382,7 @@ export function EstateCanvasScroll() {
               <span className="text-xs font-mono tracking-widest text-[#D4AF37] uppercase font-bold block">
                 INTERIOR SANCTUARY
               </span>
-              <p className="text-2xl sm:text-4xl font-serif text-white font-semibold leading-relaxed">
+              <p className="text-2xl sm:text-4xl font-serif text-[#F5F5F5] font-semibold leading-relaxed">
                 {I3_CONTENT.scenes.scene2_interiorAudio}
               </p>
             </section>
@@ -378,7 +394,7 @@ export function EstateCanvasScroll() {
               <span className="text-xs font-mono tracking-widest text-[#D4AF37] uppercase font-bold block">
                 OUTDOOR OASIS
               </span>
-              <p className="text-2xl sm:text-4xl font-serif text-white font-semibold leading-relaxed">
+              <p className="text-2xl sm:text-4xl font-serif text-[#F5F5F5] font-semibold leading-relaxed">
                 {I3_CONTENT.scenes.scene3_outdoorOasis}
               </p>
             </section>
@@ -390,23 +406,23 @@ export function EstateCanvasScroll() {
               <span className="text-xs font-mono tracking-widest text-[#D4AF37] uppercase font-bold block">
                 THE MOTOR COURT
               </span>
-              <p className="text-2xl sm:text-4xl font-serif text-white font-semibold leading-relaxed">
+              <p className="text-2xl sm:text-4xl font-serif text-[#F5F5F5] font-semibold leading-relaxed">
                 {I3_CONTENT.scenes.scene4_motorCourt}
               </p>
             </section>
           )}
 
-          {/* Movement 5: The Foundation Medallion & Intake Console */}
+          {/* Movement 5: The Foundation Medallion & Interactive Diagnostic State Machine */}
           {isIntakeActive && (
-            <section className="space-y-6 max-w-2xl mx-auto w-full text-center pointer-events-auto bg-black/80 p-8 rounded-2xl backdrop-blur-md">
+            <section className="space-y-6 max-w-2xl mx-auto w-full text-center pointer-events-auto bg-[#050505]/95 border border-[#E5E4E2]/20 p-8 rounded-2xl backdrop-blur-xl shadow-2xl">
               <div className="space-y-2">
                 <span className="text-xs font-mono tracking-widest text-[#D4AF37] uppercase font-bold block">
                   {I3_CONTENT.intakeConsole.tagline}
                 </span>
-                <h2 className="text-2xl sm:text-3xl font-serif text-white font-bold">
+                <h2 className="text-2xl sm:text-3xl font-serif text-[#F5F5F5] font-bold">
                   {I3_CONTENT.intakeConsole.header}
                 </h2>
-                <p className="text-xs sm:text-sm text-white/70 max-w-lg mx-auto">
+                <p className="text-xs sm:text-sm text-[#F5F5F5]/70 max-w-lg mx-auto">
                   {I3_CONTENT.intakeConsole.subtext}
                 </p>
                 <p className="text-[11px] font-mono text-[#D4AF37]">
@@ -414,11 +430,12 @@ export function EstateCanvasScroll() {
                 </p>
               </div>
 
+              {/* State A: Interactive Input Form */}
               {!diagnosticResult ? (
                 <form onSubmit={handleIntakeSubmit} className="space-y-4 text-left pt-2">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div>
-                      <label className="text-[11px] font-mono uppercase text-white/60 block mb-1">
+                      <label className="text-[11px] font-mono uppercase text-[#F5F5F5]/60 block mb-1">
                         Zip Code (5 digits)
                       </label>
                       <input
@@ -429,12 +446,12 @@ export function EstateCanvasScroll() {
                         value={zipCode}
                         onChange={(e) => setZipCode(e.target.value)}
                         placeholder="77380"
-                        className="w-full bg-white/5 border border-white/20 rounded px-3 py-2 text-sm text-white placeholder-white/30 focus:outline-none focus:border-[#D4AF37]"
+                        className="w-full bg-[#010101] border border-[#E5E4E2]/20 rounded px-3 py-2 text-sm text-[#F5F5F5] placeholder-[#F5F5F5]/30 focus:outline-none focus:border-[#D4AF37]"
                       />
                     </div>
 
                     <div>
-                      <label className="text-[11px] font-mono uppercase text-white/60 block mb-1">
+                      <label className="text-[11px] font-mono uppercase text-[#F5F5F5]/60 block mb-1">
                         Company Name
                       </label>
                       <input
@@ -443,14 +460,14 @@ export function EstateCanvasScroll() {
                         value={companyName}
                         onChange={(e) => setCompanyName(e.target.value)}
                         placeholder="Firm Name"
-                        className="w-full bg-white/5 border border-white/20 rounded px-3 py-2 text-sm text-white placeholder-white/30 focus:outline-none focus:border-[#D4AF37]"
+                        className="w-full bg-[#010101] border border-[#E5E4E2]/20 rounded px-3 py-2 text-sm text-[#F5F5F5] placeholder-[#F5F5F5]/30 focus:outline-none focus:border-[#D4AF37]"
                       />
                     </div>
                   </div>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div>
-                      <label className="text-[11px] font-mono uppercase text-white/60 block mb-1">
+                      <label className="text-[11px] font-mono uppercase text-[#F5F5F5]/60 block mb-1">
                         Work Email
                       </label>
                       <input
@@ -459,18 +476,18 @@ export function EstateCanvasScroll() {
                         value={workEmail}
                         onChange={(e) => setWorkEmail(e.target.value)}
                         placeholder="principal@firm.com"
-                        className="w-full bg-white/5 border border-white/20 rounded px-3 py-2 text-sm text-white placeholder-white/30 focus:outline-none focus:border-[#D4AF37]"
+                        className="w-full bg-[#010101] border border-[#E5E4E2]/20 rounded px-3 py-2 text-sm text-[#F5F5F5] placeholder-[#F5F5F5]/30 focus:outline-none focus:border-[#D4AF37]"
                       />
                     </div>
 
                     <div>
-                      <label className="text-[11px] font-mono uppercase text-white/60 block mb-1">
+                      <label className="text-[11px] font-mono uppercase text-[#F5F5F5]/60 block mb-1">
                         Craft Vector
                       </label>
                       <select
                         value={craftVector}
                         onChange={(e) => setCraftVector(e.target.value)}
-                        className="w-full bg-black border border-white/20 rounded px-3 py-2 text-sm text-white focus:outline-none focus:border-[#D4AF37]"
+                        className="w-full bg-[#010101] border border-[#E5E4E2]/20 rounded px-3 py-2 text-sm text-[#F5F5F5] focus:outline-none focus:border-[#D4AF37]"
                       >
                         {I3_CONTENT.craftOptions.map((opt) => (
                           <option key={opt.id} value={opt.id}>
@@ -483,7 +500,7 @@ export function EstateCanvasScroll() {
 
                   {craftVector === 'OTHER' && (
                     <div>
-                      <label className="text-[11px] font-mono uppercase text-white/60 block mb-1">
+                      <label className="text-[11px] font-mono uppercase text-[#F5F5F5]/60 block mb-1">
                         Specify Your Craft Specialty
                       </label>
                       <input
@@ -492,64 +509,145 @@ export function EstateCanvasScroll() {
                         value={craftOtherSpecification}
                         onChange={(e) => setCraftOtherSpecification(e.target.value)}
                         placeholder="e.g. Bespoke Architectural Millwork"
-                        className="w-full bg-white/5 border border-white/20 rounded px-3 py-2 text-sm text-white placeholder-white/30 focus:outline-none focus:border-[#D4AF37]"
+                        className="w-full bg-[#010101] border border-[#E5E4E2]/20 rounded px-3 py-2 text-sm text-[#F5F5F5] placeholder-[#F5F5F5]/30 focus:outline-none focus:border-[#D4AF37]"
                       />
                     </div>
                   )}
 
                   {formError && (
-                    <div className="text-red-400 text-xs font-mono">{formError}</div>
+                    <div className="p-3 rounded bg-red-950/40 border border-red-500/40 text-red-300 text-xs font-mono">
+                      {formError}
+                    </div>
                   )}
 
                   <div className="pt-2">
                     <button
                       type="submit"
                       disabled={formSubmitting}
-                      className="w-full bg-[#D4AF37] hover:bg-[#b89528] text-black font-bold uppercase tracking-wider py-3 rounded text-xs transition-colors disabled:opacity-50"
+                      className="w-full bg-[#D4AF37] hover:bg-[#b89528] text-black font-bold uppercase tracking-wider py-3.5 rounded text-xs transition-colors disabled:opacity-50"
                     >
-                      {formSubmitting ? 'Evaluating Seat...' : I3_CONTENT.intakeConsole.submitButton}
+                      {formSubmitting ? 'Evaluating Seat Availability...' : I3_CONTENT.intakeConsole.submitButton}
                     </button>
                   </div>
                 </form>
               ) : (
-                <div className="space-y-4 text-left pt-2">
-                  <div className="p-4 rounded bg-white/5 border border-[#D4AF37]/30 space-y-2">
-                    <div className="flex justify-between items-center">
-                      <span className="text-xs font-mono text-[#D4AF37] font-bold">
-                        {diagnosticResult.tier === 'DRAFT_PICK'
-                          ? 'FIRST-ROUND DRAFT PICK'
-                          : diagnosticResult.tier === 'WAITING_LIST'
-                          ? 'TERRITORIAL WAITING LIST'
-                          : 'INQUIRY HELD FOR REVIEW'}
-                      </span>
-                      <span className="text-xs font-mono text-white/50">
-                        ZIP {diagnosticResult.territory?.zipCode}
-                      </span>
+                /* State B: High-Status Territory Status Cards (State Machine) */
+                <div className="space-y-5 text-left pt-2">
+                  {/* Branch 1: FIRST-ROUND DRAFT PICK (Score >= 85) */}
+                  {diagnosticResult.tier === 'DRAFT_PICK' && (
+                    <div className="p-5 rounded-xl bg-[#010101] border border-[#D4AF37] shadow-[0_0_25px_rgba(212,175,55,0.25)] space-y-3">
+                      <div className="flex justify-between items-center border-b border-[#D4AF37]/30 pb-3">
+                        <div className="flex items-center gap-2">
+                          <span className="relative flex h-2.5 w-2.5">
+                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#D4AF37] opacity-75" />
+                            <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#D4AF37]" />
+                          </span>
+                          <span className="text-xs font-mono font-bold text-[#D4AF37] tracking-wider">
+                            FIRST-ROUND DRAFT PICK
+                          </span>
+                        </div>
+                        <span className="text-xs font-mono text-[#00E5FF] font-medium">
+                          ZIP {zipCode}
+                        </span>
+                      </div>
+
+                      <h3 className="text-xl font-serif text-[#F5F5F5] font-bold">
+                        TERRITORY VERIFIED: CATEGORY SEAT OPEN
+                      </h3>
+
+                      <p className="text-xs text-[#F5F5F5]/85 leading-relaxed font-serif">
+                        Zip Code {zipCode} is currently unheld for {displayedCraftLabel}. Your credentials have been escalated to Reign for immediate reservation review. Your custom Inspiration Ignition Hub is compiling.
+                      </p>
+
+                      <div className="pt-2 border-t border-[#E5E4E2]/10 flex flex-wrap justify-between items-center text-[10px] font-mono text-[#F5F5F5]/60 gap-2">
+                        <span>REF: {submissionHash}</span>
+                        <span className="text-[#00E5FF]">STATUS: LOCKED (PENDING ORCHESTRATION)</span>
+                      </div>
                     </div>
+                  )}
 
-                    <h4 className="text-lg font-serif text-white font-semibold">
-                      {diagnosticResult.ignitionHub?.title || 'Territory Diagnostic Output'}
-                    </h4>
+                  {/* Branch 2: QUALIFIED WAITING LIST (Score 70-84) */}
+                  {diagnosticResult.tier === 'WAITING_LIST' && (
+                    <div className="p-5 rounded-xl bg-[#010101] border border-[#E5E4E2] shadow-[0_0_20px_rgba(229,228,226,0.15)] space-y-3">
+                      <div className="flex justify-between items-center border-b border-[#E5E4E2]/20 pb-3">
+                        <div className="flex items-center gap-2">
+                          <span className="inline-flex rounded-full h-2.5 w-2.5 bg-[#E5E4E2]" />
+                          <span className="text-xs font-mono font-bold text-[#E5E4E2] tracking-wider">
+                            MTM TERRITORIAL RESERVE
+                          </span>
+                        </div>
+                        <span className="text-xs font-mono text-white/50">
+                          ZIP {zipCode}
+                        </span>
+                      </div>
 
-                    <p className="text-xs text-white/70 leading-relaxed font-serif">
-                      {diagnosticResult.ignitionHub?.diagnosticSummary || diagnosticResult.message}
-                    </p>
-                  </div>
+                      <h3 className="text-xl font-serif text-[#F5F5F5] font-bold">
+                        TERRITORIAL RESERVE: PRIORITY QUEUE
+                      </h3>
 
+                      <p className="text-xs text-[#F5F5F5]/85 leading-relaxed font-serif">
+                        Category interest is high in Zip Code {zipCode}. Your application has been logged to the MTM Territorial Reserve. You will be notified if the incumbent seat becomes available.
+                      </p>
+
+                      <div className="pt-2 border-t border-[#E5E4E2]/10 flex flex-wrap justify-between items-center text-[10px] font-mono text-[#F5F5F5]/60 gap-2">
+                        <span>REF: {submissionHash}</span>
+                        <span className="text-[#D4AF37]">QUEUE: PRIORITY SEAT HOLD</span>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Branch 3: DISQUALIFIED / HOLD (Score < 70) */}
+                  {diagnosticResult.tier === 'HOLD' && (
+                    <div className="p-5 rounded-xl bg-[#010101] border border-[#F5F5F5]/30 space-y-3">
+                      <div className="flex justify-between items-center border-b border-[#F5F5F5]/15 pb-3">
+                        <span className="text-xs font-mono font-bold text-[#F5F5F5]/70 tracking-wider">
+                          MTM RESEARCH REGISTRY
+                        </span>
+                        <span className="text-xs font-mono text-[#F5F5F5]/40">
+                          ZIP {zipCode}
+                        </span>
+                      </div>
+
+                      <h3 className="text-xl font-serif text-[#F5F5F5] font-bold">
+                        TERRITORY STATUS LOGGED
+                      </h3>
+
+                      <p className="text-xs text-[#F5F5F5]/80 leading-relaxed font-serif">
+                        Thank you for your submission. Our current deployment window in Zip Code {zipCode} is strictly restricted to sovereign luxury category leaders.
+                      </p>
+
+                      <div className="pt-2 border-t border-[#F5F5F5]/10 text-[10px] font-mono text-[#F5F5F5]/50">
+                        REF: {submissionHash} // Market telemetry recorded.
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Diagnostic Query Simulations (for Qualified Inbound and Draft Picks) */}
                   {diagnosticResult.ignitionHub?.querySimulations && (
-                    <div className="space-y-2 pt-1">
-                      <span className="text-[10px] font-mono uppercase tracking-widest text-white/50 block">
-                        Conversational Search Simulations:
+                    <div className="space-y-2 pt-2">
+                      <span className="text-[10px] font-mono uppercase tracking-widest text-[#D4AF37] block font-bold">
+                        Simulated Conversational AI Invisibility Vulnerabilities:
                       </span>
                       {diagnosticResult.ignitionHub.querySimulations.map((sim: any, idx: number) => (
-                        <div key={idx} className="p-2.5 rounded bg-black/60 border border-white/10 text-xs space-y-1">
-                          <p className="text-white font-mono font-medium">{sim.query}</p>
+                        <div key={idx} className="p-3 rounded-lg bg-[#010101] border border-[#E5E4E2]/15 text-xs space-y-1">
+                          <p className="text-[#F5F5F5] font-mono font-medium">{sim.query}</p>
                           <p className="text-red-400 font-mono text-[11px]">{sim.status}: {sim.engineRecommendation}</p>
-                          <p className="text-white/60 text-[11px]">Remedy: {sim.remedy}</p>
+                          <p className="text-[#F5F5F5]/70 text-[11px]">Sovereign Action: {sim.remedy}</p>
                         </div>
                       ))}
                     </div>
                   )}
+
+                  {/* Reset action to check another territory */}
+                  <div className="pt-3 text-center">
+                    <button
+                      type="button"
+                      onClick={resetForm}
+                      className="text-xs font-mono text-[#D4AF37] hover:underline uppercase tracking-wider"
+                    >
+                      Verify Another Postal Code
+                    </button>
+                  </div>
                 </div>
               )}
             </section>

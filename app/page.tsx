@@ -10,6 +10,7 @@ import { TelemetryHeader } from '@/components/telemetry-header';
 import { HoustonSpatialMesh } from '@/components/houston-spatial-mesh';
 import { IgnitionHubPreview } from '@/components/ignition-hub-preview';
 import { Monogram } from '@/components/monogram';
+import { EstateCanvasScroll } from '@/components/estate-canvas-scroll';
 
 export default function HomePage() {
   return (
@@ -40,6 +41,9 @@ export default function HomePage() {
           subtitle="Anti-Static Deliverable Architecture"
         />
       </div>
+
+      {/* ── 3. PHASE 2B: HEADLESS ESTATE CANVAS SCRUB ENGINE (400vh) ── */}
+      <EstateCanvasScroll />
 
       <main className="flex-1 max-w-6xl mx-auto w-full px-4 sm:px-6 py-16 relative z-10 space-y-36">
         {/* ═══════════════════════════════════════════════════════════════
