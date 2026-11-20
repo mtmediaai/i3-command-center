@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { ModalTrigger } from './modal-trigger';
 import { siteCopy } from '@/content/site-copy';
 
@@ -69,6 +70,13 @@ export function TelemetryHeader() {
             >
               {siteCopy.header.nav.palace.label}
             </a>
+            <Link
+              href="/behind-the-brand"
+              className="text-[#D4AF37] hover:text-white transition-colors font-medium flex items-center gap-1.5"
+            >
+              <span className="w-1 h-1 rounded-full bg-[#00E5FF] animate-pulse" />
+              Behind the Brand
+            </Link>
             <a
               href={siteCopy.header.nav.founder.url}
               target="_blank"

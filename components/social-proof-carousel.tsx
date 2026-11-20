@@ -33,11 +33,11 @@ export const INVISIBLE_ELITE_PAIN_POINTS: PainPointSlide[] = [
     ambassador: 'NEGATIVE NINA',
     personaTitle: 'Adversarial Logic Gate',
     badge: 'THE ALGORITHMIC THREAT // 02 OF 04',
-    metric: 'Data Coherence Trumps Real-World Mastery',
+    metric: 'AI Brand Ignorance: Data Density Trumps Craft',
     headline:
       'A competitor with 18 months in business and mediocre craftsmanship ranks above you simply because an agency flooded their site with schema.',
     operationalTruth:
-      'Search generative models do not evaluate stone masonry, timber joinery, or operational ethics. They evaluate mathematical data density. The loudest, most structured entity wins the multi-agent recommendation loop every single time.',
+      'Search generative models, Google’s Knowledge Graph, and Bing do not evaluate stone masonry, timber joinery, or operational ethics. They evaluate mathematical data density. Without structured schemas, machines operate in total AI Brand Ignorance regarding your practice.',
     accentColor: '#F5F5F5', // Clinical HID White
     glowColor: 'rgba(245, 245, 245, 0.3)',
   },
@@ -50,7 +50,7 @@ export const INVISIBLE_ELITE_PAIN_POINTS: PainPointSlide[] = [
     headline:
       'Next-generation family office trustees and estate principals do not browse ten blue links or click ads. They query private AI agents.',
     operationalTruth:
-      'Zero-click searches now dominate high-net-worth commercial intent. When wealth transfers to the next generation, their discovery gatekeeper is an LLM answer engine. Being omitted from that direct answer block is systemic commercial erasure.',
+      'Zero-click searches now dominate high-net-worth commercial intent. When wealth transfers to the next generation, their discovery gatekeeper is an LLM answer engine. Being omitted from that direct answer block is systemic AI Brand Ignorance.',
     accentColor: '#00E5FF', // Lightning Blue
     glowColor: 'rgba(0, 229, 255, 0.25)',
   },
@@ -69,7 +69,7 @@ export const INVISIBLE_ELITE_PAIN_POINTS: PainPointSlide[] = [
   },
 ];
 
-export function SocialProofCarousel() {
+export function SocialProofCarousel({ embedded = false }: { embedded?: boolean } = {}) {
   const items = INVISIBLE_ELITE_PAIN_POINTS;
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
@@ -144,7 +144,11 @@ export function SocialProofCarousel() {
       onKeyDown={handleKeyDown}
       aria-roledescription="carousel"
       aria-label="The Invisible Elite Daily Reality and Emotional Pain Points"
-      className="w-full max-w-4xl mt-6 rounded-2xl border border-white/15 bg-[#050505]/90 backdrop-blur-xl p-6 sm:p-8 relative overflow-hidden transition-all duration-300 hover:border-[#D4AF37]/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37] shadow-2xl"
+      className={`w-full max-w-4xl relative overflow-hidden transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37] ${
+        embedded
+          ? 'p-0 bg-transparent border-0 shadow-none'
+          : 'mt-6 rounded-2xl border border-white/15 bg-[#050505]/90 backdrop-blur-xl p-6 sm:p-8 shadow-2xl hover:border-[#D4AF37]/50'
+      }`}
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
       onFocus={() => setIsPaused(true)}
@@ -160,7 +164,7 @@ export function SocialProofCarousel() {
       />
 
       {/* Top Header Row: Ambassador badge, slide indicator, and controls */}
-      <div className="flex items-center justify-between gap-4 mb-6 relative z-10 border-b border-white/10 pb-4">
+      <div className={`flex items-center justify-between gap-4 relative z-10 border-b border-white/10 ${embedded ? 'mb-3 pb-2.5' : 'mb-6 pb-4'}`}>
         {/* Ambassador Persona Cluster */}
         <div className="flex items-center gap-3">
           <div

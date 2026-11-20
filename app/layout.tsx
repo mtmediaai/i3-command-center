@@ -234,8 +234,67 @@ export default function RootLayout({
           src="https://news.google.com/swg/js/v1/publisher.js"
           strategy="afterInteractive"
         />
+
+        {/* Bing Webmaster Tools Site Verification (Bing + Copilot AI Indexing) */}
+        {process.env.NEXT_PUBLIC_BING_VERIFICATION_ID && (
+          <meta
+            name="msvalidate.01"
+            content={process.env.NEXT_PUBLIC_BING_VERIFICATION_ID}
+          />
+        )}
+
+        {/* Google Tag Manager / GA4 Google Tag (Container: GTM-WLPB27CD) */}
+        <Script
+          src={`https://www.googletagmanager.com/gtm.js?id=${process.env.NEXT_PUBLIC_GTM_ID || 'GTM-WLPB27CD'}`}
+          strategy="afterInteractive"
+        />
+        <Script id="google-tag-manager-init" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+          `}
+        </Script>
+
+        {/* Google Analytics 4 (GA4) Direct Measurement Stream (if configured) */}
+        {process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID && (
+          <Script
+            src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID}`}
+            strategy="afterInteractive"
+          />
+        )}
+
+        {/* Microsoft Clarity Free Behavioral Heatmaps & Session Recordings */}
+        {process.env.NEXT_PUBLIC_CLARITY_PROJECT_ID && (
+          <Script id="microsoft-clarity" strategy="afterInteractive">
+            {`
+              (function(c,l,a,r,i,t,y){
+                  c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+                  t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+                  y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+              })(window, document, "clarity", "script", "${process.env.NEXT_PUBLIC_CLARITY_PROJECT_ID}");
+            `}
+          </Script>
+        )}
+
+        {/* mida.so Landing Page A/B Testing Engine */}
+        {process.env.NEXT_PUBLIC_MIDASO_PROJECT_ID && (
+          <Script
+            src={`https://cdn.mida.so/js/optimize.js?key=${process.env.NEXT_PUBLIC_MIDASO_PROJECT_ID}`}
+            strategy="afterInteractive"
+          />
+        )}
       </head>
       <body className="bg-[var(--color-void)] text-[var(--color-rim)] min-h-screen antialiased flex flex-col selection:bg-[var(--color-gold)] selection:text-black">
+        {/* Google Tag Manager (noscript fallback) */}
+        <noscript>
+          <iframe
+            src={`https://www.googletagmanager.com/ns.html?id=${process.env.NEXT_PUBLIC_GTM_ID || 'GTM-WLPB27CD'}`}
+            height="0"
+            width="0"
+            style={{ display: 'none', visibility: 'hidden' }}
+          />
+        </noscript>
         {/* Machine-meta entity verification block */}
         <div className="sr-only machine-meta-block" aria-hidden="true">
           <span>MT Media AI · Sovereign Intelligence Layer · I3 System</span>

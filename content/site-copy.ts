@@ -136,9 +136,9 @@ export interface SiteCopy {
 export const siteCopy: SiteCopy = {
   meta: {
     pageTitle:
-      'Invisible Infrastructure Intelligence (I³ System): AI Visibility Audit | MT Media AI',
+      'Invisible Infrastructure Intelligence (I³ System): AI Visibility Audit & Solving AI Brand Ignorance | MT Media AI',
     metaDescription:
-      'Map the questions buyers ask, the evidence AI systems can verify, and how your business is represented across AI search. Request an I³ Visibility Snapshot.',
+      'We explain and solve what causes AI Brand Ignorance across AI search, LLMs, Google Knowledge Graphs, Bing Webmaster tools, and AI Overviews. Request your I³ Visibility Snapshot.',
   },
   header: {
     brandName: 'MT Media AI',
@@ -162,7 +162,7 @@ export const siteCopy: SiteCopy = {
     eyebrow: 'I³ Command Center · MT Media AI',
     h1: 'Is AI Erasing Your Business When High-Net-Worth Buyers Ask Who To Trust?',
     subhead:
-      "MT Media AI's I³ System, Invisible Infrastructure Intelligence, translates your real-world prestige and referral trust into machine-readable data across Google AI Overviews, Google AI Mode, ChatGPT, Gemini, and Perplexity. You receive a practical AI visibility diagnosis before deciding what to repair.",
+      "MT Media AI's I³ System, Invisible Infrastructure Intelligence, translates your real-world prestige and referral trust into machine-readable data across Google AI Overviews, Google AI Mode, ChatGPT, Gemini, and Perplexity. We translate your offline prestige into machine-readable entity proof so answer engines cite and recommend your practice globally.",
     aeoBlock: {
       title: 'What is the I³ AI Visibility Diagnosis?',
       body:
@@ -180,14 +180,14 @@ export const siteCopy: SiteCopy = {
     heading: 'What Is Invisible Infrastructure Intelligence (I³)?',
     items: [
       {
-        question: 'What is the I³ System?',
+        question: 'What does MT Media AI do and specialize in?',
         answer:
-          'Invisible Infrastructure Intelligence (I³) is an AI visibility audit framework that evaluates the questions, evidence, and public signals determining how your business is described in AI-assisted search.',
+          'MT Media AI solves AI Brand Ignorance for established businesses. We specialize in Generative Engine Optimization (GEO), Agentic Engine Optimization (AEO), Local Engine Optimization (LEO), and Entity Knowledge Graph Architecture. We build the invisible infrastructure: machine-readable schema graphs, Google Knowledge Graph entity nodes, Bing IndexNow sync, and verified manifests, so AI search engines cite and recommend your business.',
       },
       {
-        question: 'What does an AI visibility audit examine?',
+        question: 'What is AI Brand Ignorance and what causes it?',
         answer:
-          'It audits your commercial category questions, website evidence, business identity mesh, and the external sources that search engines and language models use to verify your claims.',
+          'AI Brand Ignorance is the universal breakdown where AI systems (including LLMs, Google Knowledge Graph, Bing Webmaster tools, Google AI Overviews, and Gemini AI Mode) completely ignore an established business. It is caused by an absence of machine-readable entity schemas, unindexed knowledge graphs, and missing neural manifests. Without structured data, algorithms cannot verify your claims and bypass your practice to cite competitors with structured data.',
       },
       {
         question: 'What do I receive in the snapshot?',
@@ -195,62 +195,67 @@ export const siteCopy: SiteCopy = {
           'You receive an interactive knowledge hub: the Inspiration Ignition Hub (a private Gemini Notebook / NotebookLM environment) containing a timestamped snapshot of your AI visibility according to Perplexity AI, prioritized evidence gaps, and an AI Brand Ignorance diagnosis. In accordance with our Anti-Static Deliverables Doctrine, we deliver living, queryable intelligence rather than static PDFs that get discarded. It is yours to keep, query, and explore without cost.',
       },
       {
+        question: 'What does the I³ System AI visibility audit examine?',
+        answer:
+          'It audits your business across all machines needed for AI visibility: testing Google Knowledge Graph entity reconciliation, Bing Webmaster Tools and IndexNow ingestion, parametric LLM recall, and retrieval scoring across Google AI Overviews, Gemini AI Mode, Perplexity, and ChatGPT.',
+      },
+      {
         question: 'What happens after I submit?',
         answer:
-          'Your intake enters the secure MTM queue. An operations lead evaluates your public entity mesh and routes your diagnostic report without automated third-party model cost.',
+          'Your intake enters the secure MTM queue. An operations lead evaluates your public entity mesh across Google Knowledge Graphs, Bing, and language models, routing your diagnostic report without automated third-party model cost.',
       },
     ],
   },
   structuralAnswer: {
     h2: 'What an AI Visibility Audit Examines When Machines Describe Your Business',
     body:
-      'Traditional search asks whether a webpage can rank for keywords. Generative discovery engines ask a different question: whether verified public evidence allows an answer engine to describe your business accurately, confidently, and in the correct commercial context. The I³ System examines the structural fault lines between your real-world authority, your published entity mesh, and what conversational models can actually retrieve.',
+      'Traditional search asks whether a webpage can rank for keywords. Generative AI discovery engines, Google’s Knowledge Graph, Bing Webmaster tools, and autonomous agent crawlers operate under mathematical optimization. When an established business relies on word-of-mouth or legacy marketing, its digital footprint has unindexed schemas, missing entity graphs, and disconnected citations. The algorithms do not bypass businesses out of malice; they simply ignore them because their semantic signal falls below machine retrieval thresholds. The I³ System diagnoses the root causes of this AI Brand Ignorance across all machines and installs the structured, machine-verified evidence needed to establish global category authority.',
   },
   evidenceSection: {
-    h2: 'Search Behavior Changed: Zero-Click Search and AI Brand Erasure',
+    h2: 'Search Behavior Changed: Zero-Click Search and AI Brand Ignorance',
     description:
-      'Independent clickstream studies and industry analyses confirm that commercial discovery has shifted from ten blue links to synthesized answers. The verified metrics below demonstrate why unindexed referral businesses face systemic AI erasure.',
+      'Independent clickstream studies and industry analyses confirm that commercial discovery has shifted from ten blue links to synthesized answers. The verified metrics below demonstrate why unindexed referral businesses face systemic AI Brand Ignorance across Google, Bing, and LLM answer engines.',
   },
   methodSection: {
     h2: 'How the I³ System Reads the Field: Question Map, Evidence Map, Representation Map',
     description:
-      'Rather than relying on outdated keyword stuffing, the I³ protocol inspects the three foundational layers that determine how AI concierges and information agents parse your enterprise.',
+      'Rather than relying on outdated SEO tactics, the I³ protocol inspects the root causes of brand ignorance across every machine layer: Google’s Knowledge Graph, Bing Webmaster systems, parametric LLM weights, and AI answer engines.',
     cards: [
       {
         id: 'method-question-map',
         name: 'Question Map',
-        title: 'Commercial Intent & Category Questions',
+        title: 'Commercial Intent & Answer Engine Queries',
         description:
-          'We identify the commercial questions that shape your category, buyer decisions, and local or vertical relevance across Houston Metro and national sectors.',
+          'We identify the commercial questions that shape your category, buyer decisions, and local or vertical relevance across Google AI Overviews, Gemini AI Mode, Perplexity, and ChatGPT.',
       },
       {
         id: 'method-evidence-map',
         name: 'Evidence Map',
-        title: 'Verifiable Claims & Identity Mesh',
+        title: 'Entity Graphs, Knowledge Bases & IndexNow',
         description:
-          'We review whether your website and supporting sources make your claims easy to verify, attribute, and understand for neural discovery engines.',
+          'We inspect your entity reconciliation across Google’s Knowledge Graph, Bing Webmaster Tools, nested JSON-LD schema graphs, and verified first-party evidence.',
       },
       {
         id: 'method-representation-map',
         name: 'Representation Map',
-        title: 'Model Synthesis & Discovery Coverage',
+        title: 'Model Synthesis & Citation Retrieval Scores',
         description:
-          'We compare the available evidence with the way a business may be summarized, recommended, or omitted in AI-assisted discovery.',
+          'We audit parametric LLM training gaps, zero-click answer shadows, and algorithmic retrieval thresholds to eliminate machine ignorance and restore citation authority.',
       },
     ],
   },
   mtmFix: {
-    h2: 'The Repair for AI Erasure Is Not More Noise: It Is Structured Brand Evidence',
+    h2: 'The Universal Resolution to AI Brand Ignorance: Structured Machine-Readable Proof',
     body:
-      'The resolution is to construct a connected system of clear pages, verified claims, structured entities, credible sources, and measurable feedback. That gives buyers and machines durable proof to work with.',
+      'Eliminating AI Brand Ignorance is not about publishing more social media or running paid ads. It requires engineering the exact infrastructure that LLMs, Google’s Knowledge Graph, Bing Webmaster tools, AI Overviews, and Gemini AI Mode require to understand and verify your enterprise: connected Schema.org JSON-LD entity graphs, /llms.txt manifests, canonical knowledge graph reconciliation, and verifiable citation anchors. We solve brand ignorance at the source, transforming invisible excellence into machine-readable authority across all platforms.',
   },
   deliverables: {
     h2: 'Your Inspiration Ignition Hub Includes',
     bullets: [
       'Interactive Inspiration Ignition Hub (powered by a private Gemini Notebook environment): a queryable workspace pre-loaded with your first-party evidence, allowing your executive team to ask natural-language questions and inspect machine citations',
       'Timestamped AI visibility benchmark based on Perplexity AI retrieval data: objective scoring of how Google AI Overviews, Gemini, Perplexity, and ChatGPT currently describe your firm vs. local competitors',
-      'AI Brand Ignorance and representation-risk diagnosis: exact pinpoints of missing schema graph nodes and citation voids that keep your practice below machine retrieval thresholds',
-      'Machine-legible JSON-LD schema blueprint tailored for immediate CMS deployment (Anti-Static Deliverables Doctrine): production-ready entity code engineered for direct crawler recognition',
+      'AI Brand Ignorance root-cause diagnosis across Google Knowledge Graphs, Bing, and LLMs: exact pinpoints of missing schema graph nodes, unindexed vectors, and citation voids that keep your practice below machine retrieval thresholds',
+      'Machine-legible JSON-LD schema blueprint tailored for direct CMS deployment (Anti-Static Deliverables Doctrine): production-ready entity code engineered for crawler recognition and knowledge graph ingestion',
     ],
     scopeNote:
       'Notice: Your I³ Visibility Snapshot is an automated, one-time diagnostic snapshot as of your request timestamp. For continuous monitoring, ongoing citation drift protection, and active multi-agent defense, inquire about the MTM Solar Ascension Tiers (Sol Invictus DWY & Amun-Ra DFY).',
@@ -303,7 +308,7 @@ export const siteCopy: SiteCopy = {
       {
         question: 'What happens after I request an I³ Visibility Snapshot?',
         answer:
-          'Your request enters the MTM intake queue. An operations lead reviews your public footprint and configures your interactive Inspiration Ignition Hub (Gemini Notebook / NotebookLM) with your timestamped Perplexity AI diagnosis within 24 to 48 hours.',
+          'Your request enters the MTM intake queue. An operations lead reviews your public footprint across Google Knowledge Graphs, Bing, and LLMs, configuring your queryable Inspiration Ignition Hub (Gemini Notebook / NotebookLM) with your timestamped Perplexity AI diagnosis within 24 to 48 hours.',
       },
     ],
   },

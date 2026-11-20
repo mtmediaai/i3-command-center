@@ -294,13 +294,39 @@ export function EstateCanvasScroll() {
     setFormError(null);
   };
 
-  // Scene overlay visibility calculation
-  const isHeroActive = scrollProgress < 0.18;
-  const isScene1Active = scrollProgress >= 0.18 && scrollProgress < 0.36;
-  const isScene2Active = scrollProgress >= 0.36 && scrollProgress < 0.54;
-  const isScene3Active = scrollProgress >= 0.54 && scrollProgress < 0.72;
-  const isScene4Active = scrollProgress >= 0.72 && scrollProgress < 0.88;
-  const isIntakeActive = scrollProgress >= 0.88;
+  // Transitions: Interpolator for Smooth Hermite Transitions between estate movements
+  const getStageTransition = (start: number, end: number, fadeDistance = 0.03) => {
+    if (scrollProgress < start - fadeDistance || scrollProgress > end + fadeDistance) {
+      return { opacity: 0, pointerEvents: 'none' as const, transform: 'scale(0.96) translateY(20px)', filter: 'blur(8px)', display: 'none' };
+    }
+    let opacity = 1;
+    let translateY = 0;
+    let scale = 1;
+    let blur = 0;
+
+    if (scrollProgress < start) {
+      const t = (scrollProgress - (start - fadeDistance)) / fadeDistance;
+      opacity = Math.max(0, Math.min(1, t));
+      translateY = (1 - t) * 16;
+      scale = 0.96 + t * 0.04;
+      blur = (1 - t) * 6;
+    } else if (scrollProgress > end) {
+      const t = (scrollProgress - end) / fadeDistance;
+      opacity = Math.max(0, Math.min(1, 1 - t));
+      translateY = -t * 16;
+      scale = 1.0 - t * 0.04;
+      blur = t * 6;
+    }
+
+    return {
+      opacity,
+      transform: `translateY(${translateY}px) scale(${scale})`,
+      filter: `blur(${blur}px)`,
+      pointerEvents: (opacity > 0.4 ? 'auto' : 'none') as 'auto' | 'none',
+      transition: 'opacity 0.2s ease-out, transform 0.2s ease-out, filter 0.2s ease-out',
+      display: 'block',
+    };
+  };
 
   // Selected craft label lookup
   const activeCraftOption = I3_CONTENT.craftOptions.find((c) => c.id === craftVector);
@@ -308,6 +334,8 @@ export function EstateCanvasScroll() {
     craftVector === 'OTHER' && craftOtherSpecification
       ? craftOtherSpecification
       : activeCraftOption?.label || craftVector;
+
+  const isIntakeVisible = scrollProgress >= 0.84;
 
   return (
     <div
@@ -338,20 +366,34 @@ export function EstateCanvasScroll() {
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#050505] via-[#010101]/40 to-[#050505]/70" />
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-[#050505]/90 via-[#050505]/60 to-transparent" />
 
+        {/* ── TOP-CENTER MASKED INVISIBLE HEADER (ACT I HERO SPECIFICATION) ── */}
+        {!isIntakeVisible && (
+          <div
+            className="pointer-events-none absolute top-20 sm:top-24 left-1/2 -translate-x-1/2 z-30 transition-all duration-700"
+            style={getStageTransition(0.00, 0.16)}
+          >
+            <div className="relative group">
+              {/* Ambient Liquid Glow Mask */}
+              <div className="absolute -inset-0.5 bg-gradient-to-r from-[#D4AF37]/35 via-[#00E5FF]/25 to-[#D4AF37]/35 rounded-full blur-md opacity-80 group-hover:opacity-100 transition duration-500" />
+
+              {/* Sovereign Glass Chassis with Masked Rim */}
+              <div className="relative px-5 sm:px-7 py-2 sm:py-2.5 rounded-full bg-[#050505]/90 border border-[#E5E4E2]/25 shadow-[0_4px_30px_rgba(0,0,0,0.95),0_0_20px_rgba(212,175,55,0.2)] backdrop-blur-2xl flex items-center gap-3">
+                <span className="w-2 h-2 rounded-full bg-[#00E5FF] animate-pulse shadow-[0_0_8px_#00E5FF]" aria-hidden="true" />
+                <span className="text-[10px] sm:text-xs font-mono tracking-[0.24em] uppercase text-white font-bold whitespace-nowrap drop-shadow-[0_0_8px_rgba(255,255,255,0.4)]">
+                  INVISIBLE INFRASTRUCTURE INTELLIGENCE SYSTEM
+                </span>
+                <span className="w-1.5 h-1.5 rounded-full bg-[#D4AF37] shadow-[0_0_6px_#D4AF37]" aria-hidden="true" />
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* ── LOWER LEFT SCENE OVERLAYS (THE FORGE PROTOCOL: NINA HID GLOW + GOLDIE STRATEGIC SUBTITLE) ── */}
-        {!isIntakeActive && (
+        {!isIntakeVisible && (
           <div className="relative z-10 h-full w-full max-w-7xl mx-auto px-6 sm:px-12 md:px-16 flex flex-col justify-end pb-12 sm:pb-16 md:pb-20 pointer-events-none">
             {/* Movement 0: Hero Title & Lead */}
-            {isHeroActive && (
+            <div style={getStageTransition(0.00, 0.16)}>
               <section className="space-y-3 max-w-2xl text-left pointer-events-auto">
-                {/* Product Name Badge / Eyebrow (Echo Container) */}
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/15 bg-black/60 backdrop-blur-md">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#00E5FF] animate-pulse" aria-hidden="true" />
-                  <span className="text-[10px] sm:text-[11px] font-mono tracking-[0.2em] uppercase text-[#E5E4E2] font-semibold">
-                    INVISIBLE INFRASTRUCTURE INTELLIGENCE (I³ SYSTEM)
-                  </span>
-                </div>
-
                 {/* H1 Hero Message (Sized to mirror subsequent scroll sections) */}
                 <h1
                   className="text-xl sm:text-3xl md:text-4xl font-serif font-bold text-white leading-snug drop-shadow-[0_4px_20px_rgba(0,0,0,0.95)]"
@@ -363,14 +405,14 @@ export function EstateCanvasScroll() {
                 </h1>
 
                 {/* H2 Gold Subtitle at the bottom on one line */}
-                <h2 className="text-sm sm:text-base md:text-lg font-serif font-bold text-[#D4AF37] tracking-[0.14em] uppercase whitespace-nowrap drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)] pt-1">
+                <h2 className="text-base sm:text-xl md:text-2xl font-serif font-bold text-[#D4AF37] tracking-[0.16em] uppercase whitespace-normal sm:whitespace-nowrap drop-shadow-[0_2px_10px_rgba(0,0,0,0.95)] pt-1">
                   {I3_CONTENT.hero.superTitle}
                 </h2>
               </section>
-            )}
+            </div>
 
             {/* Movement 1: The Grand Entryway (Entering the interior of the home) */}
-            {isScene1Active && (
+            <div style={getStageTransition(0.18, 0.34)}>
               <section className="space-y-2.5 max-w-2xl text-left pointer-events-auto">
                 <h2 className="text-xl sm:text-2xl md:text-3xl font-serif font-bold text-[#D4AF37] tracking-[0.14em] uppercase drop-shadow-[0_2px_10px_rgba(0,0,0,0.95)]">
                   THE GRAND ENTRYWAY
@@ -384,10 +426,10 @@ export function EstateCanvasScroll() {
                   {I3_CONTENT.scenes.scene1_curbAppeal}
                 </p>
               </section>
-            )}
+            </div>
 
             {/* Movement 2: Outdoor Oasis (Moving to the outside pool & resort loggia) */}
-            {isScene2Active && (
+            <div style={getStageTransition(0.36, 0.52)}>
               <section className="space-y-2.5 max-w-2xl text-left pointer-events-auto">
                 <h2 className="text-xl sm:text-2xl md:text-3xl font-serif font-bold text-[#D4AF37] tracking-[0.14em] uppercase drop-shadow-[0_2px_10px_rgba(0,0,0,0.95)]">
                   OUTDOOR OASIS
@@ -401,10 +443,10 @@ export function EstateCanvasScroll() {
                   {I3_CONTENT.scenes.scene2_interiorAudio}
                 </p>
               </section>
-            )}
+            </div>
 
             {/* Movement 3: The Motor Court (The collector's garage with Porsche & Pagani) */}
-            {isScene3Active && (
+            <div style={getStageTransition(0.54, 0.68)}>
               <section className="space-y-2.5 max-w-2xl text-left pointer-events-auto">
                 <h2 className="text-xl sm:text-2xl md:text-3xl font-serif font-bold text-[#D4AF37] tracking-[0.14em] uppercase drop-shadow-[0_2px_10px_rgba(0,0,0,0.95)]">
                   THE MOTOR COURT
@@ -418,10 +460,10 @@ export function EstateCanvasScroll() {
                   {I3_CONTENT.scenes.scene3_outdoorOasis}
                 </p>
               </section>
-            )}
+            </div>
 
             {/* Movement 4: Standalone Hero Shot (The Black Jewel MTM Emblem Inlaid Floor) */}
-            {isScene4Active && (
+            <div style={getStageTransition(0.70, 0.84)}>
               <section className="space-y-3 max-w-3xl text-left pointer-events-auto">
                 <span className="text-xs sm:text-sm font-mono tracking-[0.22em] text-[#D4AF37] uppercase font-bold block drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]">
                   SOVEREIGN FOUNDATION // ZERO-CLICK INFRASTRUCTURE
@@ -444,20 +486,22 @@ export function EstateCanvasScroll() {
                   {I3_CONTENT.scenes.scene4_motorCourt}
                 </p>
               </section>
-            )}
+            </div>
           </div>
         )}
 
         {/* Movement 5: The Foundation Medallion & Interactive Diagnostic State Machine */}
-        {isIntakeActive && (
-          <div className="relative z-10 h-full w-full max-w-2xl mx-auto px-4 sm:px-6 flex flex-col justify-center items-center pointer-events-none">
-            <section className="space-y-6 w-full text-center pointer-events-auto bg-[#050505]/95 border border-[#E5E4E2]/20 p-5 sm:p-8 rounded-2xl backdrop-blur-xl shadow-2xl">
-              <div className="space-y-2">
-                <span className="text-xs font-mono tracking-widest text-[#D4AF37] uppercase font-bold block">
-                  {I3_CONTENT.intakeConsole.tagline}
-                </span>
-                <h2 className="text-2xl sm:text-3xl font-serif text-[#F5F5F5] font-bold">
-                  {I3_CONTENT.intakeConsole.header}
+        <div
+          style={getStageTransition(0.86, 1.00)}
+          className="relative z-10 h-full w-full max-w-2xl mx-auto px-4 sm:px-6 flex flex-col justify-center items-center pointer-events-none"
+        >
+          <section className="space-y-6 w-full text-center pointer-events-auto bg-[#050505]/95 border border-[#E5E4E2]/20 p-5 sm:p-8 rounded-2xl backdrop-blur-xl shadow-2xl">
+            <div className="space-y-2">
+              <span className="text-xs font-mono tracking-widest text-[#D4AF37] uppercase font-bold block">
+                {I3_CONTENT.intakeConsole.tagline}
+              </span>
+              <h2 className="text-2xl sm:text-3xl font-serif text-[#F5F5F5] font-bold">
+                {I3_CONTENT.intakeConsole.header}
                 </h2>
                 <p className="text-xs sm:text-sm text-[#F5F5F5]/70 max-w-lg mx-auto">
                   {I3_CONTENT.intakeConsole.subtext}
@@ -689,7 +733,6 @@ export function EstateCanvasScroll() {
               )}
             </section>
           </div>
-        )}
       </div>
     </div>
   );

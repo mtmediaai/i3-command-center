@@ -1,0 +1,28 @@
+{
+  "source": {
+    "filename": "Woodlands to Houston Driving Path.mp4",
+    "duration": 10.0,
+    "resolution": "1920x1080",
+    "fps": 24.0,
+    "total_source_frames": 240
+  },
+  "frames": {
+    "target_count": 120,
+    "format": "webp",
+    "naming_pattern": "frame-{NNNN}.webp"
+  },
+  "desktop": {
+    "resolution": "1920x1080",
+    "quality": 72,
+    "total_bytes": 4492952,
+    "total_mb": 4.28,
+    "avg_kb": 36.6
+  },
+  "mobile": {
+    "resolution": "960x540",
+    "quality": 68,
+    "total_bytes": 1912482,
+    "total_mb": 1.82,
+    "avg_kb": 15.6
+  }
+}
