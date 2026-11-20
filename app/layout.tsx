@@ -243,10 +243,14 @@ export default function RootLayout({
           />
         )}
 
-        {/* Google Tag Manager / GA4 Google Tag (Container: GTM-WLPB27CD) - Static for crawler detection */}
+        {/* Google Tag Manager & GA4 Direct Stream (GTM-WLPB27CD & G-MJ9DLX93KR) */}
         <script
           async
           src={`https://www.googletagmanager.com/gtm.js?id=${process.env.NEXT_PUBLIC_GTM_ID || 'GTM-WLPB27CD'}`}
+        />
+        <script
+          async
+          src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || 'G-MJ9DLX93KR'}`}
         />
         <script
           id="google-tag-manager-init"
@@ -255,17 +259,10 @@ export default function RootLayout({
               window.dataLayer = window.dataLayer || [];
               function gtag(){dataLayer.push(arguments);}
               gtag('js', new Date());
+              gtag('config', '${process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || 'G-MJ9DLX93KR'}');
             `,
           }}
         />
-
-        {/* Google Analytics 4 (GA4) Direct Measurement Stream (if configured) */}
-        {process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID && (
-          <Script
-            src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID}`}
-            strategy="afterInteractive"
-          />
-        )}
 
         {/* Microsoft Clarity Free Behavioral Heatmaps & Session Recordings */}
         {process.env.NEXT_PUBLIC_CLARITY_PROJECT_ID && (
