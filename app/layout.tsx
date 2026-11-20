@@ -243,10 +243,10 @@ export default function RootLayout({
           />
         )}
 
-        {/* Google Tag Manager & GA4 Direct Stream (GTM-WLPB27CD & G-MJ9DLX93KR) */}
+        {/* Google Tag Manager & GA4 Direct Stream (GTM-TGG55J27 & G-MJ9DLX93KR) */}
         <script
           async
-          src={`https://www.googletagmanager.com/gtm.js?id=${process.env.NEXT_PUBLIC_GTM_ID || 'GTM-WLPB27CD'}`}
+          src={`https://www.googletagmanager.com/gtm.js?id=${process.env.NEXT_PUBLIC_GTM_ID || 'GTM-TGG55J27'}`}
         />
         <script
           async
@@ -289,7 +289,7 @@ export default function RootLayout({
         {/* Google Tag Manager (noscript fallback) */}
         <noscript>
           <iframe
-            src={`https://www.googletagmanager.com/ns.html?id=${process.env.NEXT_PUBLIC_GTM_ID || 'GTM-WLPB27CD'}`}
+            src={`https://www.googletagmanager.com/ns.html?id=${process.env.NEXT_PUBLIC_GTM_ID || 'GTM-TGG55J27'}`}
             height="0"
             width="0"
             style={{ display: 'none', visibility: 'hidden' }}
