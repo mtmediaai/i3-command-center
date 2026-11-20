@@ -243,18 +243,21 @@ export default function RootLayout({
           />
         )}
 
-        {/* Google Tag Manager / GA4 Google Tag (Container: GTM-WLPB27CD) */}
-        <Script
+        {/* Google Tag Manager / GA4 Google Tag (Container: GTM-WLPB27CD) - Static for crawler detection */}
+        <script
+          async
           src={`https://www.googletagmanager.com/gtm.js?id=${process.env.NEXT_PUBLIC_GTM_ID || 'GTM-WLPB27CD'}`}
-          strategy="afterInteractive"
         />
-        <Script id="google-tag-manager-init" strategy="afterInteractive">
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-          `}
-        </Script>
+        <script
+          id="google-tag-manager-init"
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+            `,
+          }}
+        />
 
         {/* Google Analytics 4 (GA4) Direct Measurement Stream (if configured) */}
         {process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID && (
